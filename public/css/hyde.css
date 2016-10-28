@@ -33,16 +33,12 @@
 
 html {
   /*font-family: "PT Sans", Helvetica, Arial, sans-serif; */
-  font-family: "PT Sans", Helvetica, Arial, sans-serif;
+  font-family:  Helvetica, Arial, sans-serif;
 }
-@media (min-width: 48em) {
-  html {
-    font-size: 16px;
-  }
-}
+
 @media (min-width: 58em) {
   html {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
@@ -75,6 +71,7 @@ html {
 .sidebar a {
   color: #fff;
   vertical-align: text-top;
+  margin-top: 1rem;
 }
 
 /* Sitename */
