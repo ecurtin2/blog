@@ -1,6 +1,5 @@
 ---
 layout: page
-title: CV
 ---
 
 <p align="center" style="font-size:150%">
@@ -79,12 +78,12 @@ evanmcurtin@gmail.com <br>
   <br> Advisor: Dr. Jean-Claude Bradley, Department of Chemistry
   <br> Open Science Melting Point and Solubility Databases </span>
 </p>
+
 <br>
-<br>
+
 <br>
 
 ## Awards
-
 ---
 
 <p>
@@ -130,6 +129,7 @@ evanmcurtin@gmail.com <br>
   <br>
   <span style="float: left">Royal Society of Chemistry</span>
 </p>
+
 <br>
 
 ## Publications
@@ -146,6 +146,8 @@ ONS Open Melting Point Collection. Nature Precedings.
 Bradley, J.-C., Abraham, M. H., Acree, W. E., Lang, A., Beck, S. N.,
 Bulger, D. A., Clark, E. A., Condron, L. N., Costa, S. T., **Curtin, E.
 M.**, Kurtu, S. B., Mangir, M. I., McBride, M. J. (2015). Chemistry Central Journal, 9(1), 11.
+
+<br>
 
 ## Teaching Experience
 
