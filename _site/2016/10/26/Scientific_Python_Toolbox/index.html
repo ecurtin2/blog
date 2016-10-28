@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      The Scientific Computing Toolkit for Python &middot; Evan's Blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+  <!-- <body class="layout-reverse theme-base-0d">-->
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Evan's Blog
+        </a>
+      </h1>
+      <p class="lead">Overanalyzing Simple Questions since 2016.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      <a class="sidebar-nav-item" href="/Blog">Blog</a>
+      <a class="sidebar-nav-item" href="/about">About</a>
+      <a class="sidebar-nav-item" href="/CV">CV</a>
+      <a class="sidebar-nav-item" href="/LICENSE">License</a>
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">The Scientific Computing Toolkit for Python</h1>
+  <span class="post-date">26 Oct 2016</span>
+  <p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_66_0.png" alt="png" /></p>
+
+<h2 id="getting-started">Getting Started</h2>
+<hr />
+
+<p>This presentation is no help if you can’t get the python packages it uses! There are a few options here. If you’re not already set up, probably the easiest way to install python packages is <a href="https://pip.pypa.io/en/stable/">pip</a>. If you don’t already have it, here are <a href="https://packaging.python.org/installing/#install-pip-setuptools-and-wheel">installation instructions</a>. I’m a big fan of the <a href="https://www.continuum.io/">anaconda</a> python distrubution, which comes pre-loaded with basically everything I’m using today. Just use whatever works for you.</p>
+
+<p>For example, installing numpy is easy, in a command line:</p>
+
+<p>pip install numpy</p>
+
+<p>If you’re using anaconda, you can also use their package manager:</p>
+
+<p>conda install numpy</p>
+
+<p>Pip is probably the preferred method, even when you’re using anaconda. The packages I’m discussing today are <a href="http://www.numpy.org/">numpy</a>, <a href="https://www.scipy.org/">scipy</a>, <a href="http://pandas.pydata.org/">pandas</a>, <a href="http://matplotlib.org/">matplotlib</a>, <a href="https://seaborn.github.io/">seaborn</a>.</p>
+
+<p>Other useful tools are <a href="http://numba.pydata.org/">Numba</a> and <a href="http://cython.org/">Cython</a>. As far as I know, all of these are in both package managers.</p>
+
+<p>I’ve recently been told that pandas depends on cython and seaborn depends on pandas.</p>
+
+<p>You should therefore install cython -&gt; pandas -&gt; seaborn in that order.</p>
+
+<p>This talk was made using a <a href="http://jupyter.org/">jupyter</a> notebook.</p>
+
+<h2 id="python-is-slow-why-bother">Python is slow! Why bother?</h2>
+<hr />
+
+<p>Python has a lot of great functionality, carefully writtin python reads like english</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">My_Animals</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Cat'</span><span class="p">,</span> <span class="s">'Dog'</span><span class="p">,</span> <span class="s">'Chair'</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">My_Animals</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">animal</span> <span class="o">==</span> <span class="s">'Dog'</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">'Woof'</span>
+
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Woof
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="s">'Chair'</span> <span class="ow">in</span> <span class="n">My_Animals</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Who put a chair here?'</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Who put a chair here?
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="s">'Robot'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">My_Animals</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">'Robot is sad :('</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Robot is sad :(
+</code></pre>
+</div>
+
+<p>So called “list comprehensions” are incredibly useful:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">My_Robots</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Robo'</span> <span class="o">+</span> <span class="n">animal</span> <span class="k">for</span> <span class="n">animal</span> <span class="ow">in</span> <span class="n">My_Animals</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">My_Robots</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>['RoboCat', 'RoboDog', 'RoboChair']
+</code></pre>
+</div>
+
+<p>Let’s do something numerical, for example this function that performs a matrix multiplication:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">math</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">300</span>
+
+<span class="n">mat1</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.5</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+<span class="n">mat2</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">2.5</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="n">j</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+
+<span class="k">def</span> <span class="nf">mmult</span><span class="p">(</span><span class="n">mat1</span><span class="p">,</span> <span class="n">mat2</span><span class="p">):</span>
+    <span class="n">mat3</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">)]</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>     
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>  
+                <span class="n">mat3</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">+=</span> <span class="n">mat1</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">mat2</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">mat3</span>
+
+<span class="o">%</span><span class="n">time</span> <span class="n">m3</span> <span class="o">=</span> <span class="n">mmult</span><span class="p">(</span><span class="n">mat1</span><span class="p">,</span> <span class="n">mat2</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CPU times: user 4.81 s, sys: 8 ms, total: 4.82 s
+Wall time: 4.81 s
+</code></pre>
+</div>
+
+<p>Well that doesn’t seem so bad! This would take longer to do by hand! It actually is pretty slow.  <a href="https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/">Here’s</a>
+a look at some of the reasons why. It has to do with the fact that python is dynamically typed and interpreted, rather than compiled. Additionally, the arrays in native python aren’t laid out in one chunk of memory.</p>
+
+<h2 id="it-doesnt-have-to-be-this-way-numpy-section">It doesn’t have to be this way! (Numpy section)</h2>
+<hr />
+
+<p>If you’re going to be doing serious numerical work in python, numpy is essential. If you’re doing a lot of work with arrays, the performance difference between raw python and C/C++/Fortran can easily be several orders of magnitude. Numpy is focused on fast, efficient manipulation of arrays. They can be any size, any dimension as long as your computer can store it. Numpy methods are compiled and very efficient (comparable to compiled code). Let’s take a look at our matrix multiply again:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span> <span class="c"># convention</span>
+
+<span class="n">npmat1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mat1</span><span class="p">)</span> <span class="c"># use numpy arrays, they are contiguous in memory</span>
+<span class="n">npmat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mat2</span><span class="p">)</span>
+
+<span class="o">%</span><span class="n">time</span> <span class="n">npmat3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">npmat1</span><span class="p">,</span> <span class="n">npmat2</span><span class="p">)</span> <span class="c"># dot is used for dot product or matrix multiply</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CPU times: user 20 ms, sys: 8 ms, total: 28 ms
+Wall time: 12.5 ms
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">%</span><span class="n">time</span> <span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">npmat1</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>CPU times: user 224 ms, sys: 8 ms, total: 232 ms
+Wall time: 62.4 ms
+</code></pre>
+</div>
+
+<p>WHOA! Blazing fast! Morale of the story: if there is a numpy function to do it, use it! And there  is a numpy function for a lot of stuff, here’s a few useful ones:</p>
+
+<p><a href="http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.linalg.eig.html">np.linalg.eig</a> - eigenvectors/values</p>
+
+<p><a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.zeros.html">np.zeros</a> - create an array of zeros</p>
+
+<p><a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.linspace.html">np.linspace</a> - create an array of values spaced linearly between 2 endpoints</p>
+
+<p><a href="http://docs.scipy.org/doc/numpy-1.10.1/reference/generated/numpy.sort.html">np.sort</a> - Sort an array</p>
+
+<p><a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.amax.html">np.amax</a> - Return maximum value of array</p>
+
+<p><a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.random.rand.html">np.random.rand</a> - create array of random values in [0, 1)</p>
+
+<p>There’s about 3 trillion more …</p>
+
+<h2 id="a-few-useful-tips-about-numpy-arrays">A few useful tips about numpy arrays:</h2>
+<hr />
+<p>### 1) Most ‘normal’ operations are element-wise:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+             <span class="p">,[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+             <span class="p">,[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="k">print</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">A</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[11 12 13]
+ [14 15 16]
+ [17 18 19]]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">A</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[ 2  4  6]
+ [ 8 10 12]
+ [14 16 18]]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">A</span> <span class="o">==</span> <span class="mi">5</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[False False False]
+ [False  True False]
+ [False False False]]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+             <span class="p">,[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+             <span class="p">,[</span><span class="mi">70</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">90</span><span class="p">]])</span>
+<span class="k">print</span> <span class="n">A</span> <span class="o">+</span> <span class="n">B</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[11 22 33]
+ [44 55 66]
+ [77 88 99]]
+</code></pre>
+</div>
+
+<h3 id="you-can-slice-numpy-arrays">2) You can ‘slice’ numpy arrays</h3>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">A</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span>
+<span class="k">print</span> <span class="n">A</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c"># 3rd column (starts at 0)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1 2 3]
+ [4 5 6]
+ [7 8 9]] 
+
+[3 6 9]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>  <span class="c">#Second row</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[4 5 6]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="c"># Top-Left 2x2 section</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1 2]
+ [4 5]]
+</code></pre>
+</div>
+
+<h3 id="you-can-index-a-numpy-array-with-a-numpy-array">3) You can index a numpy array… with a numpy array</h3>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="k">print</span> <span class="n">A</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1 2 3]
+ [4 5 6]
+ [7 8 9]]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">A</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>  <span class="c"># first and third row</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1 2 3]
+ [7 8 9]]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">A</span><span class="p">[:,</span><span class="n">indices</span><span class="p">]</span>  <span class="c"># first and third column</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1 3]
+ [4 6]
+ [7 9]]
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">indices2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">]</span>
+                     <span class="p">,[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">]</span>
+                     <span class="p">,[</span><span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">]])</span>
+<span class="k">print</span> <span class="n">A</span><span class="p">,</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span>
+<span class="k">print</span> <span class="n">A</span><span class="p">[</span><span class="n">indices2</span><span class="p">]</span>  <span class="c"># All elements where indices2 is True</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[[1 2 3]
+ [4 5 6]
+ [7 8 9]] 
+
+[1 2 5 6]
+</code></pre>
+</div>
+
+<h3 id="and-you-can-combine-operations">4) And you can combine operations</h3>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">symmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+                     <span class="p">,[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+                     <span class="p">,[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">asymmetric</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+                      <span class="p">,[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+                      <span class="p">,[</span><span class="mi">42</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+</code></pre>
+</div>
+
+<p>Maybe to check if a matrix is symmetric</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="nb">all</span><span class="p">(</span><span class="n">symmetric</span><span class="o">.</span><span class="n">T</span> <span class="o">==</span> <span class="n">symmetric</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>True
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">np</span><span class="o">.</span><span class="nb">all</span><span class="p">(</span><span class="n">asymmetric</span><span class="o">.</span><span class="n">T</span> <span class="o">==</span> <span class="n">asymmetric</span><span class="p">)</span>  <span class="c"># WARNING if using floats, compare</span>
+                                    <span class="c"># with np.isclose(x.T, x)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>False
+</code></pre>
+</div>
+
+<p>Or to sort eigenvales and eigenvectors so that the eigenvalues are in ascending order, and you keep track of the vectors!</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">vals</span><span class="p">,</span> <span class="n">vecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">symmetric</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">vals</span>
+<span class="k">print</span> <span class="n">vecs</span>
+<span class="k">print</span> <span class="s">'</span><span class="se">\n</span><span class="s">'</span>
+
+<span class="n">indices_of_sorted_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">vals</span><span class="p">[</span><span class="n">indices_of_sorted_vals</span><span class="p">]</span>     
+<span class="k">print</span> <span class="n">vecs</span><span class="p">[:,</span> <span class="n">indices_of_sorted_vals</span><span class="p">]</span>  <span class="c"># columns are rearranged</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[-3.  9. -3.]
+[[-0.81649658  0.57735027  0.19219669]
+ [ 0.40824829  0.57735027 -0.7833358 ]
+ [ 0.40824829  0.57735027  0.59113912]]
+
+
+[-3. -3.  9.]
+[[-0.81649658  0.19219669  0.57735027]
+ [ 0.40824829 -0.7833358   0.57735027]
+ [ 0.40824829  0.59113912  0.57735027]]
+</code></pre>
+</div>
+
+<h2 id="scipy">Scipy</h2>
+<hr />
+
+<p>We’re all scientists here, so It would be silly to avoid scipy. It’s a library of scientifically relevant tools. Here’s a list of some of the submodules:</p>
+
+<p>Special functions (scipy.special)</p>
+
+<p>Integration (scipy.integrate)</p>
+
+<p>Optimization (scipy.optimize)</p>
+
+<p>Interpolation (scipy.interpolate)</p>
+
+<p>Fourier Transforms (scipy.fftpack)</p>
+
+<p>Signal Processing (scipy.signal)</p>
+
+<p>Linear Algebra (scipy.linalg)</p>
+
+<p>Sparse Eigenvalue Problems with ARPACK</p>
+
+<p>Compressed Sparse Graph Routines (scipy.sparse.csgraph)</p>
+
+<p>Spatial data structures and algorithms (scipy.spatial)</p>
+
+<p>Statistics (scipy.stats)</p>
+
+<p>Multidimensional image processing (scipy.ndimage)</p>
+
+<p>File IO (scipy.io)</p>
+
+<p>Weave (scipy.weave)</p>
+
+<p>The various python modules make it super easy to do lots of things, like making a function that returns the nth harmonic oscillator wavefunction:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span><span class="p">,</span> <span class="n">pi</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">hermite</span> <span class="k">as</span> <span class="n">h</span>
+
+<span class="k">def</span> <span class="nf">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">pi</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">N</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">h</span><span class="p">(</span><span class="n">n</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>If I try to cover all of scipy it will get boring fast… you can look up functions as you need them</p>
+
+<h2 id="matplotlib">Matplotlib</h2>
+<hr />
+
+<p>Matplotlib is the tool to go to for quick plotting stuff in Python. It can handle 2D, 3D, and even animations.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="c"># Jupyter  "Magic", just so you see the images in the notebook</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span> 
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>   <span class="c"># list of x from 0 to 10 by 100 steps</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>                 <span class="c"># take the sign of each element in x</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>                <span class="c"># do I have to explain this one?</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_37_0.png" alt="png" /></p>
+
+<p>To plot multiple things at once, call plt.plot() more than once</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_HO</span><span class="p">(</span><span class="n">N</span><span class="p">):</span> <span class="c"># plot N wavefunctions</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+
+    <span class="n">ymax</span> <span class="o">=</span> <span class="n">N</span> <span class="o">+</span> <span class="mf">1.5</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ymax</span><span class="p">)</span>    <span class="c"># figuring out plot ranges</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="n">xmax</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>                       <span class="c"># from n = [0...N)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">psi</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">))</span>   <span class="c"># Plot the wavefunction offset by</span>
+                                             <span class="c"># energy</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="s">'k'</span><span class="p">)</span>  <span class="c"># Plot the potential</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="n">xmax</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">plot_HO</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_39_0.png" alt="png" /></p>
+
+<p>Matplotlib has functions for scatterplots, pie charts, bar graphs, heatmaps blah blah blah…</p>
+
+<h2 id="pandas">Pandas</h2>
+<hr />
+
+<p>I recently started using Pandas in my research, and It’s already proven incredibly useful for data analysis. The library is focused on the Series and the DataFrame.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="n">series1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">72</span><span class="p">])</span>
+<span class="n">series1</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>0     4.0
+1     2.5
+2     8.0
+3    72.0
+dtype: float64
+</code></pre>
+</div>
+
+<p>I don’t know about you, but this isn’t the most impressive thing to me… just hold on.</p>
+
+<p>Here’s an example of a DataFrame, the reason I’m in love with this library</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Rain'</span><span class="p">,</span> <span class="s">'Temperature'</span><span class="p">,</span> <span class="s">'Wind'</span><span class="p">]</span>
+<span class="n">Dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">'20161020'</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c"># 3 cols 10 rows</span>
+
+<span class="n">df</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Dates</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">Cols</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">df</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>                Rain  Temperature      Wind
+2016-10-20  0.299910     0.965036  0.074467
+2016-10-21  0.793946     0.323089  0.661540
+2016-10-22  0.779386     0.466088  0.910945
+2016-10-23  0.760438     0.373945  0.947301
+2016-10-24  0.032152     0.505377  0.672159
+2016-10-25  0.204224     0.758403  0.193858
+2016-10-26  0.928627     0.585821  0.763869
+2016-10-27  0.125158     0.422569  0.365353
+2016-10-28  0.474713     0.500295  0.732848
+2016-10-29  0.660813     0.573754  0.586657
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">df</span><span class="p">[</span><span class="s">'Rain'</span><span class="p">]</span>  <span class="c"># Grab all the stuff in 'Rain' column</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>2016-10-20    0.299910
+2016-10-21    0.793946
+2016-10-22    0.779386
+2016-10-23    0.760438
+2016-10-24    0.032152
+2016-10-25    0.204224
+2016-10-26    0.928627
+2016-10-27    0.125158
+2016-10-28    0.474713
+2016-10-29    0.660813
+Freq: D, Name: Rain, dtype: float64
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s">'2016-10-23'</span><span class="p">]</span>  <span class="c"># locate this date</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Rain           0.760438
+Temperature    0.373945
+Wind           0.947301
+Name: 2016-10-23 00:00:00, dtype: float64
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>  <span class="c"># grab the 3rd row</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Rain           0.779386
+Temperature    0.466088
+Wind           0.910945
+Name: 2016-10-22 00:00:00, dtype: float64
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>  <span class="c"># Plot all the stuff</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_48_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'Rain'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'Temperature'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_49_0.png" alt="png" /></p>
+
+<p>You can find data by name and apply an operation to it, like checking which days had small amounts of rain:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">df</span><span class="p">[</span><span class="s">'Rain'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.5</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>2016-10-20     True
+2016-10-21    False
+2016-10-22    False
+2016-10-23    False
+2016-10-24     True
+2016-10-25     True
+2016-10-26    False
+2016-10-27     True
+2016-10-28     True
+2016-10-29    False
+Freq: D, Name: Rain, dtype: bool
+</code></pre>
+</div>
+
+<p>Hmm, that’s pretty nice isn’t it? What if we could easily select only the parts that satisfy our condition? ….</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">print</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'Rain'</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>                Rain  Temperature      Wind
+2016-10-20  0.299910     0.965036  0.074467
+2016-10-24  0.032152     0.505377  0.672159
+2016-10-25  0.204224     0.758403  0.193858
+2016-10-27  0.125158     0.422569  0.365353
+2016-10-28  0.474713     0.500295  0.732848
+</code></pre>
+</div>
+
+<p>Ok that’s pretty neat. I think this alone is useful. But we’re just getting started!</p>
+
+<p>What if we could find all parts of our data frame that satisfy a given condition, then plot two other columns of that data? Say no more…</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">TempsAbove</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s">'Temperature'</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.5</span><span class="p">]</span>
+<span class="n">TempsAbove</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="s">'Rain'</span><span class="p">,</span> <span class="s">'Wind'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_55_0.png" alt="png" /></p>
+
+<p>The reason I like this library so much is that you can use the past few examples, combining them as you wish, and analyze huge amounts of data in seconds. Lately I’ve written a function to do a custom plot on each row of a dataframe (optionally you can apply a condition to a dataframe and pass that through). I take my output files, parse them and put them into a dataframe. This lets me go from a directory of output files to a ton of plots in seconds, with little effort.</p>
+
+<h2 id="seaborn">Seaborn</h2>
+<hr />
+
+<p>Let’s face it: I’ve been to enough talks to know that most people don’t know how to make visually appealing figures. Well the good news is that you don’t have to. Trust in Seaborn, for it is magnificent.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span> <span class="c"># importing changes defaults</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[&lt;matplotlib.lines.Line2D at 0x7f959e18f690&gt;]
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_58_1.png" alt="png" /></p>
+
+<p>This is the default with nothing done, the library was made to have nice colorschemes out of the box, but I prefer a less intrusive background</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">sns</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s">'white'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>[&lt;matplotlib.lines.Line2D at 0x7f959e18f610&gt;]
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_60_1.png" alt="png" /></p>
+
+<p>Remember our harmonic oscillator plots?</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">plot_HO</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_62_0.png" alt="png" /></p>
+
+<p>There are a lot of built in plots, mostly for discrete data points and statistics. I mostly use the color palettes and things like that, but if you need to do statistical plots, look no further</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">Cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Rain'</span><span class="p">,</span> <span class="s">'Temperature'</span><span class="p">,</span> <span class="s">'Wind'</span><span class="p">]</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">Dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="s">'20161020'</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">scipy.signal</span> <span class="kn">import</span> <span class="n">gaussian</span>
+<span class="n">rain</span> <span class="o">=</span> <span class="n">gaussian</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>         
+<span class="n">Temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">6.28</span><span class="p">,</span> <span class="n">N</span><span class="p">))</span>
+<span class="n">Wind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">N</span><span class="p">))</span> <span class="o">*</span> <span class="mf">0.3</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rain</span>
+<span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">Temp</span>
+<span class="n">data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">Wind</span>
+
+<span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">Dates</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">Cols</span><span class="p">)</span>
+<span class="n">df2</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_64_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'Rain'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'Wind'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df2</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_65_1.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Abs'</span><span class="p">,</span> <span class="s">'Conc'</span><span class="p">,</span> <span class="s">'Molecule'</span><span class="p">,</span> <span class="s">'Temp'</span><span class="p">]</span>
+
+<span class="n">Temps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">75</span><span class="p">]</span>
+<span class="n">Molecules</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Blue Dye'</span><span class="p">,</span> <span class="s">'Green Dye'</span><span class="p">]</span>
+<span class="n">Absorptivity</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>   <span class="c"># whatever units makes this reasonable</span>
+<span class="n">Concs</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">]</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">Temps</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Molecules</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">conc</span> <span class="ow">in</span> <span class="n">Concs</span><span class="p">:</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">Absorptivity</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">conc</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="mi">273</span> <span class="o">+</span> <span class="n">temp</span><span class="p">)</span> <span class="o">/</span> <span class="mi">300</span><span class="p">)</span>
+            <span class="n">A</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.05</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">A</span><span class="p">,</span> <span class="n">conc</span><span class="p">,</span> <span class="n">Molecules</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">temp</span><span class="p">])</span>
+            
+<span class="n">AbsDF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s">'Conc'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s">'Abs'</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s">'Molecule'</span><span class="p">,</span> 
+           <span class="n">col</span><span class="o">=</span><span class="s">'Temp'</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">AbsDF</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-10-26-Scientific_Python_Toolbox/output_66_0.png" alt="png" /></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/09/17/Plot-By-Groups/">
+            Plotting by groups using Matplotlib, Seaborn, and Pandas
+            <small>17 Sep 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/08/21/Wrap-C++-Class-Using-Cython/">
+            Wrapping a C++ Class in Python Using Cython
+            <small>21 Aug 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+
+  <h2>Comments</h2>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'ecurtin2-blog';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+
+    </div>
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-81645801-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '//2016/10/26/Scientific_Python_Toolbox/',
+		  'title': 'The Scientific Computing Toolkit for Python'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>

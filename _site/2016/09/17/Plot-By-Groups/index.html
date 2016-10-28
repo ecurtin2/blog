@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Plotting by groups using Matplotlib, Seaborn, and Pandas &middot; Evan's Blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="layout-reverse">
+  <!-- <body class="layout-reverse theme-base-0d">-->
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Evan's Blog
+        </a>
+      </h1>
+      <p class="lead">Overanalyzing Simple Questions since 2016.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      <a class="sidebar-nav-item" href="/Blog">Blog</a>
+      <a class="sidebar-nav-item" href="/about">About</a>
+      <a class="sidebar-nav-item" href="/CV">CV</a>
+      <a class="sidebar-nav-item" href="/LICENSE">License</a>
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Plotting by groups using Matplotlib, Seaborn, and Pandas</h1>
+  <span class="post-date">17 Sep 2016</span>
+  <p><img src="/images/2016-09-17-Plot-By-Groups_files/2016-09-17-Plot-By-Groups_41_0.png" alt="png" /></p>
+
+<p>Data visualization is one of the most important aspects of preparing a paper, presentation or poster. However, it’s often treated as an afterthought in data analysis. Us humans are remarkably good at interpreting visual data and finding patterns, so why not use this to our advantage when it comes to solving problems? Apparently I’m not alone in thinking this way. I’ve recently discovered <a href="https://stanford.edu/~mwaskom/software/seaborn/">Seaborn</a>, a fantastic library for making practical, aesthetically pleasing graphs. I’ve also recently been playing around with the <a href="http://pandas.pydata.org/">pandas</a> data analysis library, and I got inspired to try to combine these tools into something neat and useful.</p>
+
+<h2 id="motivation">Motivation</h2>
+<p>Let’s say we have a few methods for calculating something, and a few systems on which we want to use each method. Potentially there’s a third layer of variables: maybe we’re having a bunch of students run the calculations. This type of problem can pop up all over the place and plotting each figure manually can be a bit painful, particularly if you have to keep changing it. I think it would be nice to have a quick way to produce high quality plots instantly so that they can be quickly updated if need be.</p>
+
+<h2 id="boilerplate">1) Boilerplate</h2>
+<hr />
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+</code></pre>
+</div>
+
+<h2 id="get-data">2) Get Data</h2>
+<hr />
+
+<p>Now if you already have data, just load it up using some of the pandas built-in functions. I’m just gonna make up some! Suppose we have data from 4 methods, each with 4 systems being studied, and each of both of these is being calculated by every one of 2 students:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">NMethods</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">NSystems</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">NStudents</span>  <span class="o">=</span> <span class="mi">16</span>
+
+<span class="c"># Here's some numbers, in real life maybe loaded </span>
+<span class="c"># directly from csv -&gt; dataframe</span>
+<span class="k">def</span> <span class="nf">generate_data</span><span class="p">(</span><span class="n">Nmethods</span><span class="p">,</span> <span class="n">NSystems</span><span class="p">,</span> <span class="n">NStudents</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">Systems_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">20</span><span class="o">*</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NMethods</span><span class="p">)])</span>
+    <span class="n">Methods_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="mi">5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NSystems</span><span class="p">)])</span>
+    <span class="n">Students_y</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NStudents</span><span class="p">)])</span>
+
+    <span class="c"># Just Name everything Method # ...</span>
+    <span class="n">Methods</span>  <span class="o">=</span> <span class="p">[</span><span class="s">'Method '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NMethods</span><span class="p">)]</span>
+    <span class="n">Systems</span>  <span class="o">=</span> <span class="p">[</span><span class="s">'System '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NSystems</span><span class="p">)]</span>
+    <span class="n">Students</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Student '</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NStudents</span><span class="p">)]</span>
+
+    <span class="c"># If you have real data this part is not needed</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NMethods</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NSystems</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">NStudents</span><span class="p">):</span>
+                <span class="c"># Again made up y values</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">Methods_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">Systems_y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+</span> <span class="n">Students_y</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> 
+                <span class="c"># Let's make our data into a list of lists, there</span>
+                <span class="c"># are a few possibilities here</span>
+                <span class="n">data_row</span> <span class="o">=</span> <span class="p">[</span><span class="n">Methods</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">Systems</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">Students</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data_row</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="n">NMethods</span><span class="p">,</span> <span class="n">NSystems</span><span class="p">,</span> <span class="n">NStudents</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="convert-data-to-convenient-form">3) Convert Data to Convenient Form</h2>
+<hr />
+
+<p>This is where pandas comes in handy. The <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">pandas DataFrame</a> object has a ton of useful features that we will be using gratuitously, so let’s load up some data  and get it into a format that pandas can use:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Method'</span><span class="p">,</span> <span class="s">'System'</span><span class="p">,</span> <span class="s">'Student'</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>You can index the dataframe like so:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> 
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span>      <span class="n">Method</span>      <span class="n">System</span>      <span class="n">Student</span>     <span class="n">X</span>                               <span class="n">Y</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span>  <span class="s">'Method 1'</span>  <span class="s">'System 1'</span>  <span class="s">'Student 1'</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.020</span><span class="p">,</span> <span class="mf">0.030</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.04</span><span class="p">,</span> <span class="mf">1.08</span><span class="p">,</span> <span class="mf">1.12</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">1</span>  <span class="s">'Method 1'</span>  <span class="s">'System 1'</span>  <span class="s">'Student 2'</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.020</span><span class="p">,</span> <span class="mf">0.030</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">,</span> <span class="mf">1.09</span><span class="p">,</span> <span class="mf">1.44</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span>  <span class="s">'Method 1'</span>  <span class="s">'System 1'</span>  <span class="s">'Student 3'</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.020</span><span class="p">,</span> <span class="mf">0.030</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">,</span> <span class="mf">1.10</span><span class="p">,</span> <span class="mf">1.14</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<p>You can also index by name of column:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'Student'</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="mi">0</span>    <span class="s">'Student 1'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">1</span>    <span class="s">'Student 2'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">2</span>    <span class="s">'Student 3'</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">Name</span><span class="p">:</span> <span class="n">Student</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="nb">object</span>
+</code></pre>
+</div>
+
+<p>And you can even find all the rows for a particular student! We will be making use of these aspects of the pandas DataFrame!</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">mask</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">'Student'</span><span class="p">]</span> <span class="o">==</span> <span class="s">'Student 7'</span>
+<span class="n">df</span><span class="p">[</span><span class="n">mask</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span>      <span class="n">Method</span>      <span class="n">System</span>      <span class="n">Student</span>     <span class="n">X</span>                               <span class="n">Y</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">6</span>  <span class="s">'Method 1'</span>  <span class="s">'System 1'</span>  <span class="s">'Student 7'</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.020</span><span class="p">,</span> <span class="mf">0.030</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.04</span><span class="p">,</span> <span class="mf">1.089</span><span class="p">,</span> <span class="mf">1.125</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">22</span> <span class="s">'Method 1'</span>  <span class="s">'System 2'</span>  <span class="s">'Student 7'</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.020</span><span class="p">,</span> <span class="mf">0.030</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="p">[</span><span class="mf">21.</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">,</span> <span class="mf">21.0</span><span class="p">,</span> <span class="mf">21.1</span><span class="p">,</span>   <span class="o">...</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="mi">38</span> <span class="s">'Method 1'</span>  <span class="s">'System 3'</span>  <span class="s">'Student 7'</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.020</span><span class="p">,</span> <span class="mf">0.030</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="p">[</span><span class="mf">41.</span><span class="p">,</span> <span class="mf">41.0</span><span class="p">,</span> <span class="mf">41.0</span><span class="p">,</span> <span class="mf">41.1</span><span class="p">,</span>   <span class="o">...</span><span class="p">]</span>
+</code></pre>
+</div>
+
+<h2 id="plot-by-groups">4) Plot By groups</h2>
+<hr />
+
+<p>Ok here comes the fun stuff! This got a bit more complex than I thought it would at first, but I’ve gotten it to work pretty well. The general idea is to group the data by one (or more) of the 3 categories and apply the same color or style to each member of that group. Additionally, we can group once more into matplotlib’s subplots (this is why I chose 3 possible groupings, but don’t tell anybody!).</p>
+
+<h3 id="a-create-the-class">4a) Create the Class</h3>
+<hr />
+
+<p>About half way through writing this, I figured out that it makes a lot more sense to write it in an object oriented style. Let’s make the class, have it initialize with a dataframe, the labels for x and y values in the dataframe, and set some default values.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">GroupPlot</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span>  <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span>  <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+               
+    <span class="k">def</span> <span class="nf">set_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span>  <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span>  <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subplt_cols</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig_legend</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">styles</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre>
+</div>
+
+<p>Here I’m letting the user choose several options. We’ll make it so that they can choose whether or not to group by colors, styles or subplots. The <em>self.subplt_cols</em> option is to set the number of columns used in the subplot, but is not needed. Finally the user can submit a list of styles that matplotlib will use to draw the lines (such a
+s [’-‘, ‘..’]).</p>
+
+<h3 id="b-determine-number-of-entries-per-category">4b) Determine number of entries per category</h3>
+<hr />
+<p>Ok, now that the defaults are set, let’s get into the meat of the program. First, we need to know how many items are contained in each grouping. This is where I’m using panda’s <a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html">indexing options</a> to index a column of the data frame based on the string that labels it. Then the <em>.unique()</em> function removes duplicated entries. What I’m left with is a list of the unique entries in that column:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">df</span><span class="p">[</span><span class="s">'Method'</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</code></pre>
+</div>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">array</span><span class="p">([</span><span class="s">'Method 1'</span><span class="p">,</span> <span class="s">'Method 2'</span><span class="p">,</span> <span class="s">'Method 3'</span><span class="p">,</span> <span class="s">'Method 4'</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Then the number of Methods I have is simply the length of this list. So  let’s make lists that contain the categories of every row, which we will be using as dictionary keys later. To get the numbers of each category just take the the number of unique elements in that list.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Ncolors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Nstyles</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+</code></pre>
+</div>
+
+<h3 id="c-determine-colors">4c) Determine Colors</h3>
+<hr />
+
+<p>I decided to use a dictionary for this part. Basically all this function does is remake a color scheme if more than 6 are needed, then construct a dictionary <em>color_dic</em>. The dictionary contains the unique entries in the <em>self.color_by</em> column, and map them to the entries of the <a href="https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.color_palette.html">seaborn color palette</a>. This way the user can define any colorscheme they want, by changing the color palette using the <a href="https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.set_palette.html">set_palette</a> function.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_color_dic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ncolors</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="c">#Default only has 6 colors, make new one if needed</span>
+            <span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s">"hls"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ncolors</span><span class="p">))</span>
+        <span class="n">color_dic</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+            <span class="n">color_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_dic</span> <span class="o">=</span> <span class="n">color_dic</span>
+</code></pre>
+</div>
+
+<h3 id="d-determine-styles">4d) Determine Styles</h3>
+<hr />
+
+<p>Matplotlib has 4 linestyle options, If the user requests too many styles, throw an error</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">check_styles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">styles</span> <span class="o">=</span> <span class="p">[</span><span class="s">'-'</span><span class="p">,</span> <span class="s">'--'</span><span class="p">,</span><span class="s">'-.'</span><span class="p">,</span> <span class="s">':'</span><span class="p">,]</span>
+        <span class="k">if</span>  <span class="bp">self</span><span class="o">.</span><span class="n">Nstyles</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'# of styles needed exceeds #'</span>
+                            <span class="o">+</span> <span class="s">'of styles available: currently '</span>
+                            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">))</span> <span class="o">+</span> <span class="s">', needs '</span> 
+                            <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nstyles</span><span class="p">)</span> <span class="o">+</span> <span class="s">'.'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Just like the color dictionary, make a dictionary for the line styles:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_style_dic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+        <span class="n">style_dic</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+            <span class="n">style_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style_dic</span> <span class="o">=</span> <span class="n">style_dic</span>
+</code></pre>
+</div>
+
+<h3 id="e-determine-subplot-info">4e) Determine subplot info</h3>
+<hr />
+
+<p>In order to draw the subplots, we need to know how many rows and columns we want. We let the user specify the number of columns if they want, but by default I thought it made sense to try to get as close to a square as possible. I did this by taking the total number of subplots requested, square rooting it and rounding down to the nearest integer. By rounding down we ensure that the plot will add rows before it adds more columns, which I think looks nicer.</p>
+
+<p>If our plots don’t form a nice rectangle, we add one row and fill it in from there!</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_subplot_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_cols</span><span class="p">:</span>
+            <span class="n">subplt_cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span><span class="p">)))</span>
+        <span class="n">subplt_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span> <span class="o">/</span> <span class="n">subplt_cols</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span> <span class="o">%</span> <span class="n">subplt_cols</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">subplt_rows</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subplt_rows</span> <span class="o">=</span> <span class="n">subplt_rows</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subplt_cols</span> <span class="o">=</span> <span class="n">subplt_cols</span>
+</code></pre>
+</div>
+
+<h3 id="f-make-the-plots">4f) Make the plots</h3>
+<hr />
+
+<p>Ok so now we have all of the parameters ready to go. Let’s get to plotting! We’ll be using the <em>self.lines</em> and <em>self.labels</em> attributes later to make a legend. I chose to iterate through each row of the data frame, and plot its x and y values according to the color, style and subplot given in the corresponding dictionaries. This one’s a bit long, but I’ve tried to write it as clearly as possible.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">make_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+            <span class="n">subplot_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">subplot_val</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c"># If not subplots, just 1 plot</span>
+
+        <span class="n">llabel</span> <span class="o">=</span> <span class="s">''</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+            <span class="n">lstyle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">llabel</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>
+                <span class="n">llabel</span> <span class="o">+=</span> <span class="s">', '</span> <span class="c"># If we have style and color use , </span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lstyle</span> <span class="o">=</span> <span class="s">''</span>
+            
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>    
+            <span class="n">col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="n">llabel</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">llabel</span><span class="p">)</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">subplot_val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> 
+                             <span class="n">subplot_val</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
+                             <span class="n">subplot_val</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> 
+                                  <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> 
+                                  <span class="n">lstyle</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">llabel</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="e-make-the-figure-legend">4e) Make the Figure Legend</h3>
+<hr />
+
+<p>If you were to just use plt.figure() at the end of the code, you get a single legend in the last entry of the subplots. Since we’re categorizing and the same type of lines will have the same color and style across each subplot, it makes sense to use one legend for all of them. This is done using matplotlib’s <a href="http://matplotlib.org/examples/pylab_examples/figlegend_demo.html">figlegend</a> command. Since we’ve stored all the lines and labels in lists, we just have to make a list of the unique labels, and only generate legend entries for those (ignore any that turn out empty!). Then we just have to set the location:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">get_figlegend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="n">unique_labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">unique_lines</span>  <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_labels</span> <span class="ow">and</span> <span class="n">label</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+            <span class="n">unique_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+            <span class="n">unique_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figlegend</span><span class="p">((</span><span class="n">unique_lines</span><span class="p">),</span> <span class="n">unique_labels</span><span class="p">,</span> 
+                  <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.01</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s">'center left'</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="f-plot">4f) Plot!</h3>
+<hr />
+
+<p>Finally, lets wrap up the method into a nice plot function:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_numbers</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_subplot_params</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">check_styles</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_style_dic</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_color_dic</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">get_sub_dic</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">make_plots</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig_legend</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_figlegend</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h3 id="g-done">4g) Done!</h3>
+<hr />
+
+<p>Ok that took some time, but here’s the class in its entirety:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="k">class</span> <span class="nc">GroupPlot</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">DataFrame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span>  <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span>  <span class="o">=</span> <span class="n">y</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_defaults</span><span class="p">()</span>
+               
+    <span class="k">def</span> <span class="nf">set_defaults</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span>  <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span>  <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subplt_cols</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fig_legend</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">styles</span> <span class="o">=</span> <span class="bp">None</span>
+ 
+    <span class="k">def</span> <span class="nf">get_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Ncolors</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Nstyles</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+        
+    <span class="k">def</span> <span class="nf">get_color_dic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ncolors</span> <span class="o">&gt;</span> <span class="mi">6</span><span class="p">:</span>
+                <span class="c">#Default only has 6 colors, make new one if needed</span>
+                <span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s">"hls"</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Ncolors</span><span class="p">))</span>
+            <span class="n">color_dic</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+                <span class="n">color_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">color_dic</span> <span class="o">=</span> <span class="n">color_dic</span>
+
+    <span class="k">def</span> <span class="nf">check_styles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">styles</span> <span class="o">=</span> <span class="p">[</span><span class="s">'-'</span><span class="p">,</span> <span class="s">'--'</span><span class="p">,</span><span class="s">'-.'</span><span class="p">,</span> <span class="s">':'</span><span class="p">,]</span>
+            <span class="k">if</span>  <span class="bp">self</span><span class="o">.</span><span class="n">Nstyles</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="nb">ValueError</span><span class="p">(</span><span class="s">'# of styles needed exceeds #'</span>
+                                <span class="o">+</span> <span class="s">'of styles available: currently '</span>
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">))</span> <span class="o">+</span> <span class="s">', needs '</span> 
+                                <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nstyles</span><span class="p">)</span> <span class="o">+</span> <span class="s">'.'</span><span class="p">)</span>
+            
+    <span class="k">def</span> <span class="nf">get_style_dic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+            <span class="n">style_dic</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+                <span class="n">style_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">styles</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">style_dic</span> <span class="o">=</span> <span class="n">style_dic</span>
+    
+    <span class="k">def</span> <span class="nf">get_subplot_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c">#Try to get close to a square layout by default</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_cols</span><span class="p">:</span>
+                <span class="n">subplt_cols</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span><span class="p">)))</span>
+            <span class="n">subplt_rows</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span> <span class="o">/</span> <span class="n">subplt_cols</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nsubplt</span> <span class="o">%</span> <span class="n">subplt_cols</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">subplt_rows</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subplt_rows</span> <span class="o">=</span> <span class="n">subplt_rows</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">subplt_cols</span> <span class="o">=</span> <span class="n">subplt_cols</span>
+            
+    <span class="k">def</span> <span class="nf">get_sub_dic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+            <span class="n">sub_dic</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span><span class="o">.</span><span class="n">unique</span><span class="p">()):</span>
+                <span class="n">sub_dic</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_rows</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_cols</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_dic</span> <span class="o">=</span> <span class="n">sub_dic</span>
+
+    <span class="k">def</span> <span class="nf">make_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+                <span class="n">subplot_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">subplot_val</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>  <span class="c"># If not subplots, just 1 plot</span>
+            
+            <span class="n">llabel</span> <span class="o">=</span> <span class="s">''</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_by</span><span class="p">:</span>
+                <span class="n">lstyle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">llabel</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>
+                    <span class="n">llabel</span> <span class="o">+=</span> <span class="s">', '</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">lstyle</span> <span class="o">=</span> <span class="s">''</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_by</span><span class="p">:</span>    
+                <span class="n">col</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_dic</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span>
+                <span class="n">llabel</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">color_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">col</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+            
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">llabel</span><span class="p">)</span>
+            
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">subplot_val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> 
+                                 <span class="n">subplot_val</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> 
+                                 <span class="n">subplot_val</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> 
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">df</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">][</span><span class="n">i</span><span class="p">],</span> 
+                                      <span class="n">lstyle</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">llabel</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subplt_by</span><span class="p">:</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subplt_keys</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+            
+    <span class="k">def</span> <span class="nf">get_figlegend</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">unique_labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">unique_lines</span>  <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">label</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">unique_labels</span> <span class="ow">and</span> <span class="n">label</span> <span class="o">!=</span> <span class="s">''</span><span class="p">:</span>
+                <span class="n">unique_labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+                <span class="n">unique_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">figlegend</span><span class="p">((</span><span class="n">unique_lines</span><span class="p">),</span> <span class="n">unique_labels</span><span class="p">,</span> 
+                      <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.01</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="n">loc</span><span class="o">=</span><span class="s">'center left'</span><span class="p">)</span>
+      
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_numbers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_subplot_params</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_styles</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_style_dic</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_color_dic</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_sub_dic</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_plots</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fig_legend</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_figlegend</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="use">5) Use!</h2>
+<hr />
+<p>Let’s go back to our original problem. To use the function, all we need to do is get our data into a pandas DataFrame, and create a <em>GroupPlot</em> instance. Then we specify what type of groupings we want, and that’s it! I’ve added a few formatting specifiers to make it look a bit better.</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="n">NMethods</span><span class="p">,</span> <span class="n">NSystems</span><span class="p">,</span> <span class="n">NStudents</span><span class="p">)</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Method'</span><span class="p">,</span> <span class="s">'System'</span><span class="p">,</span> <span class="s">'Student'</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">GroupPlot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">color_by</span>  <span class="o">=</span> <span class="s">'System'</span> 
+<span class="n">x</span><span class="o">.</span><span class="n">style_by</span>  <span class="o">=</span> <span class="s">'Method'</span>
+<span class="n">x</span><span class="o">.</span><span class="n">subplt_by</span> <span class="o">=</span> <span class="s">'Student'</span>
+<span class="n">x</span><span class="o">.</span><span class="n">fig_legend</span><span class="o">=</span> <span class="bp">True</span>
+<span class="n">x</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-09-17-Plot-By-Groups_files/2016-09-17-Plot-By-Groups_37_0.png" alt="png" /></p>
+
+<p>We can change which way we want to group the data easily:</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="n">NMethods</span><span class="p">,</span> <span class="n">NSystems</span><span class="p">,</span> <span class="n">NStudents</span><span class="p">)</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Method'</span><span class="p">,</span> <span class="s">'System'</span><span class="p">,</span> <span class="s">'Student'</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">GroupPlot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">color_by</span>  <span class="o">=</span> <span class="s">'Method'</span>   <span class="c"># Switched method and system</span>
+<span class="n">x</span><span class="o">.</span><span class="n">style_by</span>  <span class="o">=</span> <span class="s">'System'</span>
+<span class="n">x</span><span class="o">.</span><span class="n">subplt_by</span> <span class="o">=</span> <span class="s">'Student'</span>
+<span class="n">x</span><span class="o">.</span><span class="n">fig_legend</span><span class="o">=</span> <span class="bp">True</span>
+<span class="n">x</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-09-17-Plot-By-Groups_files/2016-09-17-Plot-By-Groups_39_0.png" alt="png" /></p>
+
+<p>And we can style using anything from matplotlib or seaborn, pretty cool! I’m a huge fan of the <a href="http://matplotlib.org/xkcd/examples/showcase/xkcd.html">xckd()</a> function!</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">data</span> <span class="o">=</span> <span class="n">generate_data</span><span class="p">(</span><span class="n">NMethods</span><span class="p">,</span> <span class="n">NSystems</span><span class="p">,</span> <span class="n">NStudents</span><span class="p">)</span>
+<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s">'Method'</span><span class="p">,</span> <span class="s">'System'</span><span class="p">,</span> <span class="s">'Student'</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xkcd</span><span class="p">()</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">GroupPlot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="s">'X'</span><span class="p">,</span> <span class="s">'Y'</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">color_by</span>  <span class="o">=</span> <span class="s">'System'</span> 
+<span class="n">x</span><span class="o">.</span><span class="n">style_by</span>  <span class="o">=</span> <span class="s">'Method'</span>
+<span class="n">x</span><span class="o">.</span><span class="n">subplt_by</span> <span class="o">=</span> <span class="s">'Student'</span>
+<span class="n">x</span><span class="o">.</span><span class="n">fig_legend</span><span class="o">=</span> <span class="bp">True</span>
+<span class="n">x</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p><img src="/images/2016-09-17-Plot-By-Groups_files/2016-09-17-Plot-By-Groups_41_0.png" alt="png" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+<hr />
+
+<p>I’ve spent a good amount of time trying to figure this out, and I’m pretty happy with the results. One of the things I might play around with is getting a legend that has only a list of colors, and a list of linestyles (rather than all combinations). I don’t think this would be too hard to implement, watch out for updates.</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/10/26/Scientific_Python_Toolbox/">
+            The Scientific Computing Toolkit for Python
+            <small>26 Oct 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/08/21/Wrap-C++-Class-Using-Cython/">
+            Wrapping a C++ Class in Python Using Cython
+            <small>21 Aug 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+
+  <h2>Comments</h2>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'ecurtin2-blog';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+
+    </div>
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-81645801-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '//2016/09/17/Plot-By-Groups/',
+		  'title': 'Plotting by groups using Matplotlib, Seaborn, and Pandas'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+  </body>
+</html>

@@ -1,0 +1,48 @@
+# Dependencies
+markdown:         kramdown
+highlighter:      rouge
+
+# Permalinks
+permalink:        pretty
+#relative_permalinks: true
+
+# Setup
+title:            Evan's Blog
+tagline:          'Now This is a Tagline!'
+description:      'Overanalyzing Simple Questions since 2016.'
+url:              http://ecurtin2.github.io
+baseurl:          /
+
+author:
+  name:           'Evan Curtin'
+  url:            http://github.com/ecurtin2
+
+paginate:         5
+
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/poole/hyde
+
+
+gems: [jekyll-paginate]
+
+google_analytics: UA-81645801-1
+disqus: ecurtin2-blog
+
+# Includes an icon in the footer for each username you enter
+footer-links:
+  dribbble:
+  email: evanmcurtin@gmail.com
+  facebook:
+  flickr:
+  github: ecurtin2
+  instagram:
+  linkedin: evanmcurtin
+  pinterest:
+  rss: real # just type anything here for a working RSS icon
+  twitter:
+  stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
+  youtube: # channel/<your_long_string> or user/<user-name>
+  googleplus: # anything in your profile username that comes after plus.google.com/
