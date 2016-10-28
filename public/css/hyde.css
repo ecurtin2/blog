@@ -56,11 +56,11 @@ html {
 
 .sidebar {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   color: rgba(255,255,255,.5);
   background-color: #202020;
 }
-@media (min-width: 48em) {
+@media (min-width: 28em) {
   .sidebar {
     position: fixed;
     top: 0;
@@ -74,23 +74,26 @@ html {
 /* Sidebar links */
 .sidebar a {
   color: #fff;
+  vertical-align: text-top;
 }
 
-/* About section */
+/* Sitename */
 .sidebar-about h1 {
   color: #fff;
-  margin-top: 0;
-  font-family: "Abril Fatface", serif;
-  font-size: 3.25rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-family: Helvetica, serif;
+  font-size: 2rem;
 }
 
 /* Sidebar nav */
 .sidebar-nav {
+  margin-top:    1rem;
   margin-bottom: 1rem;
 }
 .sidebar-nav-item {
   display: block;
-  line-height: 1.75;
+  line-height: 1.0;
 }
 a.sidebar-nav-item:hover,
 a.sidebar-nav-item:focus {
@@ -106,11 +109,11 @@ a.sidebar-nav-item:focus {
  * contents to the bottom of the sidebar in tablets and up.
  */
 
-@media (min-width: 48em) {
+@media (min-width: 18em) {
   .sidebar-sticky {
     position: absolute;
     right:  1rem;
-    bottom: 1rem;
+    top: 1rem;
     left:   1rem;
   }
 }
@@ -127,15 +130,15 @@ a.sidebar-nav-item:focus {
   padding-bottom: 4rem;
 }
 
-@media (min-width: 40em) {
+@media (min-width: 20em) {
   .content {
     max-width: 60rem;
-    margin-left: 40rem;
-    margin-right: 20rem;
+    margin-left: 10rem;
+    margin-right: 10rem;
   }
 }
 
-@media (min-width: 64em) {
+@media (min-width: 14em) {
   .content {
     margin-left: 22rem;
     margin-right: 4rem;
@@ -149,21 +152,21 @@ a.sidebar-nav-item:focus {
  * Flip the orientation of the page by placing the `.sidebar` on the right.
  */
 
-@media (min-width: 48em) {
+@media (min-width: 1em) {
   .layout-reverse .sidebar {
     left: auto;
     right: 0;
   }
   .layout-reverse .content {
-    margin-left: 20rem;
-    margin-right: 20rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
 
-@media (min-width: 64em) {
+@media (min-width: 14em) {
   .layout-reverse .content {
-    margin-left: 15rem;
-    margin-right: 15rem;
+    margin-left: 1rem;
+    margin-right: 20rem;
   }
 }
 
