@@ -2,133 +2,63 @@
 layout: page
 ---
 
-<p align="center" style="font-size:150%">
-<b>Evan M. Curtin</b><br>
+<p align="center" style="font-size:250%">
+  <b>Evan M. Curtin</b><br>
 </p>
+
 <p align="center">
-Champaign, IL 61820 <br>
-evanmcurtin@gmail.com <br>
+  Champaign, IL 61820 <br>
+  evanmcurtin@gmail.com <br>
 </p>
 
 ## Education
 
 ---
 
-<p>
-  <span style="float: left;"><b>University of Illinois @ Urbana-Champaign</b> </span>
-  <span style="float: right;">Urbana, IL <br> 2015 - Present</span>
-  <br>
-  <span style="float: left">Pursuing PhD in Chemistry </span>
-</p>
-<br>
 
-<!---GPA: 4.00 / 4.00 <br> -->
-
-<p>
-  <span style="float: left;"><b>Drexel University</b></span>
-  <span style="float: right;"> Philadelphia, PA <br>2015 - Present</span>
-  <br>
-  <span style="float: left"> BS/MS in Chemistry
-  <br> MS Thesis Advisor: Dr. Karl Sohlberg
-  </span>
-</p>
-
-<!---GPA: 3.85 / 4.00<br> -->
+| **University of Illinois @ Urbana-Champaign**         |       **Urbana, IL** |
+| :---------------------------------------------------- | -------------------: |
+| Pursuing PhD in Chemisry                              |       2015 - Present |
+| **Drexel University**                                 | **Philadelphia, PA** |
+| Bachelors and Masters of Science in Chemistry (BS/MS) <br> Magna Cum Laude |          2010 - 2015 |
 
 <br>
-<br>
 
-## Research Experience
+
+# Research Experience
 
 ---
 
-<p>
-  <span style="float: left;"><b>University of Illinois @ Urbana-Champaign</b> </span>
-  <span style="float: right;">Urbana, IL <br> 2015 - Present</span>
-  <br>
-  <span style="float: left">Graduate Research Assistant <br> Theoretical Chemistry Method Development </span>
-</p>
-<br>
-<br>
+| **University of Illinois @ Urbana-Champaign**                                  |               **Urbana, IL** |
+| :----------------------------------------------------------------------------- | ---------------------------: |
+| Graduate Research Assistant <br> Theoretical Chemistry Method Development      |               2015 - Present |
+| **Drexel University**                                                          |         **Philadelphia, PA** |
+| Research Assistant <br> Reduced Complexity Models for Nanostructure Properties |                  2013 - 2015 |
+| **Janssen Pharmaceuticals of Johnson & Johnson**                               |         **Spring House, PA** |
+| Biologics R&D Co-op <br> Determined the kinetics and affinity for antibody therapeutics binding to disease targets using Surface Plasmon Resonance (SPR)                                                                            |       Apr - Sep 2013 |
+| **Drexel University**                                                          |         **Philadelphia, PA** |
+| Undergraduate Research Assistant <br> Advisor: Dr. Jean-Claude Bradley, Department of Chemistry <br> [Open Science Melting Point and Solubility Databases](http://usefulchem.wikispaces.com/)                                    |                  2011 - 2012 |
 
-<p>
-  <span style="float: left;"><b>Drexel University</b> </span>
-  <span style="float: right;">Philadelphia, PA <br> 2013 - 2015</span>
-  <br>
-  <span style="float: left">Research Assistant <br>
-  Reduced Complexity Models for Nanostructure Properties</span>
-</p>
-<br>
-<br>
-
-<p>
-  <span style="float: left;"><b>Janssen Pharmaceuticals of Johnson & Johnson</b> </span>
-  <span style="float: right;">Spring House, PA <br> April - September 2013</span>
-  <br>
-  <span style="float: left">Biologics R&D Co-op <br> Kinetics and Affinity of Antibody Therapeutics </span>
-</p>
-<br>
-<br>
-
-<p>
-  <span style="float: left;"><b>Drexel University</b> </span>
-  <span style="float: right;">Philadelphia, PA <br> 2011 - 2012</span>
-  <br>
-  <span style="float: left">Undergraduate Research Assistant
-  <br> Advisor: Dr. Jean-Claude Bradley, Department of Chemistry
-  <br> Open Science Melting Point and Solubility Databases </span>
-</p>
 
 <br>
 
-<br>
+# Awards
 
-## Awards
 ---
 
-<p>
-  <span style="float: left;"><b>Mark Pytosh Fellowship</b> </span>
-  <span style="float: right;">August 2016</span>
-  <br>
-  <span style="float: left">University of Illinois @ Urbana Champaign
-  <br> Funded by Mr. Mark and Mrs. Hilda Pytosh</span>
-</p>
-<br>
-<br>
-<p>
-  <span style="float: left;"><b>NSF-GRFP Honorable Mention</b> </span>
-  <span style="float: right;">March 2016</span>
-  <br>
-  <span style="float: left">National Science Foundation</span>
-</p>
-<br>
-<p>
-  <span style="float: left;"><b>Chemistry Second Honors</b> </span>
-  <span style="float: right;">May 2015</span>
-  <br>
-  <span style="float: left">Drexel University College of Arts and Sciences </span>
-</p>
-<br>
-<p>
-  <span style="float: left;"><b>Hypercube Scholar Award</b> </span>
-  <span style="float: right;">May 2015</span>
-  <br>
-  <span style="float: left">Hypercube, Inc. </span>
-</p>
-<br>
-<p>
-  <span style="float: left;"><b>Baccalaureate Award for Academic Achievement</b> </span>
-  <span style="float: right;">May 2015</span>
-  <br>
-  <span style="float: left">American Institute of Chemists </span>
-</p>
-<br>
-<p>
-  <span style="float: left;"><b>Open Notebook Science Award</b> </span>
-  <span style="float: right;">May 2011</span>
-  <br>
-  <span style="float: left">Royal Society of Chemistry</span>
-</p>
+| **Mark Pytosh Fellowship**                          |      **Aug 2016**  |
+| :-------------------------------------------------- | ---------------------:|
+| University of Illinois @ Urbana Champaign <br> Funded by Mr. Mark and Mrs. Hilda Pytosh |
+| **NSF-GRFP Honorable Mention**                      |        **Mar 2016** |
+| National Science Foundation                         |                       |
+| **Chemistry Second Honors**                         |          **May 2015** |
+| Drexel University College of Arts and Sciences      |                       |
+| **Hypercube Scholar Award**                         |          **May 2015** |
+| Hypercube, Inc.                                     |                       |
+| **Baccalaureate Award for Academic Achievement**    |          **May 2015** |
+| American Institute of Chemists                      |                       |
+| **Open Notebook Science Award**                     |          **May 2011** |
+| Royal Society of Chemistry                          |                       |
 
 <br>
 
@@ -136,29 +66,20 @@ evanmcurtin@gmail.com <br>
 
 ---
 
-**Curtin, E.**, & Sohlberg, K. (2016). A Reduced Dimensionality Model of Torsional Vibrations
- in Star Molecules. Physica E (77) 131–137.
+| [A Reduced Dimensionality Model of Torsional Vibrations in Star Molecules](http://dx.doi.org/10.1016/j.physe.2015.11.013) |    **Mar 2016** |
+| :------------------------------------------------------------------------------------------------------------------------ | --------------: |
+| **Curtin, E. M.**, & Sohlberg, K. (2016). *Physica E: Low-Dimensional Systems and Nanostructures*, 77, 131–137.           |                 |
+| [**ONS Open Melting Point Collection**](http://dx.doi.org/10.1038/npre.2011.6229.1)                                       |    **Aug 2011** |
+| Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., & **Curtin, E**. (2011). *Nature Precedings*.                     |                 |
+| [**Determination of Abraham model solute descriptors for the monomeric and dimeric forms of trans-cinnamic acid using measured solubilities from the Open Notebook Science Challenge**](http://dx.doi.org/10.1186/s13065-015-0080-9)                                                                   |    **Jan 2015** |
+| Jean-Claude Bradley, Michael H Abraham, William E Acree Jr, Andrew SID Lang, Samantha N Beck, David A Bulger, Elizabeth A Clark, Lacey N Condron, Stephanie T Costa, **Evan M Curtin**, Sozit B Kurtu, Mark I Mangir and Matthew J McBride (2015). *Chemistry Central Journal*, 9(1), 11. |
 
-Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., &
-**Curtin, E.** (2011).
-ONS Open Melting Point Collection. Nature Precedings.
-
-Bradley, J.-C., Abraham, M. H., Acree, W. E., Lang, A., Beck, S. N.,
-Bulger, D. A., Clark, E. A., Condron, L. N., Costa, S. T., **Curtin, E.
-M.**, Kurtu, S. B., Mangir, M. I., McBride, M. J. (2015). Chemistry Central Journal, 9(1), 11.
 
 <br>
 
 ## Teaching Experience
-
 ---
 
-<p>
-  <span style="float: left;"><b>University of Illinois @ Urbana-Champaign</b> </span>
-  <span style="float: right;">Urbana, IL <br> Fall 2015 - Spring 2016</span>
-  <span style="float: left">One semester of Physical Chemistry and one semester <br> of
-  General Chemistry Lab. For all courses with evaluations, <br>  I was rated by students as "excellent." </span>
-</p>
-<br>
-<br>
-<br>
+| **University of Illinois @ Urbana-Champaign** | **Urbana, IL** |
+| :-------------------------------------------- | -------------: |
+| One semester of Physical Chemistry and one semester of General Chemistry Lab. For all courses with evaluations, I was rated by students as "excellent."  | Fall 2015 - Spring 2016  |

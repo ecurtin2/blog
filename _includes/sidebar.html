@@ -15,6 +15,9 @@
       <a class="sidebar-nav-item{% if page.url == "{{ site.baseurl }}/" %} active{% endif %}" href="/about">About</a>
       <a class="sidebar-nav-item{% if page.url == "{{ site.baseurl }}/" %} active{% endif %}" href="/CV">CV</a>
       <a class="sidebar-nav-item{% if page.url == "{{ site.baseurl }}/" %} active{% endif %}" href="/LICENSE">License</a>
+      <a class="sidebar-nav-icons{% if page.url == "{{ site.baseurl }}/" %} active{% endif %}" href={{ site.repo }}><img src="/images/icons/GitHub_icon.png"></a>
+      <a class="sidebar-nav-icons{% if page.url == "{{ site.baseurl }}/" %} active{% endif %}" href={{ site.mailto }}><img src="/images/icons/email_icon.png"></a>
+      <a class="sidebar-nav-icons{% if page.url == "{{ site.baseurl }}/" %} active{% endif %}" href={{ site.linkedin }}><img src="/images/icons/LinkedIn_icon.png"></a>
     </nav>
 
     <p>&copy; {{ site.time | date: '%Y' }}. All rights reserved.</p>

@@ -17,7 +17,6 @@ layout: page
         {{ post.excerpt }}
       </div>
 
-      <!--<a href="{{ post.url }}" class="read-more">Read the full post</a> -->
     </article>
   {% endfor %}
 </div>
