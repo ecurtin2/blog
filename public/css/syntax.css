@@ -21,10 +21,6 @@
     --ec_lightgray: #f2f2f2;
 }
 
-
-
-
-
 .highlight .hll { background-color: #ffc; }
 .highlight .c { color: var(--ec_lightblue); } /* Comment */
 .highlight .err { color: var(--ec_lightgreen); font-weight: bold } /* Error */
