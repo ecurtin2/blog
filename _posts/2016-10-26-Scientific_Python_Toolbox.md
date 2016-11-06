@@ -8,7 +8,7 @@ title: The Scientific Computing Toolkit for Python
 ## Getting Started
 ---
 
-This presentation is no help if you can't get the python packages it uses! There are a few options here. If you're not already set up, probably the easiest way to install python packages is [pip](https://pip.pypa.io/en/stable/). If you don't already have it, here are [installation instructions](https://packaging.python.org/installing/#install-pip-setuptools-and-wheel). I'm a big fan of the [anaconda](https://www.continuum.io/) python distrubution, which comes pre-loaded with basically everything I'm using today. Just use whatever works for you. 
+This presentation is no help if you can't get the python packages it uses! There are a few options here. If you're not already set up, probably the easiest way to install python packages is [pip](https://pip.pypa.io/en/stable/). If you don't already have it, here are [installation instructions](https://packaging.python.org/installing/#install-pip-setuptools-and-wheel). I'm a big fan of the [anaconda](https://www.continuum.io/) python distrubution, which comes pre-loaded with basically everything I'm using today. Just use whatever works for you.
 
 For example, installing numpy is easy, in a command line:
 
@@ -18,15 +18,15 @@ If you're using anaconda, you can also use their package manager:
 
 conda install numpy
 
-Pip is probably the preferred method, even when you're using anaconda. The packages I'm discussing today are [numpy](http://www.numpy.org/), [scipy](https://www.scipy.org/), [pandas](http://pandas.pydata.org/), [matplotlib](http://matplotlib.org/), [seaborn](https://seaborn.github.io/). 
+Pip is probably the preferred method, even when you're using anaconda. The packages I'm discussing today are [numpy](http://www.numpy.org/), [scipy](https://www.scipy.org/), [pandas](http://pandas.pydata.org/), [matplotlib](http://matplotlib.org/), [seaborn](https://seaborn.github.io/).
 
-Other useful tools are [Numba](http://numba.pydata.org/) and [Cython](http://cython.org/). As far as I know, all of these are in both package managers. 
+Other useful tools are [Numba](http://numba.pydata.org/) and [Cython](http://cython.org/). As far as I know, all of these are in both package managers.
 
-I've recently been told that pandas depends on cython and seaborn depends on pandas. 
+I've recently been told that pandas depends on cython and seaborn depends on pandas.
 
-You should therefore install cython -> pandas -> seaborn in that order. 
+You should therefore install cython -> pandas -> seaborn in that order.
 
-This talk was made using a [jupyter](http://jupyter.org/) notebook. 
+This talk was made using a [jupyter](http://jupyter.org/) notebook.
 
 ## Python is slow! Why bother?
 ---
@@ -86,7 +86,7 @@ mat2 = [[2.5*i + j for i in range(N)] for j in range(N)]
 
 def mmult(mat1, mat2):
     mat3 = [[0.0 for i in range(N)] for j in range(N)]
-    
+
     for i in range(N):     
         for k in range(N):  
             for j in range(N):  
@@ -134,7 +134,7 @@ npmat2 = np.asarray(mat2)
 
 WHOA! Blazing fast! Morale of the story: if there is a numpy function to do it, use it! And there  is a numpy function for a lot of stuff, here's a few useful ones:
 
-[np.linalg.eig](http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.linalg.eig.html) - eigenvectors/values 
+[np.linalg.eig](http://docs.scipy.org/doc/numpy-1.10.0/reference/generated/numpy.linalg.eig.html) - eigenvectors/values
 
 [np.zeros](http://docs.scipy.org/doc/numpy/reference/generated/numpy.zeros.html) - create an array of zeros
 
@@ -146,10 +146,11 @@ WHOA! Blazing fast! Morale of the story: if there is a numpy function to do it, 
 
 [np.random.rand](http://docs.scipy.org/doc/numpy/reference/generated/numpy.random.rand.html) - create array of random values in [0, 1)
 
-There's about 3 trillion more ... 
+There's about 3 trillion more ...
 
 ## A few useful tips about numpy arrays:
 ---
+
 ### 1) Most 'normal' operations are element-wise:
 
 
@@ -208,8 +209,8 @@ print A[:, 2]  # 3rd column (starts at 0)
 
     [[1 2 3]
      [4 5 6]
-     [7 8 9]] 
-    
+     [7 8 9]]
+
     [3 6 9]
 
 
@@ -273,8 +274,8 @@ print A[indices2]  # All elements where indices2 is True
 
     [[1 2 3]
      [4 5 6]
-     [7 8 9]] 
-    
+     [7 8 9]]
+
     [1 2 5 6]
 
 
@@ -336,8 +337,8 @@ print vecs[:, indices_of_sorted_vals]  # columns are rearranged
     [[-0.81649658  0.57735027  0.19219669]
      [ 0.40824829  0.57735027 -0.7833358 ]
      [ 0.40824829  0.57735027  0.59113912]]
-    
-    
+
+
     [-3. -3.  9.]
     [[-0.81649658  0.19219669  0.57735027]
      [ 0.40824829 -0.7833358   0.57735027]
@@ -394,13 +395,13 @@ If I try to cover all of scipy it will get boring fast... you can look up functi
 ## Matplotlib
 ---
 
-Matplotlib is the tool to go to for quick plotting stuff in Python. It can handle 2D, 3D, and even animations. 
+Matplotlib is the tool to go to for quick plotting stuff in Python. It can handle 2D, 3D, and even animations.
 
 
 ```python
 import matplotlib.pyplot as plt
 # Jupyter  "Magic", just so you see the images in the notebook
-%matplotlib inline 
+%matplotlib inline
 
 fig = plt.figure(figsize=(6,4))
 
@@ -447,7 +448,7 @@ Matplotlib has functions for scatterplots, pie charts, bar graphs, heatmaps blah
 ## Pandas
 ---
 
-I recently started using Pandas in my research, and It's already proven incredibly useful for data analysis. The library is focused on the Series and the DataFrame. 
+I recently started using Pandas in my research, and It's already proven incredibly useful for data analysis. The library is focused on the Series and the DataFrame.
 
 
 ```python
@@ -468,7 +469,7 @@ series1
 
 
 
-I don't know about you, but this isn't the most impressive thing to me... just hold on. 
+I don't know about you, but this isn't the most impressive thing to me... just hold on.
 
 Here's an example of a DataFrame, the reason I'm in love with this library
 
@@ -591,7 +592,7 @@ print df[df['Rain'] < 0.5]
     2016-10-28  0.474713     0.500295  0.732848
 
 
-Ok that's pretty neat. I think this alone is useful. But we're just getting started! 
+Ok that's pretty neat. I think this alone is useful. But we're just getting started!
 
 What if we could find all parts of our data frame that satisfy a given condition, then plot two other columns of that data? Say no more...
 
@@ -606,12 +607,12 @@ plt.show()
 ![png](/images/2016-10-26-Scientific_Python_Toolbox/output_55_0.png)
 
 
-The reason I like this library so much is that you can use the past few examples, combining them as you wish, and analyze huge amounts of data in seconds. Lately I've written a function to do a custom plot on each row of a dataframe (optionally you can apply a condition to a dataframe and pass that through). I take my output files, parse them and put them into a dataframe. This lets me go from a directory of output files to a ton of plots in seconds, with little effort. 
+The reason I like this library so much is that you can use the past few examples, combining them as you wish, and analyze huge amounts of data in seconds. Lately I've written a function to do a custom plot on each row of a dataframe (optionally you can apply a condition to a dataframe and pass that through). I take my output files, parse them and put them into a dataframe. This lets me go from a directory of output files to a ton of plots in seconds, with little effort.
 
 ## Seaborn
 ---
 
-Let's face it: I've been to enough talks to know that most people don't know how to make visually appealing figures. Well the good news is that you don't have to. Trust in Seaborn, for it is magnificent. 
+Let's face it: I've been to enough talks to know that most people don't know how to make visually appealing figures. Well the good news is that you don't have to. Trust in Seaborn, for it is magnificent.
 
 
 ```python
@@ -720,9 +721,9 @@ for temp in Temps:
             A = Absorptivity[j] * conc * np.exp((273 + temp) / 300)
             A += np.random.rand() * 0.05
             data.append([A, conc, Molecules[j], temp])
-            
+
 AbsDF = pd.DataFrame(data, columns=cols)
-sns.lmplot(x='Conc', y='Abs', hue='Molecule', 
+sns.lmplot(x='Conc', y='Abs', hue='Molecule',
            col='Temp', data=AbsDF, col_wrap=2)
 plt.show()
 ```
