@@ -1,15 +1,19 @@
 @import url("colors.css");
 
-.highlight .hll { background-color: #ffc; }
+
+pre { white-space: pre; overflow: auto; }
+
+
+.highlight .hll { background-color: var(--ec_white); }
 .highlight .c { color: var(--ec_lightblue); } /* Comment */
 .highlight .err { color: var(--ec_lightgreen); font-weight: bold } /* Error */
 .highlight .k { color: var(--ec_lightgreen); font-weight: bold } /* Keyword */
-.highlight .o { color: var(--ec_black); } /* Operator */
+.highlight .o { color: var(--ec_darkgray); } /* Operator */
 .highlight .cm { color: var(--ec_lightblue); } /* Comment.Multiline */
 .highlight .cp { color: var(--ec_darkpurple); } /* Comment.Preproc */
 .highlight .c1 { color: var(--ec_lightred); } /* Comment.Single */
 .highlight .cs { color: var(--ec_darkpurple); } /* Comment.Special */
-.highlight .gd { background-color: #fcc; border: 1px solid #c00 } /* Generic.Deleted */
+.highlight .gd { background-color: var(--ec_white); border: 1px solid #c00 } /* Generic.Deleted */
 .highlight .ge { color: var(--ec_darkgray); font-style: italic } /* Generic.Emph */
 .highlight .gr { color: var(--ec_lightred); } /* Generic.Error */
 .highlight .gh { color: var(--ec_darkgreen); } /* Generic.Heading */
@@ -60,10 +64,10 @@
 .highlight .sr { color: var(--ec_lightred) } /* Literal.String.Regex */
 .highlight .s1 { color: var(--ec_lightred); font-weight: bold  } /* Literal.String.Single */
 .highlight .ss { color: var(--ec_lightred); font-weight: bold  } /* Literal.String.Symbol */
-.highlight .bp { color: var(--ec_black) } /* Name.Builtin.Pseudo */
-.highlight .vc { color: var(--ec_black) } /* Name.Variable.Class */
-.highlight .vg { color: var(--ec_black) } /* Name.Variable.Global */
-.highlight .vi { color: var(--ec_black) } /* Name.Variable.Instance */
+.highlight .bp { color: var(--ec_darkgray) } /* Name.Builtin.Pseudo */
+.highlight .vc { color: var(--ec_darkgray) } /* Name.Variable.Class */
+.highlight .vg { color: var(--ec_darkgray) } /* Name.Variable.Global */
+.highlight .vi { color: var(--ec_darkgray) } /* Name.Variable.Instance */
 .highlight .il { color: var(--ec_lightgreen); font-weight: bold  } /* Literal.Number.Integer.Long */
 
 .css .o,

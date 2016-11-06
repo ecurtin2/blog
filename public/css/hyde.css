@@ -33,10 +33,10 @@
 .sidebar {
   text-align: center;
   padding: 1rem 1rem;
-  color: rgba(255,255,255,.5);
-  background-color: #202020;
+  color: var(--ec_midgray);
+  background-color: var(--ec_themecolor);
 }
-@media (min-width: 36em) {
+@media (min-width: 28em) {
   .sidebar {
     position: fixed;
     top: 0;
@@ -50,14 +50,14 @@
 
 /* Sidebar links */
 .sidebar a {
-  color: #fff;
+  color: var(--ec_midgray);
   vertical-align: text-top;
   margin-top: 1rem;
 }
 
 /* Sitename */
 .sidebar-about h1 {
-  color: #fff;
+  color: var(--ec_white);
   margin-top: 1rem;
   margin-bottom: 1rem;
   font-family: Helvetica, serif;
