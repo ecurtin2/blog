@@ -1,0 +1,22 @@
+:root{
+    --ec_lightred:#FF3934;
+    --ec_black: #333;
+    --ec_lightblue:  #0778ED;
+    --ec_lightgreen: #00A757;
+    --ec_lightred: #FF3934;
+    --ec_lightpurple: #B673e0;
+    --ec_lightyellow: #dfb320;
+    --ec_lightorange: #ff9900;
+    --ec_lightteal: #20c1df;
+    --ec_darkblue: #0505D6;
+    --ec_darkgreen: #185e25;
+    --ec_darkred: #70211c;
+    --ec_darkpurple: #8329AA;
+    --ec_darkyellow: #95772e;
+    --ec_darkteal: #12424a;
+    --ec_darkorange: #cc5200;
+    --ec_darkgray: #808080;
+    --ec_midgray:   #e6e6e6;
+    --ec_lightgray: #f2f2f2;
+    --ec_themecolor: #515151;
+}
