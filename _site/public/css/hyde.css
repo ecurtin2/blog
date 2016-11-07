@@ -109,7 +109,6 @@ a.sidebar-nav-item:focus {
 .Custom-Theme .sidebar {
   background-color: var(--ec_themecolor);
 }
-.Custom-Theme .content a,
 .Custom-Theme .related-posts li a:hover {
   color: color: var(--ec_themecolor);
 }

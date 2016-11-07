@@ -70,8 +70,9 @@ a {
   color: var(--ec_midtheme);
   text-decoration: none;
 }
+
 a strong {
-  color: var(--ec_midtheme);;
+  color: var(--ec_midtheme);
 }
 /* `:focus` is linked to `:hover` for basic accessibility */
 a:hover,
@@ -136,19 +137,19 @@ hr {
   position: relative;
   margin: 1.5rem 0;
   border: 0;
-  border-top: 1px solid var(--ec_midgray);
+  border-top: 1px solid var(--ec_lighttheme);
   border-bottom: 1px solid var(--ec_white);
 }
 
 abbr {
   font-size: 85%;
   font-weight: bold;
-  color: var(--ec_midgray);
+  color: var(--ec_lighttheme);
   text-transform: uppercase;
 }
 abbr[title] {
   cursor: help;
-  border-bottom: 1px dotted var(--ec_lightgray);
+  border-bottom: 1px dotted var(--ec_lighttheme);
 }
 
 /* Code */
@@ -165,7 +166,6 @@ code {
 }
 pre {
   display: block;
-  margin-top: 0;
   margin-bottom: 1rem;
   padding: 1rem;
   font-size: .8rem;
@@ -334,6 +334,10 @@ td, th {
   margin-bottom: 4em;
 }
 
+.date {
+  color: var(--ec_lighttheme);
+}
+
 /* Blog post or page title */
 .page-title,
 .post-title,
@@ -350,7 +354,7 @@ td, th {
   display: block;
   margin-top: -.5rem;
   margin-bottom: 1rem;
-  color: var(--ec_midgray);
+  color: var(--ec_lighttheme);
 }
 
 /* Related posts */
@@ -362,9 +366,10 @@ td, th {
 .related-posts {
   padding-left: 0;
   list-style: none;
+  color: var(--ec_lighttheme);
 }
 .related-posts h3 {
-  color: var(--ec_darkgray);
+  color: var(--ec_lighttheme);
   margin-top: 0;
 }
 .related-posts h3:hover {
@@ -374,7 +379,7 @@ td, th {
 
 .related-posts li small {
   font-size: 75%;
-  color: var(--ec_darkgray);
+  color: var(--ec_lighttheme);
 }
 .related-posts li a:hover {
   color: var(--ec_themecolor);
@@ -397,7 +402,7 @@ td, th {
   margin-left: -1rem;
   margin-right: -1rem;
   font-family: Helvetica, Arial, sans-serif;
-  color: var(--ec_lightgray);
+  color: var(--ec_lighttheme);
   text-align: center;
 }
 
@@ -408,12 +413,13 @@ td, th {
   border: 1px solid var(--ec_white);
 }
 .pagination-item:first-child {
-  margin-bottom: -1px;
+  margin-bottom: 0px;
+  color: var(--ec_lighttheme);
 }
 
 /* Only provide a hover state for linked pagination items */
 a.pagination-item:hover {
-  background-color: var(--ec_lightgray);
+  background-color: var(--ec_lighttheme);
 }
 
 @media (min-width: 30em) {

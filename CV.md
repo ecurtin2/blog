@@ -9,14 +9,19 @@ layout: page
   evanmcurtin@gmail.com <br>
 </p>
 
-### Education
+
+# Education
+
+---
 
 |||
 | :-------------------------------------------------------------------------------------- | ------------------------------------: |
 | **University of Illinois @ Urbana-Champaign** <br> Pursuing PhD in Chemistry            |    **Urbana, IL** <br> 2015 - Present |
 | **Drexel University** <br> Bachelors and Masters of Science in Chemistry (BS/MS) <br> Magna Cum Laude                                                                                     | **Philadelphia, PA** <br> 2010 - 2015 |
 
-### Research Experience
+# Research Experience
+
+---
 
 |||
 | :----------------------------------------------------------------------------- | ------------------------------------: |
@@ -25,7 +30,9 @@ layout: page
 | **Janssen Pharmaceuticals of Johnson & Johnson** <br> Biologics R&D Co-op <br> Determined the kinetics and affinity for antibody therapeutics binding to disease targets using Surface Plasmon Resonance (SPR)    | **Spring House, PA** <br> Apr - Sep 2013 |
 | **Drexel University** <br> Undergraduate Research Assistant <br> Advisor: Dr. Jean-Claude Bradley, Department of Chemistry <br> [Open Science Melting Point and Solubility Databases](http://usefulchem.wikispaces.com/)                                                      |  **Philadelphia, PA** <br> 2011 - 2012 |
 
-### Awards
+# Awards
+
+---
 
 |||
 | :---------------------------------------------------------------------------------------------------------------------- | -----------: |
@@ -36,7 +43,9 @@ layout: page
 | **Baccalaureate Award for Academic Achievement** <br> American Institute of Chemists                                    | **May 2015** |
 | **Open Notebook Science Award** <br> Royal Society of Chemistry                                                         | **May 2011** |
 
-### Publications
+# Publications
+
+---
 
 |||
 | :-- | --: |
@@ -44,7 +53,9 @@ layout: page
 | [**ONS Open Melting Point Collection**](http://dx.doi.org/10.1038/npre.2011.6229.1) <br> Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., & **Curtin, E**. (2011). *Nature Precedings*. | **Aug 2011** |
 | [**Determination of Abraham model solute descriptors for the monomeric and dimeric forms of trans-cinnamic acid using measured solubilities from the Open Notebook Science Challenge**](http://dx.doi.org/10.1186/s13065-015-0080-9) <br> Jean-Claude Bradley, Michael H Abraham, William E Acree Jr, Andrew SID Lang, Samantha N Beck, David A Bulger, Elizabeth A Clark, Lacey N Condron, Stephanie T Costa, **Evan M Curtin**, Sozit B Kurtu, Mark I Mangir and Matthew J McBride (2015). *Chemistry Central Journal*, 9(1), 11. | **Jan 2015** |
 
-### Teaching Experience
+# Teaching Experience
+
+---
 
 |||
 | :-------------------------------------------- | -------------: |
