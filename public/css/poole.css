@@ -158,15 +158,15 @@ pre {
   font-family: Menlo, Monaco, "Courier New", monospace;
 }
 code {
-  padding: .1em .1em;
+  padding: .1rem .1rem;
   font-size: 85%;
   color: var(--ec_darkred);
   background-color: var(--ec_white);
-  border-radius: 3px;
+  border-radius: 5px;
 }
 pre {
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: .1rem;
   padding: 1rem;
   font-size: .8rem;
   line-height: 1.4;
