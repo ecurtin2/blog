@@ -1,7 +1,7 @@
 :root{
     --ec_lightred:#FF3934;
     --ec_black: #333;
-    --ec_white: #fff;
+    --ec_white: #f8f8f8;
     --ec_lightblue:  #0778ED;
     --ec_lightgreen: #00A757;
     --ec_lightred: #FF3934;
@@ -17,9 +17,12 @@
     --ec_darkteal: #12424a;
     --ec_darkorange: #cc5200;
     --ec_darkgray: #404040;
-    --ec_midgray:   #e6e6e6;
     --ec_lightgray: #d9d9d9;
-    --ec_themecolor: rgba(0, 102, 102, 1.0);
-    --ec_midtheme: rgba(0, 102, 102, 0.85);
-    --ec_lighttheme: rgba(0, 102, 102, 0.65);
+    --ec_midgray: #DD23BE;
+
+    --ec_theme1: #104f55; /* sidebar, headings */
+    --ec_theme2: #00A878; /* bold, dates */
+    --ec_theme3: #087E8B; /* Links, including bloglist */
+    --ec_themecodebg: #f8f8f8; /* Code block bg */
+    --ec_themebg: #e2dadb; /* Page bg and sidebar text*/
 }

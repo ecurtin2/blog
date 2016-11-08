@@ -2,7 +2,7 @@
 
 pre { white-space: pre; overflow: auto; }
 
-.highlight .hll { background-color: var(--ec_white); }
+.highlight .hll { background-color: var(--ec_lightred); }
 .highlight .c { color: var(--ec_lightblue); } /* Comment */
 .highlight .err { color: var(--ec_lightgreen); font-weight: bold } /* Error */
 .highlight .k { color: var(--ec_lightgreen); font-weight: bold } /* Keyword */

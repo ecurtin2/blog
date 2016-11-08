@@ -33,8 +33,8 @@
 .sidebar {
   text-align: center;
   padding: 1rem 1rem;
-  color: var(--ec_midgray);
-  background-color: var(--ec_themecolor);
+  color: var(--ec_themebg);
+  background-color: var(--ec_theme1);
 }
 @media (min-width: 39em) {
   .sidebar {
@@ -50,7 +50,7 @@
 
 /* Sidebar links */
 .sidebar a {
-  color: var(--ec_midgray);
+  color: var(--ec_themebg);
   vertical-align: text-top;
   margin-top: 1rem;
 }
@@ -107,8 +107,8 @@ a.sidebar-nav-item:focus {
 
 /* Theme */
 .Custom-Theme .sidebar {
-  background-color: var(--ec_themecolor);
+  background-color: var(--ec_theme1);
 }
 .Custom-Theme .related-posts li a:hover {
-  color: color: var(--ec_themecolor);
+  color: color: var(--ec_theme1);
 }
