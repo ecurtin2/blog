@@ -159,7 +159,7 @@ pre {
 }
 code {
   padding: 1rem;
-  font-size: 85%;
+  font-size: 115%;
   color: var(--ec_darkred);
   background-color: var(--ec_themecodebg);
   border-radius: 5px;
@@ -177,7 +177,7 @@ pre {
 }
 pre code {
   padding: 0rem;
-  font-size: 100%;
+  font-size: 115%;
   color: inherit;
   background-color: transparent;
 }
