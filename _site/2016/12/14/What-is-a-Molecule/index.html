@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      What is a Molecule? &middot; Evan's Blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="Custom-Theme">
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Evan's Blog
+        </a>
+      </h1>
+      <p class="lead">Overanalyzing Simple Questions since 2016.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      <a class="sidebar-nav-item" href="/Blog">Blog</a>
+      <a class="sidebar-nav-item" href="/about">About</a>
+      <a class="sidebar-nav-item" href="/CV">CV</a>
+      <a class="sidebar-nav-item" href="/LICENSE">License</a>
+      <a class="sidebar-nav-icons" href=https://github.com/ecurtin2/ecurtin2.github.io><img src="/images/icons/GitHub_icon.png"></a>
+      <a class="sidebar-nav-icons" href=mailto:evanmcurtin@gmail.com><img src="/images/icons/email_icon.png"></a>
+      <a class="sidebar-nav-icons" href=https://www.linkedin.com/in/evanmcurtin><img src="/images/icons/LinkedIn_icon.png"></a>
+    </nav>
+
+    <p>&copy; 2016. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">What is a Molecule?</h1>
+  <span class="post-date">14 Dec 2016</span>
+  <p>I recently replied to an reddit <a href="https://www.reddit.com/r/askscience/comments/59frj2/could_someone_explain_what_this_iupac_definition/">/r/askscience post</a> that got me overthinking about something so simple, I just had to write a post about it. The main crux of the issue is simple. At a base level, what is a molecule? As I’ll show you now, a rigorous definition is a bit tricky. International Union of Pure and Applied Chemistry is basically the chemical naming authority. Here’s <a href="https://goldbook.iupac.org/M04002.html">IUPAC’s definition of molecule</a>:</p>
+
+<blockquote>
+  <p>An electrically neutral entity consisting of more than one atom (n &gt; 1). Rigorously, a molecule, in which  n &gt; 1 must correspond to a depression on the potential energy surface that is deep enough to confine at least one vibrational state.</p>
+</blockquote>
+
+<p>Let’s break this down into pieces</p>
+
+<blockquote>
+  <p>An electrically neutral entity consisting of more than one atom (n &gt; 1)</p>
+</blockquote>
+
+<p>Fair enough, if this were the whole definition then any arrangement of 2 or more atoms constitutes a molecule. This is a bit weird, considering that basically everything falls into this category, as long as it doesn’t hold a charge. However there’s not too much to discuss on this point.</p>
+
+<blockquote>
+  <p>Rigorously, a molecule, in which  n &gt; 1 must correspond to a depression on the potential energy surface that is deep enough to confine at least one vibrational state.</p>
+</blockquote>
+
+<p>What? Potential energy surface? Confined vibrations?? What does this have to do with a molecule?</p>
+
+<p>Quite a lot actually, let’s dig in!</p>
+
+<h2 id="potential-energy-surface-pes">Potential Energy Surface (PES)</h2>
+
+<hr />
+
+<p>We chemists like to use the phrase Potential Energy Surface a lot, so much so that we invented an acronym for it. The PES basically tells us how the energy changes as atoms move around. Let’s take a look at an example PES:</p>
+
+<p><img class="post-image" src="/images/2016-12-14-What-is-a-Molecule/2016-12-14-What-is-a-Molecule_1_0.png" /></p>
+
+<p>Here is a typical PES for a two-atom molecule such as H2 or N2. As you can see, the energy is very high towards the left, which is when we start smashing the two nuclei into one another.</p>
+
+<p><img class="post-image" src="/images/2016-12-14-What-is-a-Molecule/2016-12-14-What-is-a-Molecule_3_0.png" /></p>
+
+<p>At the other extreme on the right, the curve begins to level out. This is because the atoms are so far apart, moving them farther away does nothing, since they are completely independent.</p>
+
+<p><img class="post-image" src="/images/2016-12-14-What-is-a-Molecule/2016-12-14-What-is-a-Molecule_5_0.png" /></p>
+
+<p>Lastly, we have the case where the atoms are in their lowest energy arrangement. Since nature likes moving towards a low energy state, this is the most stable form of the molecule. The distance at which this occurs is the <strong>bond length</strong>.</p>
+
+<p>So, we can think of a molecule forming from atoms <strong>when the lowest energy point of the PES is not the atoms being far apart</strong>. An example where this might not happen is in the following PES:</p>
+
+<p><img class="post-image" src="/images/2016-12-14-What-is-a-Molecule/2016-12-14-What-is-a-Molecule_7_0.png" /></p>
+
+<p>Notice how the energy keeps going down as you increase the distance. This means that the atoms will constantly want to keep getting farther apart, and <strong>you have no molecule!</strong> In the words of IUPAC, a surface that looks like this has no depression whatsoever!</p>
+
+<h2 id="vibrational-state">Vibrational State</h2>
+
+<hr />
+
+<p>Ok so we’ve learned that in order to have a molecule, we need to have a PES with a <em>depression</em> in it. Most of the time we call such a depression a <strong>potential well</strong>. This is because a potential well is lower than the points around it, much like a regular well. However, atoms in molecules are always vibrating about. What does this mean for our molecules’ existance? It means that the vibration can’t have too much energy, or else the molecule will <strong>tear itself apart</strong>. Let’s draw some pictures to clarify.</p>
+
+<p>Here is what it would look like for a molecule to be safely vibrating, but still staying together:</p>
+
+<p><img class="post-image" src="/images/2016-12-14-What-is-a-Molecule/boundvib.gif" /></p>
+
+<p>And here is what it would look like if the molecule’s vibration had so much energy that it fell apart!</p>
+
+<p><img class="post-image" src="/images/2016-12-14-What-is-a-Molecule/unboundvib.gif" /></p>
+
+<p>Note that the second case has a much shallower potential well. This explains what IUPAC means when they say,</p>
+
+<blockquote>
+  <p>depression on the potential energy surface that is deep enough to confine at least one vibrational state.</p>
+</blockquote>
+
+<p>In our second gif, the molecule’s well is so shallow that the atoms just fall apart!</p>
+
+<p>But in the first gif, the well is deeper and the atoms get trapped inside! We have a <strong>stable</strong> molecule, which is the question we tried to answer!</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <hr>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/10/26/Scientific_Python_Toolbox/">
+            The Scientific Computing Toolkit for Python
+            <small>26 Oct 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/09/17/Plot-By-Groups/">
+            Plotting by groups using Matplotlib, Seaborn, and Pandas
+            <small>17 Sep 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/08/21/Wrap-C++-Class-Using-Cython/">
+            Wrapping a C++ Class in Python Using Cython
+            <small>21 Aug 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+
+  <h2>Comments</h2>
+  <hr>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'ecurtin2-blog';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</div>
+
+    </div>
+    
+	<!-- Google Analytics -->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-81645801-1', 'auto');
+		ga('send', 'pageview', {
+		  'page': '//2016/12/14/What-is-a-Molecule/',
+		  'title': 'What is a Molecule?'
+		});
+	</script>
+	<!-- End Google Analytics -->
+
+
+
+  </body>
+</html>
