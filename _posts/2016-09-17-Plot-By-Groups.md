@@ -10,7 +10,7 @@ Data visualization is one of the most important aspects of preparing a paper, pr
 
 
 ## Motivation
-Let's say we have a few methods for calculating something, and a few systems on which we want to use each method. Potentially there's a third layer of variables: maybe we're having a bunch of students run the calculations. This type of problem can pop up all over the place and plotting each figure manually can be a bit painful, particularly if you have to keep changing it. I think it would be nice to have a quick way to produce high quality plots instantly so that they can be quickly updated if need be. 
+Let's say we have a few methods for calculating something, and a few systems on which we want to use each method. Potentially there's a third layer of variables: maybe we're having a bunch of students run the calculations. This type of problem can pop up all over the place and plotting each figure manually can be a bit painful, particularly if you have to keep changing it. I think it would be nice to have a quick way to produce high quality plots instantly so that they can be quickly updated if need be.
 
 ## 1) Boilerplate
 ---
@@ -36,7 +36,7 @@ NMethods = 4
 NSystems = 4
 NStudents  = 16
 
-# Here's some numbers, in real life maybe loaded 
+# Here's some numbers, in real life maybe loaded
 # directly from csv -> dataframe
 def generate_data(Nmethods, NSystems, NStudents):
     x = np.linspace(0,1,100)
@@ -55,7 +55,7 @@ def generate_data(Nmethods, NSystems, NStudents):
         for j in range(NSystems):
             for k in range(NStudents):
                 # Again made up y values
-                y = Methods_y[i] + Systems_y[j] + Students_y[k] 
+                y = Methods_y[i] + Systems_y[j] + Students_y[k]
                 # Let's make our data into a list of lists, there
                 # are a few possibilities here
                 data_row = [Methods[i], Systems[j], Students[k], x, y]
@@ -80,7 +80,7 @@ You can index the dataframe like so:
 
 
 ```python
-df[:3] 
+df[:3]
 ```
 
 
@@ -133,18 +133,18 @@ Ok here comes the fun stuff! This got a bit more complex than I thought it would
 ### 4a) Create the Class
 ---
 
-About half way through writing this, I figured out that it makes a lot more sense to write it in an object oriented style. Let's make the class, have it initialize with a dataframe, the labels for x and y values in the dataframe, and set some default values. 
+About half way through writing this, I figured out that it makes a lot more sense to write it in an object oriented style. Let's make the class, have it initialize with a dataframe, the labels for x and y values in the dataframe, and set some default values.
 
 
 ```python
 class GroupPlot(object):
-    
+
     def __init__(self, DataFrame, x, y):
         self.df = DataFrame
         self.x  = x
         self.y  = y
         self.set_defaults()
-               
+
     def set_defaults(self):
         self.color_by  = None
         self.style_by  = None
@@ -158,7 +158,7 @@ Here I'm letting the user choose several options. We'll make it so that they can
 s ['-', '..']).
 
 ### 4b) Determine number of entries per category
---- 
+---
 Ok, now that the defaults are set, let's get into the meat of the program. First, we need to know how many items are contained in each grouping. This is where I'm using panda's [indexing options](http://pandas.pydata.org/pandas-docs/stable/indexing.html) to index a column of the data frame based on the string that labels it. Then the *.unique()* function removes duplicated entries. What I'm left with is a list of the unique entries in that column:
 
 
@@ -170,7 +170,7 @@ df['Method'].unique()
 ```
 
 
-Then the number of Methods I have is simply the length of this list. So  let's make lists that contain the categories of every row, which we will be using as dictionary keys later. To get the numbers of each category just take the the number of unique elements in that list. 
+Then the number of Methods I have is simply the length of this list. So  let's make lists that contain the categories of every row, which we will be using as dictionary keys later. To get the numbers of each category just take the the number of unique elements in that list.
 
 
 ```python
@@ -189,7 +189,7 @@ def get_numbers(self):
 ### 4c) Determine Colors
 ---
 
-I decided to use a dictionary for this part. Basically all this function does is remake a color scheme if more than 6 are needed, then construct a dictionary *color_dic*. The dictionary contains the unique entries in the *self.color_by* column, and map them to the entries of the [seaborn color palette](https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.color_palette.html). This way the user can define any colorscheme they want, by changing the color palette using the [set_palette](https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.set_palette.html) function. 
+I decided to use a dictionary for this part. Basically all this function does is remake a color scheme if more than 6 are needed, then construct a dictionary *color_dic*. The dictionary contains the unique entries in the *self.color_by* column, and map them to the entries of the [seaborn color palette](https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.color_palette.html). This way the user can define any colorscheme they want, by changing the color palette using the [set_palette](https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.set_palette.html) function.
 
 
 ```python
@@ -218,7 +218,7 @@ def check_styles(self):
         if  self.Nstyles > len(self.styles):
             raise ValueError('# of styles needed exceeds #'
                             + 'of styles available: currently '
-                            + str(len(self.styles)) + ', needs ' 
+                            + str(len(self.styles)) + ', needs '
                             + str(self.Nstyles) + '.')
 ```
 
@@ -237,7 +237,7 @@ def get_style_dic(self):
 ### 4e) Determine subplot info
 ---
 
-In order to draw the subplots, we need to know how many rows and columns we want. We let the user specify the number of columns if they want, but by default I thought it made sense to try to get as close to a square as possible. I did this by taking the total number of subplots requested, square rooting it and rounding down to the nearest integer. By rounding down we ensure that the plot will add rows before it adds more columns, which I think looks nicer. 
+In order to draw the subplots, we need to know how many rows and columns we want. We let the user specify the number of columns if they want, but by default I thought it made sense to try to get as close to a square as possible. I did this by taking the total number of subplots requested, square rooting it and rounding down to the nearest integer. By rounding down we ensure that the plot will add rows before it adds more columns, which I think looks nicer.
 
 If our plots don't form a nice rectangle, we add one row and fill it in from there!
 
@@ -257,7 +257,7 @@ def get_subplot_params(self):
 ### 4f) Make the plots
 ---
 
-Ok so now we have all of the parameters ready to go. Let's get to plotting! We'll be using the *self.lines* and *self.labels* attributes later to make a legend. I chose to iterate through each row of the data frame, and plot its x and y values according to the color, style and subplot given in the corresponding dictionaries. This one's a bit long, but I've tried to write it as clearly as possible. 
+Ok so now we have all of the parameters ready to go. Let's get to plotting! We'll be using the *self.lines* and *self.labels* attributes later to make a legend. I chose to iterate through each row of the data frame, and plot its x and y values according to the color, style and subplot given in the corresponding dictionaries. This one's a bit long, but I've tried to write it as clearly as possible.
 
 
 ```python
@@ -275,10 +275,10 @@ def make_plots(self):
             lstyle = self.style_dic[self.style_keys[i]]
             llabel += self.style_keys[i]
             if self.color_by:
-                llabel += ', ' # If we have style and color use , 
+                llabel += ', ' # If we have style and color use ,
         else:
             lstyle = ''
-            
+
         if self.color_by:    
             col = self.color_dic[self.color_keys[i]]
             llabel += self.color_keys[i]
@@ -287,12 +287,12 @@ def make_plots(self):
 
         self.labels.append(llabel)
 
-        ax = fig.add_subplot(subplot_val[0], 
-                             subplot_val[1], 
+        ax = fig.add_subplot(subplot_val[0],
+                             subplot_val[1],
                              subplot_val[2])
 
-        self.lines.append(ax.plot(self.df[self.x][i], 
-                                  self.df[self.y][i], 
+        self.lines.append(ax.plot(self.df[self.x][i],
+                                  self.df[self.y][i],
                                   lstyle, c=col, label=llabel))
         if self.subplt_by:
             plt.title(self.subplt_keys[i])
@@ -315,7 +315,7 @@ def get_figlegend(self):
             unique_labels.append(label)
             unique_lines.append(self.lines[i][0])
 
-    plt.figlegend((unique_lines), unique_labels, 
+    plt.figlegend((unique_lines), unique_labels,
                   bbox_to_anchor=(1.01, 0.5), loc='center left')
 ```
 
@@ -346,13 +346,13 @@ Ok that took some time, but here's the class in its entirety:
 
 ```python
 class GroupPlot(object):
-    
+
     def __init__(self, DataFrame, x, y):
         self.df = DataFrame
         self.x  = x
         self.y  = y
         self.set_defaults()
-               
+
     def set_defaults(self):
         self.color_by  = None
         self.style_by  = None
@@ -360,7 +360,7 @@ class GroupPlot(object):
         self.subplt_cols = None
         self.fig_legend = None
         self.styles = None
- 
+
     def get_numbers(self):
         if self.color_by:
             self.color_keys = self.df[self.color_by]
@@ -371,7 +371,7 @@ class GroupPlot(object):
         if self.subplt_by:
             self.subplt_keys = self.df[self.subplt_by]
             self.Nsubplt = len(self.subplt_keys.unique())
-        
+
     def get_color_dic(self):
         if self.color_by:
             if self.Ncolors > 6:
@@ -389,16 +389,16 @@ class GroupPlot(object):
             if  self.Nstyles > len(self.styles):
                 raise ValueError('# of styles needed exceeds #'
                                 + 'of styles available: currently '
-                                + str(len(self.styles)) + ', needs ' 
+                                + str(len(self.styles)) + ', needs '
                                 + str(self.Nstyles) + '.')
-            
+
     def get_style_dic(self):
         if self.style_by:
             style_dic = {}
             for i, key in enumerate(self.style_keys.unique()):
                 style_dic[key] = self.styles[i]
             self.style_dic = style_dic
-    
+
     def get_subplot_params(self):
     #Try to get close to a square layout by default
         if self.subplt_by:
@@ -409,7 +409,7 @@ class GroupPlot(object):
                 subplt_rows += 1
             self.subplt_rows = subplt_rows
             self.subplt_cols = subplt_cols
-            
+
     def get_sub_dic(self):
         if self.subplt_by:
             sub_dic = {}
@@ -425,7 +425,7 @@ class GroupPlot(object):
                 subplot_val = self.sub_dic[self.subplt_keys[i]]
             else:
                 subplot_val = [1,1,1]  # If not subplots, just 1 plot
-            
+
             llabel = ''
             if self.style_by:
                 lstyle = self.style_dic[self.style_keys[i]]
@@ -439,22 +439,22 @@ class GroupPlot(object):
                 llabel += self.color_keys[i]
             else:
                 col = sns.color_palette()[0]
-            
-            
+
+
             self.labels.append(llabel)
-            
-            ax = fig.add_subplot(subplot_val[0], 
-                                 subplot_val[1], 
+
+            ax = fig.add_subplot(subplot_val[0],
+                                 subplot_val[1],
                                  subplot_val[2])
 
-            self.lines.append(ax.plot(self.df[self.x][i], 
-                                      self.df[self.y][i], 
+            self.lines.append(ax.plot(self.df[self.x][i],
+                                      self.df[self.y][i],
                                       lstyle, c=col, label=llabel))
             if self.subplt_by:
                 plt.title(self.subplt_keys[i])
             plt.xlabel(self.x)
             plt.ylabel(self.y)
-            
+
     def get_figlegend(self):
         unique_labels = []
         unique_lines  = []
@@ -463,9 +463,9 @@ class GroupPlot(object):
                 unique_labels.append(label)
                 unique_lines.append(self.lines[i][0])
 
-        plt.figlegend((unique_lines), unique_labels, 
+        plt.figlegend((unique_lines), unique_labels,
                       bbox_to_anchor=(1.01, 0.5), loc='center left')
-      
+
     def plot(self):
         self.get_numbers()
         self.get_subplot_params()
@@ -480,7 +480,7 @@ class GroupPlot(object):
 
 ## 5) Use!
 ---
-Let's go back to our original problem. To use the function, all we need to do is get our data into a pandas DataFrame, and create a *GroupPlot* instance. Then we specify what type of groupings we want, and that's it! I've added a few formatting specifiers to make it look a bit better. 
+Let's go back to our original problem. To use the function, all we need to do is get our data into a pandas DataFrame, and create a *GroupPlot* instance. Then we specify what type of groupings we want, and that's it! I've added a few formatting specifiers to make it look a bit better.
 
 
 ```python
@@ -489,7 +489,7 @@ cols = ['Method', 'System', 'Student', 'X', 'Y']
 df = pd.DataFrame(data, columns=cols)
 fig = plt.figure(figsize=(8,8))
 x = GroupPlot(df, 'X', 'Y')
-x.color_by  = 'System' 
+x.color_by  = 'System'
 x.style_by  = 'Method'
 x.subplt_by = 'Student'
 x.fig_legend= True
@@ -526,7 +526,7 @@ plt.show()
 ![png](/images/2016-09-17-Plot-By-Groups_files/2016-09-17-Plot-By-Groups_39_0.png)
 
 
-And we can style using anything from matplotlib or seaborn, pretty cool! I'm a huge fan of the [xckd()](http://matplotlib.org/xkcd/examples/showcase/xkcd.html) function! 
+And we can style using anything from matplotlib or seaborn, pretty cool! I'm a huge fan of the [xckd()](http://matplotlib.org/xkcd/examples/showcase/xkcd.html) function!
 
 
 ```python
@@ -536,7 +536,7 @@ df = pd.DataFrame(data, columns=cols)
 fig = plt.figure(figsize=(8,8))
 plt.xkcd()
 x = GroupPlot(df, 'X', 'Y')
-x.color_by  = 'System' 
+x.color_by  = 'System'
 x.style_by  = 'Method'
 x.subplt_by = 'Student'
 x.fig_legend= True
@@ -553,4 +553,4 @@ plt.show()
 ## Conclusion
 ---
 
-I've spent a good amount of time trying to figure this out, and I'm pretty happy with the results. One of the things I might play around with is getting a legend that has only a list of colors, and a list of linestyles (rather than all combinations). I don't think this would be too hard to implement, watch out for updates. 
+I've spent a good amount of time trying to figure this out, and I'm pretty happy with the results. One of the things I might play around with is getting a legend that has only a list of colors, and a list of linestyles (rather than all combinations). I don't think this would be too hard to implement, watch out for updates.

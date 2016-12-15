@@ -2,6 +2,8 @@
 layout: page
 ---
 
+
+
 <h1 align="center"> Evan M. Curtin </h1>
 
 <p align="center">
@@ -60,3 +62,15 @@ layout: page
 |||
 | :-------------------------------------------- | -------------: |
 | **University of Illinois @ Urbana-Champaign** <br> One semester of Physical Chemistry and one semester of General Chemistry Lab. For all courses with evaluations, I was rated by students as "excellent." | **Urbana, IL** <br> Fall 2015 - Spring 2016 |
+
+# Technical Skills
+
+---
+
+|||
+| :-------------------------------------------- | -------------: |
+| **Python** <br> Heavy emphasis on numerical computation and data analysis. Significant experience using NumPy, SciPy, and matplotlib. Very comfortable with Pandas and Cython. Familiarity with SWIG. Used predominately in 2 major projects, as well as dozens of smaller ones, including side projects for my own entertainment. | **2000 Hours** |
+| **C++** <br> Predominately used in numerical code where performance is at a premium. I've used C++ both to extend Python by way of Cython, but have also written an entire project in C++ using Make, GDB, gcc and valgrind.  | **1000 Hours** |
+| **FORTRAN77/90** <br> My first programming language. The code for the March 2016 paper was written exclusively in FORTRAN, using only a few of the features of the 90 standard.   | **500 Hours** |
+| **HTML/CSS** <br> I spent a few weekends designing two blogs, including [my technical one]({{ site.url }}), and my [collaborative cookbook](https://evanandfriends.github.io/).   | **50 Hours** |
+| **Microsoft Office** <br> Wrote papers in Word, used Powerpoint for presentations and excel for data analysis from 2006 to the present day. | **>1000 Hours** |

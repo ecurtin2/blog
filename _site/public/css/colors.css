@@ -23,6 +23,6 @@
     --ec_theme1: #104f55; /* sidebar, headings */
     --ec_theme2: 	#00996e; /* Links, including bloglist */
     --ec_theme3: #087E8B; /* bold, dates */
-    --ec_themecodebg: #f8f8f8; /* Code block bg */
-    --ec_themebg: #e2dadb; /* Page bg and sidebar text*/
+    --ec_themecodebg: #e8e8e8; /* Code block bg */
+    --ec_themebg: #f8f8f8; /* Page bg and sidebar text*/
 }

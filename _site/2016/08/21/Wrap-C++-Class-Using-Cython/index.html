@@ -30,7 +30,7 @@
 
 
   <body class="Custom-Theme">
-
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
     <div class="sidebar">
   <div class="container sidebar-sticky">
     <div class="sidebar-about">
@@ -62,27 +62,27 @@
       <div class="post">
   <h1 class="post-title">Wrapping a C++ Class in Python Using Cython</h1>
   <span class="post-date">21 Aug 2016</span>
-  <p>One of my favorite uses for Cython is to use it to wrap a C++ class in python. 
-The reason I like this so much is that you can easily create a class in python, 
-and seamlessly optimize the slow parts in C++. This way you can get all the 
-advantages of python, like the easy syntax and massive amount of libraries that 
+  <p>One of my favorite uses for Cython is to use it to wrap a C++ class in python.
+The reason I like this so much is that you can easily create a class in python,
+and seamlessly optimize the slow parts in C++. This way you can get all the
+advantages of python, like the easy syntax and massive amount of libraries that
 are trivial to implement, while still being able to speed up performance critical
- sections of your code. However, at the end of the day, the resulting class 
+ sections of your code. However, at the end of the day, the resulting class
 still looks like a standard python class, just better!</p>
 
-<p>Now there is a tutorial on <a href="http://cython.readthedocs.io/en/latest/src/userguide/wrapping_CPlusPlus.html">wrapping C++ in the Cython documentation</a>, 
-which looks pretty good in retrospect. However, I struggled a bit when I was 
-trying to learn how to do this, so I decided to write this post to help anybody 
+<p>Now there is a tutorial on <a href="http://cython.readthedocs.io/en/latest/src/userguide/wrapping_CPlusPlus.html">wrapping C++ in the Cython documentation</a>,
+which looks pretty good in retrospect. However, I struggled a bit when I was
+trying to learn how to do this, so I decided to write this post to help anybody
 else in my situation. Enough blabbering though, let’s get to it!</p>
 
 <h1 id="step-1-create-the-c-class">Step 1: Create the C++ Class</h1>
 <hr />
-<p>Let’s say we defined a C++ class in the following header file, Class.h. I’ve 
+<p>Let’s say we defined a C++ class in the following header file, Class.h. I’ve
 made the class pretty trivial for the purpose of demonstration:</p>
 
 <h2 id="classh">Class.h</h2>
 
-<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#ifndef CPP_MYCLASS // header guards 
+<figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="cp">#ifndef CPP_MYCLASS // header guards
 #define CPP_MYCLASS
 </span>
 <span class="k">namespace</span> <span class="n">my_namespace</span> <span class="p">{</span>
@@ -98,7 +98,7 @@ made the class pretty trivial for the purpose of demonstration:</p>
 <span class="p">}</span>
 <span class="cp">#endif</span></code></pre></figure>
 
-<p>In addition to the header file, we have defined the following implementation of 
+<p>In addition to the header file, we have defined the following implementation of
 the class methods in Class.cpp:</p>
 
 <h2 id="classcpp">Class.cpp</h2>
@@ -117,32 +117,32 @@ the class methods in Class.cpp:</p>
     <span class="n">cpp_double</span> <span class="o">=</span> <span class="mf">1.2</span><span class="p">;</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>Again the functions here are simple, but they can be any valid C++ function 
-(there are caveats which are discussed in Cython’s documentation, but I haven’t 
+<p>Again the functions here are simple, but they can be any valid C++ function
+(there are caveats which are discussed in Cython’s documentation, but I haven’t
 had problems).</p>
 
 <h1 id="step-2-wrap-the-class-using-cython">Step 2: Wrap the Class using Cython</h1>
 <hr />
 
-<p>Now this part is the meat of the problem. At first it’s a bit intimidating and 
-confusing to see all these variable declarations in the cpp, header and pyx 
-files. Once you get a handle on it it’s not too bad though. Additionally, the 
-redundant variable declarations could be automated (I might do this in a future 
+<p>Now this part is the meat of the problem. At first it’s a bit intimidating and
+confusing to see all these variable declarations in the cpp, header and pyx
+files. Once you get a handle on it it’s not too bad though. Additionally, the
+redundant variable declarations could be automated (I might do this in a future
 post).</p>
 
 <h2 id="classwrapperpyx">ClassWrapper.pyx</h2>
 
 <p><strong><em>Note:</em></strong> All the code in step 2 goes into <em>ClassWrapper.pyx</em></p>
 
-<p>First, we have to let Cython know that the class <em>MyCppClass</em> is defined inside 
-the file <em>Class.h</em>. The keyword <em>extern</em> here lets us know that the class is 
-defined elsewhere (ie. in the header file). Using this keyword in Cython like 
-this implies the entire class and all attributes/methods within are defined 
-externally in <em>Class.h</em>. Note that only methods/attributes that want python 
+<p>First, we have to let Cython know that the class <em>MyCppClass</em> is defined inside
+the file <em>Class.h</em>. The keyword <em>extern</em> here lets us know that the class is
+defined elsewhere (ie. in the header file). Using this keyword in Cython like
+this implies the entire class and all attributes/methods within are defined
+externally in <em>Class.h</em>. Note that only methods/attributes that want python
 access need to be here.</p>
 
-<p>The <em>except +</em> part allows Cython to handle exceptions from the constructor. 
-Apart from this, the class definition is identical to the one in <em>Class.h</em>, 
+<p>The <em>except +</em> part allows Cython to handle exceptions from the constructor.
+Apart from this, the class definition is identical to the one in <em>Class.h</em>,
 except for there is no ; at the end of each line.</p>
 
 <figure class="highlight"><pre><code class="language-cpp" data-lang="cpp"><span class="n">cdef</span> <span class="k">extern</span> <span class="n">from</span> <span class="s">"Class.h"</span> <span class="k">namespace</span> <span class="s">"my_namespace"</span><span class="o">:</span>
@@ -159,10 +159,10 @@ except for there is no ; at the end of each line.</p>
 
 <h3 id="create-the-wrapper-class">Create the Wrapper Class</h3>
 
-<p>Ok, so we’ve told Cython that <em>MyCppClass</em> is defined elsewhere. If we want 
+<p>Ok, so we’ve told Cython that <em>MyCppClass</em> is defined elsewhere. If we want
 python access to the class (which we do, if you’ve read this far) we have to
-create a wrapper class around the C++ class. I treat this first portion as 
-boilerplate, it allows us to allocate a new instance of <em>MyCppClass</em> when we 
+create a wrapper class around the C++ class. I treat this first portion as
+boilerplate, it allows us to allocate a new instance of <em>MyCppClass</em> when we
 instantiate <em>WrapperClass</em>.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">cdef</span> <span class="k">class</span> <span class="nc">WrapperClass</span><span class="p">:</span>
@@ -173,19 +173,19 @@ instantiate <em>WrapperClass</em>.</p>
     <span class="k">def</span> <span class="nf">__dealloc__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">C_Class</span></code></pre></figure>
 
-<p>Once we allow for instantiation of the class from python, we can define all 
-sorts of member functions and attributes <strong><em>just as we would for a standard 
-python class</em></strong>. So we can define the <strong>__init__</strong> function to set up some 
-attributes with a value at the time of instantiation (we’ll get to 
+<p>Once we allow for instantiation of the class from python, we can define all
+sorts of member functions and attributes <strong><em>just as we would for a standard
+python class</em></strong>. So we can define the <strong>__init__</strong> function to set up some
+attributes with a value at the time of instantiation (we’ll get to
 <em>self.Mydouble</em>, I promise).</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">Mydouble</span> <span class="o">=</span> <span class="n">value</span></code></pre></figure>
 
-<p>That’s the boring part though. Here’s the magic. We can define a python-style 
+<p>That’s the boring part though. Here’s the magic. We can define a python-style
 function (note the <em>def</em> and not <em>cdef</em>) which casts the input to the appropriate
- c-type and then calls the <em>C++ level function</em> of our choice. I have examples 
-here of a function that returns a double and a void function. Additionally, we 
+ c-type and then calls the <em>C++ level function</em> of our choice. I have examples
+here of a function that returns a double and a void function. Additionally, we
 can just use regular python here if we wish (for functions which don’t need to be sped up by C++).</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>        
@@ -201,13 +201,13 @@ can just use regular python here if we wish (for functions which don’t need to
     <span class="k">return</span> <span class="n">x</span> <span class="o">==</span> <span class="n">y</span>  </code></pre></figure>
 
 <h3 id="define-properties-allows-for-settinggetting-them-in-python">Define properties, allows for setting/getting them in python</h3>
-<p>If you jumped the gun and tried to do this already, you might have noticed that 
+<p>If you jumped the gun and tried to do this already, you might have noticed that
 you don’t have access to the C++ variables directly from python. This is because
- we’re defining a wrapper class, whos attributes are only the ones we define 
-within the scope of <em>WrapperClass</em>. If we want to have read/write access to the 
+ we’re defining a wrapper class, whos attributes are only the ones we define
+within the scope of <em>WrapperClass</em>. If we want to have read/write access to the
 C++ level variables, we can use the python property function to do what we want.</p>
 
-<p>Just define a function to set the C++ level variable and another one to get it 
+<p>Just define a function to set the C++ level variable and another one to get it
 like so:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">def</span> <span class="nf">get_cpp_double</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -221,37 +221,37 @@ like so:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">Mydouble</span> <span class="o">=</span> <span class="nb">property</span><span class="p">(</span><span class="n">get_cpp_double</span><span class="p">,</span> <span class="n">set_cpp_double</span><span class="p">)</span></code></pre></figure>
 
-<p>So now we have an attribute of <em>WrapperClass</em> called <em>Mydouble</em>. However, 
-<em>Mydouble</em> is basically an alias for the C++ level attribute <em>cpp_double</em>. If 
-you want to use the same names for C++ and Python variables, see the guide 
+<p>So now we have an attribute of <em>WrapperClass</em> called <em>Mydouble</em>. However,
+<em>Mydouble</em> is basically an alias for the C++ level attribute <em>cpp_double</em>. If
+you want to use the same names for C++ and Python variables, see the guide
 <a href="http://cython.readthedocs.io/en/latest/src/userguide/external_C_code.html#resolve-conflicts">here</a>
 , but I’ll just use different names for now.</p>
 
-<p>Once the property defined in the .pyx file, you can use it within the wrapper 
+<p>Once the property defined in the .pyx file, you can use it within the wrapper
 class as though it were a python variable (see <em>self.Mydouble</em> in __init__).</p>
 
 <h1 id="compile">3) Compile</h1>
 
 <p>The easiest way to compile our Cython code is to use <em>distutils</em> and <em>cythonize</em>
-in a python script. Simply include all the source files and make sure the 
+in a python script. Simply include all the source files and make sure the
 compiler knows to use C++.</p>
 
 <h2 id="setuppy">Setup.py</h2>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">distutils.core</span> <span class="kn">import</span> <span class="n">setup</span>
-<span class="kn">from</span> <span class="nn">Cython.Build</span> <span class="kn">import</span> <span class="n">cythonize</span> 
+<span class="kn">from</span> <span class="nn">Cython.Build</span> <span class="kn">import</span> <span class="n">cythonize</span>
 <span class="kn">from</span> <span class="nn">distutils.extension</span> <span class="kn">import</span> <span class="n">Extension</span>
 
 <span class="n">sourcefiles</span>  <span class="o">=</span> <span class="p">[</span><span class="s">'ClassWrapper.pyx'</span><span class="p">,</span> <span class="s">'Class.cpp'</span><span class="p">]</span>
 <span class="n">compile_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s">'-std=c++11'</span><span class="p">]</span>
-<span class="n">ext</span><span class="o">=</span><span class="p">[</span><span class="n">Extension</span><span class="p">(</span><span class="s">'*'</span><span class="p">,</span> 
-            <span class="n">sourcefiles</span><span class="p">,</span> 
-            <span class="n">extra_compile_args</span><span class="o">=</span><span class="n">compile_opts</span><span class="p">,</span> 
-            <span class="n">language</span><span class="o">=</span><span class="s">'c++'</span><span class="p">)]</span> 
- 
-<span class="n">setup</span><span class="p">(</span> 
-  <span class="n">ext_modules</span><span class="o">=</span><span class="n">cythonize</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span> 
-<span class="p">)</span> </code></pre></figure>
+<span class="n">ext</span><span class="o">=</span><span class="p">[</span><span class="n">Extension</span><span class="p">(</span><span class="s">'*'</span><span class="p">,</span>
+            <span class="n">sourcefiles</span><span class="p">,</span>
+            <span class="n">extra_compile_args</span><span class="o">=</span><span class="n">compile_opts</span><span class="p">,</span>
+            <span class="n">language</span><span class="o">=</span><span class="s">'c++'</span><span class="p">)]</span>
+
+<span class="n">setup</span><span class="p">(</span>
+  <span class="n">ext_modules</span><span class="o">=</span><span class="n">cythonize</span><span class="p">(</span><span class="n">ext</span><span class="p">)</span>
+<span class="p">)</span></code></pre></figure>
 
 <p>To compile just run:</p>
 
@@ -267,7 +267,7 @@ Once we run <em>setup.py</em> and compile our code, we should get a shared objec
 <em>ClassWrapper.so</em>. We can now import this just like any other python module. We
 then have access to the class from the python level.</p>
 
-<p>We can instantiate the class, and set the value of <em>self.Mydouble</em> to anything 
+<p>We can instantiate the class, and set the value of <em>self.Mydouble</em> to anything
 that can be cast to a double:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">ClassWrapper</span>
@@ -276,7 +276,7 @@ that can be cast to a double:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="mf">5.0</span></code></pre></figure>
 
-<p>We have read/write access via the <em>set_cpp_double</em> and <em>get_cpp_double</em> 
+<p>We have read/write access via the <em>set_cpp_double</em> and <em>get_cpp_double</em>
 functions which we call thusly:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">instance</span><span class="o">.</span><span class="n">Mydouble</span> <span class="o">=</span> <span class="mf">34.5</span>  <span class="c">#setter</span>
@@ -284,8 +284,8 @@ functions which we call thusly:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="mf">34.5</span></code></pre></figure>
 
-<p>We can call a void function, which changes the value of the C++ attribute 
-<em>cpp_double</em>. Since we wrapped this variable with the python level property 
+<p>We can call a void function, which changes the value of the C++ attribute
+<em>cpp_double</em>. Since we wrapped this variable with the python level property
 <em>Mydouble</em>, calling this function changes the value of <em>Mydouble</em>.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">instance</span><span class="o">.</span><span class="n">void_func</span><span class="p">()</span>
@@ -293,7 +293,7 @@ functions which we call thusly:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="o">&gt;&gt;&gt;</span> <span class="mf">1.2</span></code></pre></figure>
 
-<p>We can also call functions that take and return values, like this silly 
+<p>We can also call functions that take and return values, like this silly
 implementation of multiplication:</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span> <span class="n">instance</span><span class="o">.</span><span class="n">func</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span></code></pre></figure>
@@ -313,7 +313,7 @@ implementation of multiplication:</p>
 
 
 <span class="o">./</span><span class="n">ClassWrapper</span><span class="o">.</span><span class="n">pyx</span> <span class="ow">in</span> <span class="n">ClassWrapper</span><span class="o">.</span><span class="n">WrapperClass</span><span class="o">.</span><span class="n">func</span> <span class="p">(</span><span class="n">ClassWrapper</span><span class="o">.</span><span class="n">cpp</span><span class="p">:</span><span class="mi">1057</span><span class="p">)()</span>
-     <span class="mi">30</span> 
+     <span class="mi">30</span>
      <span class="mi">31</span>     <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
 <span class="o">---&gt;</span> <span class="mi">32</span>         <span class="n">cdef</span> <span class="n">double</span> <span class="n">c_x</span> <span class="o">=</span> <span class="n">x</span>
      <span class="mi">33</span>         <span class="n">cdef</span> <span class="nb">int</span>    <span class="n">c_i</span> <span class="o">=</span> <span class="n">i</span>
@@ -322,7 +322,7 @@ implementation of multiplication:</p>
 
 <span class="nb">TypeError</span><span class="p">:</span> <span class="n">a</span> <span class="nb">float</span> <span class="ow">is</span> <span class="n">required</span></code></pre></figure>
 
-<p>And finally, you get an exception if you try to use a variable that’s not a property in 
+<p>And finally, you get an exception if you try to use a variable that’s not a property in
 <em>WrapperClass</em>, even though it’s declared <em>public</em>.</p>
 
 <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">instance</span><span class="o">.</span><span class="n">cpp_public</span></code></pre></figure>
@@ -339,17 +339,17 @@ implementation of multiplication:</p>
 
 <h1 id="conclusion">Conclusion</h1>
 
-<p>So, we went through how to wrap a C++ class in python using Cython. I really like being 
-able to selectively optimize various function as needed. This allows me to use 
+<p>So, we went through how to wrap a C++ class in python using Cython. I really like being
+able to selectively optimize various function as needed. This allows me to use
 python when I want to, and C++ only when I need to (I may be a bit biased towards
  python, but so is any sane person).</p>
 
-<p>Now I am aware that Cython offers functionality of defining c-level functions 
-within the .pyx files, and many of these can match the speed of optimized C++ 
-code. However, I find it a bit easier to just wrap C++ directly, since I know 
-that I’m getting the best speed and don’t have to worry about the nuances of 
-Cython (I think it’s easier to write fast C++ code than it is to write fast 
-Cython code, particularly for more complex functions). Additionally, If you 
+<p>Now I am aware that Cython offers functionality of defining c-level functions
+within the .pyx files, and many of these can match the speed of optimized C++
+code. However, I find it a bit easier to just wrap C++ directly, since I know
+that I’m getting the best speed and don’t have to worry about the nuances of
+Cython (I think it’s easier to write fast C++ code than it is to write fast
+Cython code, particularly for more complex functions). Additionally, If you
 already have C++ code lying around, you don’t have to rewrite anything!</p>
 
 </div>
@@ -358,6 +358,15 @@ already have C++ code lying around, you don’t have to rewrite anything!</p>
   <h2>Related Posts</h2>
   <hr>
   <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2016/12/14/What-is-a-Molecule/">
+            What is a Molecule?
+            <small>14 Dec 2016</small>
+          </a>
+        </h3>
+      </li>
     
       <li>
         <h3>
