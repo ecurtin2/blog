@@ -3,6 +3,7 @@ layout: post
 title: What is a Molecule?
 ---
 
+<img class="post-image" src="/images/2016-12-14-What-is-a-Molecule/2016-12-14-What-is-a-Molecule_5_0.png">
 
 I recently replied to an reddit [/r/askscience post](https://www.reddit.com/r/askscience/comments/59frj2/could_someone_explain_what_this_iupac_definition/) that got me overthinking about something so simple, I just had to write a post about it. The main crux of the issue is simple. At a base level, what is a molecule? As I'll show you now, a rigorous definition is a bit tricky. International Union of Pure and Applied Chemistry is basically the chemical naming authority. Here's [IUPAC's definition of molecule](https://goldbook.iupac.org/M04002.html):
 

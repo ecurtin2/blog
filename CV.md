@@ -2,7 +2,7 @@
 layout: page
 ---
 
-
+# CV
 
 <h1 align="center"> Evan M. Curtin </h1>
 

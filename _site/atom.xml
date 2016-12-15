@@ -4,7 +4,7 @@
  <title>Evan's Blog</title>
  <link href="http://ecurtin2.github.io/atom.xml" rel="self"/>
  <link href="http://ecurtin2.github.io/"/>
- <updated>2016-12-15T01:28:50-06:00</updated>
+ <updated>2016-12-15T01:35:52-06:00</updated>
  <id>http://ecurtin2.github.io</id>
  <author>
    <name></name>
@@ -17,7 +17,9 @@
    <link href="http://ecurtin2.github.io/2016/12/14/What-is-a-Molecule/"/>
    <updated>2016-12-14T00:00:00-06:00</updated>
    <id>http://ecurtin2.github.io/2016/12/14/What-is-a-Molecule</id>
-   <content type="html">&lt;p&gt;I recently replied to an reddit &lt;a href=&quot;https://www.reddit.com/r/askscience/comments/59frj2/could_someone_explain_what_this_iupac_definition/&quot;&gt;/r/askscience post&lt;/a&gt; that got me overthinking about something so simple, I just had to write a post about it. The main crux of the issue is simple. At a base level, what is a molecule? As I’ll show you now, a rigorous definition is a bit tricky. International Union of Pure and Applied Chemistry is basically the chemical naming authority. Here’s &lt;a href=&quot;https://goldbook.iupac.org/M04002.html&quot;&gt;IUPAC’s definition of molecule&lt;/a&gt;:&lt;/p&gt;
+   <content type="html">&lt;p&gt;&lt;img class=&quot;post-image&quot; src=&quot;/images/2016-12-14-What-is-a-Molecule/2016-12-14-What-is-a-Molecule_5_0.png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I recently replied to an reddit &lt;a href=&quot;https://www.reddit.com/r/askscience/comments/59frj2/could_someone_explain_what_this_iupac_definition/&quot;&gt;/r/askscience post&lt;/a&gt; that got me overthinking about something so simple, I just had to write a post about it. The main crux of the issue is simple. At a base level, what is a molecule? As I’ll show you now, a rigorous definition is a bit tricky. International Union of Pure and Applied Chemistry is basically the chemical naming authority. Here’s &lt;a href=&quot;https://goldbook.iupac.org/M04002.html&quot;&gt;IUPAC’s definition of molecule&lt;/a&gt;:&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;An electrically neutral entity consisting of more than one atom (n &amp;gt; 1). Rigorously, a molecule, in which  n &amp;gt; 1 must correspond to a depression on the potential energy surface that is deep enough to confine at least one vibrational state.&lt;/p&gt;
