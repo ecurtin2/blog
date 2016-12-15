@@ -1,8 +1,7 @@
 ---
 layout: page
+title: Blog
 ---
-
-# Blog
 
 <div class="posts">
   {% for post in site.posts %}
