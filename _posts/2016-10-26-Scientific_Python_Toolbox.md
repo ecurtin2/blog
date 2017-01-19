@@ -406,7 +406,7 @@ import matplotlib.pyplot as plt
 fig = plt.figure(figsize=(6,4))
 
 x = np.linspace(0, 10, 100)   # list of x from 0 to 10 by 100 steps
-y = np.sin(x)                 # take the sign of each element in x
+y = np.sin(x)                 # take the sin of each element in x
 plt.plot(x, y)                # do I have to explain this one?
 plt.show()
 ```
