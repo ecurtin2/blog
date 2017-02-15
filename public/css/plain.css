@@ -1,0 +1,32 @@
+.plain {
+  color: var(--ec_black);
+}
+
+.plain hr {
+  position: relative;
+  margin: 0rem 0rem .5rem 0rem;
+  border: 0;
+  border-top: 1px solid var(--ec_black);
+  border-bottom: 0px solid var(--ec_black);
+}
+
+.plain h1, .plain h2, .plain h3, .plain h4, .plain h5, .plain h6 {
+    margin-top: 0.1rem;
+    color: var(--ec_black);
+}
+
+.plain h1, .plain h6 {
+  text-align: center;
+}
+
+.plain strong {
+  color: var(--ec_black);
+}
+
+.plain a {
+  color: var(--ec_black);
+}
+
+.plain dt {
+  color: var(--ec_black);
+}

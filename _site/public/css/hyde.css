@@ -13,8 +13,7 @@
  * https://github.com/poole/hyde.
  */
 
-@import url("colors.css");
-@import url("plain.css");
+
 /*
  * Contents
  *
@@ -86,6 +85,11 @@ a.sidebar-nav-item:focus {
 }
 .sidebar-nav-item.active {
   font-weight: bold;
+}
+
+/* images */
+img {
+  margin: auto;
 }
 
 /* Container

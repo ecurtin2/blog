@@ -102,9 +102,24 @@ h3 {
   font-size: 1.25rem;
   color: var(--ec_theme1);
 }
-h4, h5, h6 {
+h4 {
   margin-top: 1.0rem;
   font-size: 1rem;
+  color: var(--ec_theme1);
+}
+
+/* h5 and h6 are small and large centering */
+h5 {
+  text-align: center;
+  margin-top: 0.1rem;
+  font-size: 1rem;
+  color: var(--ec_theme1);
+}
+
+h6 {
+  text-align: center;
+  margin-top: 0.1rem;
+  font-size: 1.75rem;
   color: var(--ec_theme1);
 }
 
@@ -120,6 +135,10 @@ strong {
 }
 
 /* Lists */
+li {
+  list-style-type: none;
+}
+
 ul, ol, dl {
   margin-top: 0;
   margin-bottom: 1rem;
@@ -127,9 +146,17 @@ ul, ol, dl {
 
 dt {
   font-weight: bold;
+  float: right;
+  clear: right;
+  width: 22%;
+  text-align: right;
+  margin-right: 2%;
+  color: var(--ec_theme3);
 }
 dd {
   margin-bottom: .5rem;
+  margin-right: 25%;
+  margin-left: 2%;
 }
 
 /* Misc */
@@ -242,7 +269,7 @@ img {
 /* Tables */
 table {
   margin-bottom: 0rem;
-  margin-top:-2rem;
+  margin-top: 0rem;
   width: 100%;
   border: /*1px solid #e5e5e5;*/
   border-collapse: collapse;
