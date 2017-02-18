@@ -48,7 +48,7 @@ body {
 }
 
 html {
-  font-family: Calibri, Lato, Helvetica, Arial, sans-serif; 
+  font-family: Calibri, Lato, Helvetica, Arial, sans-serif;
   /*font-family: "FF Tisa"; */
   font-size: 16px;
   line-height: 1.5;
@@ -149,14 +149,14 @@ dt {
   font-weight: bold;
   float: right;
   clear: right;
-  width: 22%;
+  width: 16%;
   text-align: right;
   margin-right: 2%;
   color: var(--ec_theme3);
 }
 dd {
   margin-bottom: .5rem;
-  margin-right: 25%;
+  margin-right: 2%;
   margin-left: 2%;
 }
 

@@ -2,6 +2,13 @@
   color: var(--ec_black);
 }
 
+html {
+  font-family: Calibri, Lato, Helvetica, Arial, sans-serif;
+  /*font-family: "FF Tisa"; */
+  font-size: 14px !important;
+  line-height: 1.5;
+}
+
 .plain hr {
   position: relative;
   margin: 0rem 0rem .5rem 0rem;
