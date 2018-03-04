@@ -3,6 +3,11 @@ layout: post
 title: Wrapping a C++ Class in Python Using Cython
 ---
 
+```python
+import C++
+```
+
+
 One of my favorite uses for Cython is to use it to wrap a C++ class in python.
 The reason I like this so much is that you can easily create a class in python,
 and seamlessly optimize the slow parts in C++. This way you can get all the

@@ -3,8 +3,6 @@ layout: page
 title: License
 ---
 
-This Blog was constructed using the [Hyde theme for Jekyll](http://hyde.getpoole.com/) by Mark Otto
-
 # Released under MIT License
 
 Copyright (c) 2016 Evan Curtin.

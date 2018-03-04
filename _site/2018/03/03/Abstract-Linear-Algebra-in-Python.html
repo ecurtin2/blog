@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Abstract Linear Algebra in Python</title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="/assets/main.css">
+  <link rel="canonical" href="http://localhost:4000/2018/03/03/Abstract-Linear-Algebra-in-Python.html">
+  <link rel="alternate" type="application/rss+xml" title="Evan&#39;s Blog!" href="/feed.xml">
+  
+  
+</head>
+
+
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+    <a class="site-title" href="/">Evan&#39;s Blog!</a>
+  
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+          
+            
+            
+            <a class="page-link" href="/Blog.html">Blog</a>
+            
+          
+            
+            
+            <a class="page-link" href="/CV.html">CV</a>
+            
+          
+            
+            
+            <a class="page-link" href="/LICENSE.html">License</a>
+            
+          
+            
+            
+            <a class="page-link" href="/about.html">About</a>
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Abstract Linear Algebra in Python</h1>
+    <p class="post-meta">
+      <time datetime="2018-03-03T00:00:00-06:00" itemprop="datePublished">
+        
+        Mar 3, 2018
+      </time>
+      </p>
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\mathbf{S^{-1}AS} =  \left[\begin{matrix}a - b & 0\\0 & a + b\end{matrix}\right] %]]></script>
+
+<p>Lately I’ve been playing around with the <a href="https://trilinos.org/packages/anasazi/">anasazi</a> library. It’s basically a library that implements algorithms to solve eigenvalue problems that are all completely unaware of the underling data structures. The way this is done is by implementing the algorithms in terms of an <strong>interface</strong>. Basically, this interface is a contract between whoever wrote the library, and whoever is using it. It’s a formal way for the library writer to say “If you give me an object that implements x, and y, this library will do Z with that object.”</p>
+
+<p>This idea is a bit… abstract. <em>And that’s the whole point</em>. Two places where this idea is used constantly are the Python Standard Library and the C++ Standard Template Library (STL). In Python, any object that implements __iter__ and __next__ is automatically considered an iterable, and this opens up a ton of the standard library. In C++, similar functionality is done using iterators, the basic type that all of the STL algorithms work on.</p>
+
+<p>In python, for instance, this allows you to define a custom collection with __iter__ and __next__, and now you automatically get any(), all(), list() and so on, <em>regardless of what it is your collection does</em>.</p>
+
+<p>This has the significant advantage that the algorithms and data structures you use become decoupled. Therefore to implement N algorithms on M data structures, you only need to implement N + M things around a common interface, rather than the N * M combinations of algorithms and data structures. It’s never quite this amazing in practice, but it’s close.</p>
+
+<h2 id="moving-past-numpy-separating-algorithms-and-data-structures-in-linear-algebra">Moving Past numpy: Separating Algorithms and data structures in Linear Algebra</h2>
+
+<p>This is getting long winded. Assume for now that numpy is not doing what we need (say, we need memory - distributed matrices for our problem or something). Rather than rewrite an entire algorithm for another type, why not abstract away numpy in the first place? Then we simply need to write an interface between our algorithm and any data structure we want it to be able to use.</p>
+
+<h2 id="case-study---the-similarity-transform">Case Study - The Similarity Transform</h2>
+
+<p>Python’s duck typing actually makes this almost too easy to be true. However I prefer the explicit abstract method interface: here’s the imports:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+</code></pre></div></div>
+
+<p>Lets write out a function for a similarity transform, 
+<script type="math/tex">\mathbf{\tilde{A}} = \mathbf{S}^{-1}\mathbf{A}\mathbf{S}</script> 
+but let’s use this idea of an abstract interface. The funny thing is, this looks remarkable like psuedo - code:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">SimilarityTransform</span><span class="p">(</span><span class="n">STInterface</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">STInterface</span><span class="p">,</span> <span class="n">SimilarityTransformInterface</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">STInterface</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span> <span class="err">@</span> <span class="n">other</span> <span class="err">@</span> <span class="n">STInterface</span>
+</code></pre></div></div>
+
+<p>Here we assumed that there’s something out there called a SimilarityTransformInterface, and the thing we are being passed is an instance of that. Think for a second: what would this interface need to look like? Well, anything conforming to this interface has to implement an inverse() method as well as the @ operator, the python operator for matrix multliplication (since Python 3.5 - you’re not still using python 2 right?).</p>
+
+<p>The cool thing is, you can express this idea by defining an <em>Abstract Base Class</em> with <em>Abstract Methods</em>. Basically, an abstract base class cannot be instantiated, but it can be subclassed. The rule is, any subclass must implement all methods marked as abstract by the @abstractmethod decorator.</p>
+
+<p>So let’s define our abstract base class:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SimilarityTransformInterface</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
+    
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
+        
+    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="k">pass</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">__subclasshook__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+        <span class="s">"""Any class that implements all abstract methods of this ABC is a subclass.
+        
+        This does not require that they inherit from this class!!!        
+        """</span>
+        <span class="k">if</span> <span class="n">cls</span> <span class="ow">is</span> <span class="n">SimilarityTransformInterface</span><span class="p">:</span>
+            <span class="n">requirements_met</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">__class__</span><span class="o">.</span><span class="n">__abstractmethods__</span><span class="p">:</span>
+                <span class="n">requirements_met</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">r</span> <span class="ow">in</span> <span class="n">B</span><span class="o">.</span><span class="n">__dict__</span> <span class="k">for</span> <span class="n">B</span> <span class="ow">in</span> <span class="n">C</span><span class="o">.</span><span class="n">__mro__</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">requirements_met</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">return</span> <span class="nb">NotImplemented</span>        
+</code></pre></div></div>
+
+<p>Here we’ve basically instructed anybody who wants to subclass this class that they must implement inverse() and __matmul__ themselves.</p>
+
+<p>But that’s not all. The __subclasshoook__ method is where it gets real funky. It basically patches python’s issubclass and isinstance methods, and this function as written here basically tells python that  <strong>any class that implements all of the abstractmethods IS A SimilarityTransformInterface</strong>, and there’s no need to inherit from it!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">NotOne</span><span class="p">:</span> <span class="k">pass</span>
+<span class="k">class</span> <span class="nc">IsOne</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
+    <span class="k">def</span> <span class="nf">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
+    
+<span class="k">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">NotOne</span><span class="p">,</span> <span class="n">SimilarityTransformInterface</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">IsOne</span><span class="p">,</span> <span class="n">SimilarityTransformInterface</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>False
+True
+</code></pre></div></div>
+
+<p>So now we’ve defined our interface, and we can check to make sure whatever we’re being passed conforms to it. We’re now officially done writing the algorithm. Now all we have to do is write a wrapper for whatever our data types are to make them conform to the interface. I did this for numpy arrays below by copying fromt their documentation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">NumpyShim</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+    <span class="s">"""This wraps a numpy array object into a SimiliarityTransformInterface compliant object."""</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">input_array</span><span class="p">):</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">obj</span>
+    
+    <span class="k">def</span> <span class="nf">__array_finalize__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"I just used the np.linalg.inv inverse"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Ignore the __new__ and __aray_finalize__ functions. They have to do with complications of subclassing numpy arrays. Since numpy already defines the __matmul__ function (for using @ on numpy arrays) all I have to define is the inverse. Numpy also has an inverse function, so I can just call that function within inverse(). Right now this all probably looks like a lot more work to write a one line numpy function, but bear with me.</p>
+
+<p>Let’s first make sure that our similarity transform algorithm works on numpy arrays. We can test this by diagonalizing a symmetric matrix, and seeing if we can use the eigenvectors to transform it into a diagonal matrix of eigenvalues.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span>
+<span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="n">S</span> <span class="o">=</span> <span class="n">NumpyShim</span><span class="p">(</span><span class="n">evecs</span><span class="p">)</span>
+<span class="n">M</span> <span class="o">=</span> <span class="n">NumpyShim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"Eigenvalues are: "</span><span class="p">,</span> <span class="n">evals</span><span class="p">)</span>
+
+<span class="n">SimilarityTransform</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Eigenvalues are:  [-3.71087275 -1.94249831 -0.09555686  3.90007723]
+I just used the np.linalg.inv inverse
+
+
+
+
+
+NumpyShim([[-3.71087275, -0.        , -0.        ,  0.        ],
+           [-0.        , -1.94249831, -0.        ,  0.        ],
+           [ 0.        ,  0.        , -0.09555686, -0.        ],
+           [ 0.        ,  0.        , -0.        ,  3.90007723]])
+</code></pre></div></div>
+
+<p>Wohoo! It works! But that was a lot of work for basically nothing. Here’s where it can get interesting. We know that we have orthogonal eigenvectors of a hermitian matrix, and we know that the inverse of an orthogonal matrix is just it’s transpose. So let’s not waste our time calculating the inverse when we could just do the transpose. But we don’t wanna mess with the algorithm when we know it works:</p>
+
+<p>Let’s do this by making a specialized OrthogonalArray class, whose inverse() method is just the transpose operation. Like so:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">OrthogonalArray</span><span class="p">(</span><span class="n">NumpyShim</span><span class="p">):</span>
+    <span class="s">"""Specializes inverse function for orthogonal numpy arrays"""</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="err">@</span> <span class="bp">self</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))),</span> <span class="mf">0.0</span> <span class="p">)),</span> <span class="s">"Must be orthogonal!"</span>
+    
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"I just used the orthogonal array inverse"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<p>Now all we have to do is convert our eigenvectors to be an OrthogonalArray and call the similarity transform on that. Note that it uses the orthogonal array inverse function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sym</span> <span class="o">=</span> <span class="n">OrthogonalArray</span><span class="p">(</span><span class="n">evecs</span><span class="p">)</span>
+<span class="n">SimilarityTransform</span><span class="p">(</span><span class="n">sym</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>I just used the orthogonal array inverse
+
+
+
+
+
+OrthogonalArray([[-3.71087275, -0.        , -0.        ,  0.        ],
+                 [-0.        , -1.94249831,  0.        ,  0.        ],
+                 [-0.        , -0.        , -0.09555686, -0.        ],
+                 [ 0.        ,  0.        , -0.        ,  3.90007723]])
+</code></pre></div></div>
+
+<p>Ok that’s pretty neat, isn’t it? We can specialize our data structures to optimize certain restrictions that we know to be true. But the underlying algorithm is unchanged.</p>
+
+<p>If you’re still not convinced, imagine the following: You could use a sparse array, an out-of-memory dask array, or maybe a massively parallel Trilinos or Petsc array to do this <strong>same algorithm</strong> they just <em>need to implement the correct interface</em>.</p>
+
+<h2 id="ok-lets-get-real-weird">Ok let’s get real weird</h2>
+
+<p>Allow me to demonstrate. I’m going to use the same function to do a <em>symbolic</em> similarity transform using sympy.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">init_printing</span><span class="p">,</span> <span class="n">symbols</span>
+<span class="n">init_printing</span><span class="p">(</span><span class="n">use_unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">SympyShim</span><span class="p">(</span><span class="n">Matrix</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">):</span>
+        <span class="bp">self</span> <span class="o">=</span> <span class="n">mat</span>
+        
+    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Again, sympy implements the @ operator for us already. (We could have actually required .inv() instead of .inverse() and used both numpy and sympy, but I wanted to illustrate). So we spend the 10 seconds it takes to implement our interface using sympy Matrices.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">'a b'</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">]])</span>
+<span class="n">display</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[\begin{matrix}a & b\\b & a\end{matrix}\right] %]]></script>
+
+<p>Let’s take a look at the eigenvalues and vectors:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pair1</span><span class="p">,</span> <span class="n">pair2</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">eigenvects</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pair1</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">pair2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">\left ( a - b, \quad 1, \quad \left [ \left[\begin{matrix}-1\\1\end{matrix}\right]\right ]\right )</script>
+
+<script type="math/tex; mode=display">\left ( a + b, \quad 1, \quad \left [ \left[\begin{matrix}1\\1\end{matrix}\right]\right ]\right )</script>
+
+<p>Sympy gives us (eigenvalue, multiplicity, eigenvector) tuples as a result, so we have our eigenvectors and values. Lets make a single matrix for the vectors:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sympy_evecs</span> <span class="o">=</span> <span class="n">pair1</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">col_insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pair2</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">sympy_evecs</span>
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[\begin{matrix}-1 & 1\\1 & 1\end{matrix}\right] %]]></script>
+
+<p>Now just convert to our interface type, and use our similarity transform:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">s</span> <span class="o">=</span> <span class="n">SympyShim</span><span class="p">(</span><span class="n">sympy_evecs</span><span class="p">)</span>
+<span class="n">SimilarityTransform</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+</code></pre></div></div>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left[\begin{matrix}a - b & 0\\0 & a + b\end{matrix}\right] %]]></script>
+
+<p><strong>What the &gt;^_!</strong> it works!!!  Ok maybe I’m overexaggerating what’s going on here but I’ve demonstrated the core idea here. This is an incredibly simple function that I’m implementing but the core idea is the same. <strong>The duck typing of Python makes it an ideal language to implement abstract algorithms that are independent of the underling datatypes</strong>. Can you do this type of thing in C++? Surely, but get your templates and 1200 character types ready.</p>
+
+<p>I also think that a lot of linear algebra algorithms are a great target for this approach. Writing a lot of the interface code is quite straightforward (it really really really looks like pseudo code) and then you just have to wrap a lot of very commonly implemented tasks anyway (inverse, dot product, etc).</p>
+
+<p>Then you can leverage a lot of linear algebra packages: numpy/scipy, theano, dask, pestc, trilinos, CUDABLAS, tensorflow, etc. with the same algorithms.</p>
+
+<p>You can also do <strong>Matrix free computation where you never even store a matrix</strong>. This problem happens all the time if you’re dealing with very large matrices that are hundreds of thousands or millions of rows.</p>
+
+<p>Maybe we can re implement <a href="https://trilinos.org/packages/anasazi/">anasazi</a> eigensolvers at the algorithm level in python. Then we can have plug-n-play Lanczos, Arnoldi, Davidson, etc algorithms.</p>
+
+<p>Last thing then I’ll be quiet. Imagine using this approach in conjunction with numpy as a proof of concept of your algorithm. Come production time, just write a wrapper for theano and if you do it properly you ought to be able to generate the compute graph of your entire algorithm, and let theano optimize and compile it. I really think this approach to solving problems will really shine when paired with the Python scientific stack.</p>
+
+  </div>
+
+  
+</article>
+
+      </div>
+    </main>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Evan&#39;s Blog!</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li>
+            
+              Evan&#39;s Blog!
+            
+            </li>
+            
+            <li><a href="mailto:evanmcurtin@gmail.com">evanmcurtin@gmail.com</a></li>
+            
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <ul class="social-media-list">
+          
+          <li>
+            <a href="https://github.com/ecurtin2"><span class="icon icon--github"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M7.999,0.431c-4.285,0-7.76,3.474-7.76,7.761 c0,3.428,2.223,6.337,5.307,7.363c0.388,0.071,0.53-0.168,0.53-0.374c0-0.184-0.007-0.672-0.01-1.32 c-2.159,0.469-2.614-1.04-2.614-1.04c-0.353-0.896-0.862-1.135-0.862-1.135c-0.705-0.481,0.053-0.472,0.053-0.472 c0.779,0.055,1.189,0.8,1.189,0.8c0.692,1.186,1.816,0.843,2.258,0.645c0.071-0.502,0.271-0.843,0.493-1.037 C4.86,11.425,3.049,10.76,3.049,7.786c0-0.847,0.302-1.54,0.799-2.082C3.768,5.507,3.501,4.718,3.924,3.65 c0,0,0.652-0.209,2.134,0.796C6.677,4.273,7.34,4.187,8,4.184c0.659,0.003,1.323,0.089,1.943,0.261 c1.482-1.004,2.132-0.796,2.132-0.796c0.423,1.068,0.157,1.857,0.077,2.054c0.497,0.542,0.798,1.235,0.798,2.082 c0,2.981-1.814,3.637-3.543,3.829c0.279,0.24,0.527,0.713,0.527,1.437c0,1.037-0.01,1.874-0.01,2.129 c0,0.208,0.14,0.449,0.534,0.373c3.081-1.028,5.302-3.935,5.302-7.362C15.76,3.906,12.285,0.431,7.999,0.431z"/></svg>
+</span><span class="username">ecurtin2</span></a>
+
+          </li>
+          
+
+          
+          <li>
+            <a href="https://twitter.com/emc923"><span class="icon icon--twitter"><svg viewBox="0 0 16 16" width="16px" height="16px"><path fill="#828282" d="M15.969,3.058c-0.586,0.26-1.217,0.436-1.878,0.515c0.675-0.405,1.194-1.045,1.438-1.809c-0.632,0.375-1.332,0.647-2.076,0.793c-0.596-0.636-1.446-1.033-2.387-1.033c-1.806,0-3.27,1.464-3.27,3.27 c0,0.256,0.029,0.506,0.085,0.745C5.163,5.404,2.753,4.102,1.14,2.124C0.859,2.607,0.698,3.168,0.698,3.767 c0,1.134,0.577,2.135,1.455,2.722C1.616,6.472,1.112,6.325,0.671,6.08c0,0.014,0,0.027,0,0.041c0,1.584,1.127,2.906,2.623,3.206 C3.02,9.402,2.731,9.442,2.433,9.442c-0.211,0-0.416-0.021-0.615-0.059c0.416,1.299,1.624,2.245,3.055,2.271 c-1.119,0.877-2.529,1.4-4.061,1.4c-0.264,0-0.524-0.015-0.78-0.046c1.447,0.928,3.166,1.469,5.013,1.469 c6.015,0,9.304-4.983,9.304-9.304c0-0.142-0.003-0.283-0.009-0.423C14.976,4.29,15.531,3.714,15.969,3.058z"/></svg>
+</span><span class="username">emc923</span></a>
+
+          </li>
+          
+        </ul>
+      </div>
+
+      <div class="footer-col footer-col-3">
+        <p>Overthinking simple questions since 2016 (kinda).</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+
+
+  </body>
+
+</html>

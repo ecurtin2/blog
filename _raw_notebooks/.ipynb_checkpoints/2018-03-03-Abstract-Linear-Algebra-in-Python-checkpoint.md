@@ -1,13 +1,3 @@
----
-title: Abstract Linear Algebra in Python
-layout: post
----
-
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
-$$ \mathbf{S^{-1}AS} =  \left[\begin{matrix}a - b & 0\\0 & a + b\end{matrix}\right]$$
-
-
-
 
 Lately I've been playing around with the [anasazi](https://trilinos.org/packages/anasazi/) library. It's basically a library that implements algorithms to solve eigenvalue problems that are all completely unaware of the underling data structures. The way this is done is by implementing the algorithms in terms of an **interface**. Basically, this interface is a contract between whoever wrote the library, and whoever is using it. It's a formal way for the library writer to say "If you give me an object that implements x, and y, this library will do Z with that object."
 
@@ -34,7 +24,7 @@ from IPython.display import display
 ```
 
 Lets write out a function for a similarity transform, 
-$$\mathbf{\tilde{A}} = \mathbf{S}^{-1}\mathbf{A}\mathbf{S}$$ 
+$\mathbf{\tilde{A}} = \mathbf{S}^{-1}\mathbf{A}\mathbf{S}$, 
 but let's use this idea of an abstract interface. The funny thing is, this looks remarkable like psuedo - code:
 
 
@@ -276,3 +266,8 @@ You can also do **Matrix free computation where you never even store a matrix**.
 Maybe we can re implement [anasazi](https://trilinos.org/packages/anasazi/) eigensolvers at the algorithm level in python. Then we can have plug-n-play Lanczos, Arnoldi, Davidson, etc algorithms.
 
 Last thing then I'll be quiet. Imagine using this approach in conjunction with numpy as a proof of concept of your algorithm. Come production time, just write a wrapper for theano and if you do it properly you ought to be able to generate the compute graph of your entire algorithm, and let theano optimize and compile it. I really think this approach to solving problems will really shine when paired with the Python scientific stack.
+
+
+```python
+
+```
