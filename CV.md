@@ -3,10 +3,6 @@ layout: page
 title: CV
 ---
 
-###### Evan M. Curtin
-
-##### evanmcurtin@gmail.com | (267) 644 - 6180 #####
-
 ### Education
 -------------
 2015 - Present
@@ -24,7 +20,7 @@ Philadelphia, PA
 
 2010 - Present
 :     **Data Analysis/Presentation**  
-     Automated data analysis pipelines and presented technical information to
+     Automated data analysis pipelines using the Python data stack and presented technical information to
      expert and layman audiences.
 
 2012 - Present
@@ -33,11 +29,10 @@ Philadelphia, PA
 
 2012 - Present
 :     **Programming**  
-     Procedural and Object-oriented programming and experienced in numerical
-     methods.  
-      -- **Most experience:** C++, Python  
-      -- **Moderate experience:** Fortran  
-      -- **Familiar with:** HTML/CSS  
+     Experienced in creating lightweight, rapid-iterations in scientific python, as well as highly tuned C++ scaling across a supercomputer.  
+      -- **Most experience:** Python 
+      -- **Moderate experience:** C++ 
+      -- **Some experience:** Fortran  
 
 ### Experience
 -----------------------
@@ -46,23 +41,26 @@ Philadelphia, PA
 Urbana, IL
 :     **University of Illinois @ Urbana-Champaign**  
       *Graduate Research/Teaching Assistant*   
-      Developed a method for predicting the phase diagram of the electron gas.
-      Taught Physical Chemistry and General Chemistry Lab and was
+      Developed a method for predicting the phase diagram of the electron gas. This required the solution
+      of an eigenvalue problem with hundreds of thousands of degrees of freedom, which was done using high
+      performance, parallel C++ on the Blue Waters Supercomputer.
+      Additionally, I taught Physical Chemistry and General Chemistry Lab and was
       rated "excellent" by students.
 
 2013 - 2015   
 Philadelphia, PA
 :     **Drexel University**  
       *Research Assistant*    
-      Created a method to analyze vibrations in branched molecules
-      and to predict electron transit times.
+      Created a method to analyze vibrations in branched molecules (Fortran 90)
+      and to predict electron transit times (Python 3). The python module was implemented using
+      just-in-time compilation to achieve speed comparable to compiled code. 
 
 Apr - Sep 2013
 Spring House, PA
 :     **Janssen Pharmaceuticals of Johnson & Johnson**  
       *Biologics R&D Co-op*    
       Determined the kinetics and affinity for antibody therapeutics
-      binding to disease targets.
+      binding to disease targets using Surface Plasmon Resonance (SPR).
 
 Apr - Sep 2012
 Exton, PA
