@@ -5,7 +5,7 @@ title: CV
 
 ###### Evan M. Curtin
 
-<!--##### evanmcurtin@gmail.com | (267) 644 - 6180 #####-->
+##### evanmcurtin@gmail.com | (267) 644 - 6180 #####
 
 ### Education
 -------------
@@ -29,12 +29,11 @@ Philadelphia, PA
 
 2012 - Present
 :     **Method Development**  
-     Created numerical models for scientific problems using
-     Linear Algebra and Differential Equations.
+     Created numerical models to solve problems in computational chemistry by employing techniques from Linear Algebra and Differential Equations.
 
 2012 - Present
 :     **Programming**  
-     Object-oriented programming and experienced in numerical
+     Procedural and Object-oriented programming and experienced in numerical
      methods.  
       -- **Most experience:** C++, Python  
       -- **Moderate experience:** Fortran  
@@ -72,7 +71,7 @@ Exton, PA
       Analyzed company and client samples using company protocols as well as
       cGMP and GLP practices.
 
-2011 - 2012
+Jun - Sep 2011
 Philadelphia, PA
 :     **Drexel University**    
       *Undergraduate Research Assistant*    
@@ -80,7 +79,7 @@ Philadelphia, PA
       [Open Science Melting Point and Solubility Databases
       ](http://usefulchem.wikispaces.com/).
 
-### Publications
+### Selected Publication
 ----------------
 
 Mar 2016
@@ -90,6 +89,7 @@ Mar 2016
       ***Curtin, E. M.***, & Sohlberg, K.
       *Physica E: Low-Dimensional Systems and Nanostructures*, 77, 131–137.
 
+<!--
 Jan 2015
 :     [**Determination of Abraham model solute descriptors for the
          monomeric and dimeric forms of trans-cinnamic acid using
@@ -121,6 +121,7 @@ Mar 2016
 :     **NSF-GRFP Honorable Mention**  
       National Science Foundation
 
+
 May 2015
 :     **Chemistry Second Honors**  
       Drexel University College of Arts and Sciences
@@ -136,3 +137,4 @@ May 2015
 May 2011
 :     **Open Notebook Science Award**  
       Royal Society of Chemistry
+-->

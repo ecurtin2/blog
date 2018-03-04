@@ -71,7 +71,7 @@
 <h2 id="motivation">Motivation</h2>
 <p>Let’s say we have a few methods for calculating something, and a few systems on which we want to use each method. Potentially there’s a third layer of variables: maybe we’re having a bunch of students run the calculations. This type of problem can pop up all over the place and plotting each figure manually can be a bit painful, particularly if you have to keep changing it. I think it would be nice to have a quick way to produce high quality plots instantly so that they can be quickly updated if need be.</p>
 
-<h2 id="boilerplate">1) Boilerplate</h2>
+<h2 id="1-boilerplate">1) Boilerplate</h2>
 <hr />
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">math</span>
@@ -83,7 +83,7 @@
 </code></pre>
 </div>
 
-<h2 id="get-data">2) Get Data</h2>
+<h2 id="2-get-data">2) Get Data</h2>
 <hr />
 
 <p>Now if you already have data, just load it up using some of the pandas built-in functions. I’m just gonna make up some! Suppose we have data from 4 methods, each with 4 systems being studied, and each of both of these is being calculated by every one of 2 students:</p>
@@ -122,7 +122,7 @@
 </code></pre>
 </div>
 
-<h2 id="convert-data-to-convenient-form">3) Convert Data to Convenient Form</h2>
+<h2 id="3-convert-data-to-convenient-form">3) Convert Data to Convenient Form</h2>
 <hr />
 
 <p>This is where pandas comes in handy. The <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">pandas DataFrame</a> object has a ton of useful features that we will be using gratuitously, so let’s load up some data  and get it into a format that pandas can use:</p>
@@ -172,12 +172,12 @@
 </code></pre>
 </div>
 
-<h2 id="plot-by-groups">4) Plot By groups</h2>
+<h2 id="4-plot-by-groups">4) Plot By groups</h2>
 <hr />
 
 <p>Ok here comes the fun stuff! This got a bit more complex than I thought it would at first, but I’ve gotten it to work pretty well. The general idea is to group the data by one (or more) of the 3 categories and apply the same color or style to each member of that group. Additionally, we can group once more into matplotlib’s subplots (this is why I chose 3 possible groupings, but don’t tell anybody!).</p>
 
-<h3 id="a-create-the-class">4a) Create the Class</h3>
+<h3 id="4a-create-the-class">4a) Create the Class</h3>
 <hr />
 
 <p>About half way through writing this, I figured out that it makes a lot more sense to write it in an object oriented style. Let’s make the class, have it initialize with a dataframe, the labels for x and y values in the dataframe, and set some default values.</p>
@@ -203,7 +203,7 @@
 <p>Here I’m letting the user choose several options. We’ll make it so that they can choose whether or not to group by colors, styles or subplots. The <em>self.subplt_cols</em> option is to set the number of columns used in the subplot, but is not needed. Finally the user can submit a list of styles that matplotlib will use to draw the lines (such a
 s [’-‘, ‘..’]).</p>
 
-<h3 id="b-determine-number-of-entries-per-category">4b) Determine number of entries per category</h3>
+<h3 id="4b-determine-number-of-entries-per-category">4b) Determine number of entries per category</h3>
 <hr />
 <p>Ok, now that the defaults are set, let’s get into the meat of the program. First, we need to know how many items are contained in each grouping. This is where I’m using panda’s <a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html">indexing options</a> to index a column of the data frame based on the string that labels it. Then the <em>.unique()</em> function removes duplicated entries. What I’m left with is a list of the unique entries in that column:</p>
 
@@ -229,7 +229,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h3 id="c-determine-colors">4c) Determine Colors</h3>
+<h3 id="4c-determine-colors">4c) Determine Colors</h3>
 <hr />
 
 <p>I decided to use a dictionary for this part. Basically all this function does is remake a color scheme if more than 6 are needed, then construct a dictionary <em>color_dic</em>. The dictionary contains the unique entries in the <em>self.color_by</em> column, and map them to the entries of the <a href="https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.color_palette.html">seaborn color palette</a>. This way the user can define any colorscheme they want, by changing the color palette using the <a href="https://stanford.edu/~mwaskom/software/seaborn/generated/seaborn.set_palette.html">set_palette</a> function.</p>
@@ -246,7 +246,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h3 id="d-determine-styles">4d) Determine Styles</h3>
+<h3 id="4d-determine-styles">4d) Determine Styles</h3>
 <hr />
 
 <p>Matplotlib has 4 linestyle options, If the user requests too many styles, throw an error</p>
@@ -274,7 +274,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h3 id="e-determine-subplot-info">4e) Determine subplot info</h3>
+<h3 id="4e-determine-subplot-info">4e) Determine subplot info</h3>
 <hr />
 
 <p>In order to draw the subplots, we need to know how many rows and columns we want. We let the user specify the number of columns if they want, but by default I thought it made sense to try to get as close to a square as possible. I did this by taking the total number of subplots requested, square rooting it and rounding down to the nearest integer. By rounding down we ensure that the plot will add rows before it adds more columns, which I think looks nicer.</p>
@@ -293,7 +293,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h3 id="f-make-the-plots">4f) Make the plots</h3>
+<h3 id="4f-make-the-plots">4f) Make the plots</h3>
 <hr />
 
 <p>Ok so now we have all of the parameters ready to go. Let’s get to plotting! We’ll be using the <em>self.lines</em> and <em>self.labels</em> attributes later to make a legend. I chose to iterate through each row of the data frame, and plot its x and y values according to the color, style and subplot given in the corresponding dictionaries. This one’s a bit long, but I’ve tried to write it as clearly as possible.</p>
@@ -338,7 +338,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h3 id="e-make-the-figure-legend">4e) Make the Figure Legend</h3>
+<h3 id="4e-make-the-figure-legend">4e) Make the Figure Legend</h3>
 <hr />
 
 <p>If you were to just use plt.figure() at the end of the code, you get a single legend in the last entry of the subplots. Since we’re categorizing and the same type of lines will have the same color and style across each subplot, it makes sense to use one legend for all of them. This is done using matplotlib’s <a href="http://matplotlib.org/examples/pylab_examples/figlegend_demo.html">figlegend</a> command. Since we’ve stored all the lines and labels in lists, we just have to make a list of the unique labels, and only generate legend entries for those (ignore any that turn out empty!). Then we just have to set the location:</p>
@@ -356,7 +356,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h3 id="f-plot">4f) Plot!</h3>
+<h3 id="4f-plot">4f) Plot!</h3>
 <hr />
 
 <p>Finally, lets wrap up the method into a nice plot function:</p>
@@ -374,7 +374,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h3 id="g-done">4g) Done!</h3>
+<h3 id="4g-done">4g) Done!</h3>
 <hr />
 
 <p>Ok that took some time, but here’s the class in its entirety:</p>
@@ -513,7 +513,7 @@ s [’-‘, ‘..’]).</p>
 </code></pre>
 </div>
 
-<h2 id="use">5) Use!</h2>
+<h2 id="5-use">5) Use!</h2>
 <hr />
 <p>Let’s go back to our original problem. To use the function, all we need to do is get our data into a pandas DataFrame, and create a <em>GroupPlot</em> instance. Then we specify what type of groupings we want, and that’s it! I’ve added a few formatting specifiers to make it look a bit better.</p>
 
