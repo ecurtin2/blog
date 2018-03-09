@@ -20,10 +20,10 @@ Philadelphia, PA
 
 2010 - Present
 :     **Data Analysis/Presentation**  
-     - Automated data analysis pipelines using the Python data stack, emphasizing reproducibility
-       via complete automation from data generation all the way through presentation. 
-     - Presented technical information to expert and layman audiences. I prioritize clarity of 
-     content by using ideas from color theory.  
+      - Automated data analysis pipelines using the Python data stack, emphasizing reproducibility
+        via complete automation from data generation all the way through presentation. 
+      - Presented technical information to expert and layman audiences. I prioritize clarity of 
+        content by using ideas from color theory.  
 
 2012 - Present
 :     **Method Development**  
@@ -35,9 +35,9 @@ Philadelphia, PA
 :     **Programming**  
      Experienced in creating lightweight, rapid-iterations in scientific python, as well as highly tuned C++ scaling across a supercomputer.  
      I often cherry pick ideas from software engineering when they improve a code base.
-      -- **Most experience:** Python (2 and 3)
-      -- **Moderate experience:** C++ (C++11 onward)
-      -- **Some experience:** Fortran (pre-2003 standard)  
+     - **Most experience:** Python (2 and 3)
+     - **Moderate experience:** C++ (C++11 onward)
+     - **Some experience:** Fortran (pre-2003 standard)  
 
 ### Experience
 -----------------------
@@ -90,33 +90,35 @@ Philadelphia, PA
       in some cases performing the measurements to resolve discrepancies. 
       - All work was done using Open Science principles.
 
-### Selected Publication
+### Publications
 ----------------
 
 Mar 2016
-:     [**A Reduced Dimensionality Model of Torsional Vibrations in
+:     - [**A Reduced Dimensionality Model of Torsional Vibrations in
          Star Molecules**
-      ](http://dx.doi.org/10.1016/j.physe.2015.11.013)  
-      ***Curtin, E. M.***, & Sohlberg, K.
-      *Physica E: Low-Dimensional Systems and Nanostructures*, 77, 131–137.
+        ](http://dx.doi.org/10.1016/j.physe.2015.11.013)  
+        ***Curtin, E. M.***, & Sohlberg, K.
+        *Physica E: Low-Dimensional Systems and Nanostructures*, 77, 131–137.
+
 
 Jan 2015
-:     [**Determination of Abraham model solute descriptors for the
+:     - [**Determination of Abraham model solute descriptors for the
          monomeric and dimeric forms of trans-cinnamic acid using
          measured solubilities from the Open Notebook Science
          Challenge**
-      ](http://dx.doi.org/10.1186/s13065-015-0080-9)   
-      Jean-Claude Bradley, Michael H Abraham, William E Acree Jr,
-      Andrew SID Lang, Samantha N Beck, David A Bulger, Elizabeth A Clark,
-      Lacey N Condron, Stephanie T Costa, ***Evan M Curtin***,
-      Sozit B Kurtu, Mark I Mangir and Matthew J McBride
-      *Chemistry Central Journal*, 9(1), 11.
+        ](http://dx.doi.org/10.1186/s13065-015-0080-9)   
+        Jean-Claude Bradley, Michael H Abraham, William E Acree Jr,
+        Andrew SID Lang, Samantha N Beck, David A Bulger, Elizabeth A Clark,
+        Lacey N Condron, Stephanie T Costa, ***Evan M Curtin***,
+        Sozit B Kurtu, Mark I Mangir and Matthew J McBride
+        *Chemistry Central Journal*, 9(1), 11.
+
 
 Aug 2011
-:     [**ONS Open Melting Point Collection**
-      ](http://dx.doi.org/10.1038/npre.2011.6229.1)  
-      Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., & ***Curtin, E***.
-      *Nature Precedings*.
+:     - [**ONS Open Melting Point Collection**
+        ](http://dx.doi.org/10.1038/npre.2011.6229.1)  
+        Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., & ***Curtin, E***.
+        *Nature Precedings*.
 
 
 
@@ -127,6 +129,7 @@ Aug 2016
 :     **Mark Pytosh Fellowship**  
       University of Illinois at Urbana Champaign
 
+
 Mar 2016
 :     **NSF-GRFP Honorable Mention**  
       National Science Foundation
@@ -136,13 +139,16 @@ May 2015
 :     **Chemistry Second Honors**  
       Drexel University College of Arts and Sciences
 
+
 May 2015
 :     **Hypercube Scholar Award**  
       Hypercube, Inc.
 
+
 May 2015
 :     **Baccalaureate Award for Academic Achievement**  
       American Institute of Chemists
+
 
 May 2011
 :     **Open Notebook Science Award**  
