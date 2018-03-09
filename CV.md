@@ -1,4 +1,4 @@
----
+﻿---
 layout: page
 title: CV
 ---
@@ -13,26 +13,31 @@ Urbana, IL
 2010 - 2015
 Philadelphia, PA
 :    **Drexel University**  
-     *Bachelors and Masters of Science in Chemistry*, GPA: 3.85  
+     *BS and MS in Chemistry*, GPA: 3.85  
 
 ### Technical Skills
 --------------------
 
 2010 - Present
 :     **Data Analysis/Presentation**  
-     Automated data analysis pipelines using the Python data stack and presented technical information to
-     expert and layman audiences.
+     - Automated data analysis pipelines using the Python data stack, emphasizing reproducibility
+       via complete automation from data generation all the way through presentation. 
+     - Presented technical information to expert and layman audiences. I prioritize clarity of 
+     content by using ideas from color theory.  
 
 2012 - Present
 :     **Method Development**  
-     Created numerical models to solve problems in computational chemistry by employing techniques from Linear Algebra and Differential Equations.
+     Created models to solve problems in computational chemistry by employing techniques from Linear Algebra, Differential Equations
+     and numerical optimization. My favorite approach is to distill the simplest possible model that is effective, but am not afraid
+     to utilize complex models when necessary.
 
 2012 - Present
 :     **Programming**  
      Experienced in creating lightweight, rapid-iterations in scientific python, as well as highly tuned C++ scaling across a supercomputer.  
-      -- **Most experience:** Python 
-      -- **Moderate experience:** C++ 
-      -- **Some experience:** Fortran  
+     I often cherry pick ideas from software engineering when they improve a code base.
+      -- **Most experience:** Python (2 and 3)
+      -- **Moderate experience:** C++ (C++11 onward)
+      -- **Some experience:** Fortran (pre-2003 standard)  
 
 ### Experience
 -----------------------
@@ -41,41 +46,49 @@ Philadelphia, PA
 Urbana, IL
 :     **University of Illinois @ Urbana-Champaign**  
       *Graduate Research/Teaching Assistant*   
-      Developed a method for predicting the phase diagram of the electron gas. This required the solution
+      - Developed a method for predicting how electrons align in solids. This required the solution
       of an eigenvalue problem with hundreds of thousands of degrees of freedom, which was done using high
-      performance, parallel C++ on the Blue Waters Supercomputer.
-      Additionally, I taught Physical Chemistry and General Chemistry Lab and was
+      performance, parallel C++ on the Blue Waters Supercomputer. 
+      - Implemented a deterministic global minimum search algorithm in order to find better solutions to fundamental
+	problems in theoretical chemistry and physics. 
+      - Analyzed datasets bigger than 16GB out-of-memory by utilizing the HDF5 file format in conjunction with the python
+	data stack (pandas, numpy, scipy, dask).    
+      - Taught Physical Chemistry and General Chemistry Lab and was
       rated "excellent" by students.
 
 2013 - 2015   
 Philadelphia, PA
 :     **Drexel University**  
       *Research Assistant*    
-      Created a method to analyze vibrations in branched molecules (Fortran 90)
-      and to predict electron transit times (Python 3). The python module was implemented using
-      just-in-time compilation to achieve speed comparable to compiled code. 
+      - Created a method detemine how rapidly branched molecules vibrate with reduced computational
+      complexity in Fortran 90. 
+      - Invented a scheme to predict how long electrons take to move
+      across a molecule in Python 3. The python module was accelerated with Numba to achieve very fast execution speed. 
 
 Apr - Sep 2013
 Spring House, PA
 :     **Janssen Pharmaceuticals of Johnson & Johnson**  
       *Biologics R&D Co-op*    
-      Determined the kinetics and affinity for antibody therapeutics
-      binding to disease targets using Surface Plasmon Resonance (SPR).
+      - Determine how quickly drugs bind to and release from disease targets using Surface Plasmon Resonance (SPR).
+      This information informed high-level decisions about which drug candidates to pursue.	
 
 Apr - Sep 2012
 Exton, PA
 :     **West Pharmaceutical Services**    
       *Quality Control Co-op*    
-      Analyzed company and client samples using company protocols as well as
-      cGMP and GLP practices.
+      - Analyzed company and client products with analytical chemistry techniques to 
+      ensure consistency of quality, while applying cGMP and GLP practices.
 
 Jun - Sep 2011
 Philadelphia, PA
 :     **Drexel University**    
       *Undergraduate Research Assistant*    
-      Curated and generated data for the
+      - Curated and generated data for the
       [Open Science Melting Point and Solubility Databases
-      ](http://usefulchem.wikispaces.com/).
+      ](http://usefulchem.wikispaces.com/). 
+      - This required validation of data from multiple database sources, and 
+      in some cases performing the measurements to resolve discrepancies. 
+      - All work was done using Open Science principles.
 
 ### Selected Publication
 ----------------
@@ -87,7 +100,6 @@ Mar 2016
       ***Curtin, E. M.***, & Sohlberg, K.
       *Physica E: Low-Dimensional Systems and Nanostructures*, 77, 131–137.
 
-<!--
 Jan 2015
 :     [**Determination of Abraham model solute descriptors for the
          monomeric and dimeric forms of trans-cinnamic acid using
@@ -113,7 +125,7 @@ Aug 2011
 
 Aug 2016
 :     **Mark Pytosh Fellowship**  
-      University of Illinois @ Urbana Champaign
+      University of Illinois at Urbana Champaign
 
 Mar 2016
 :     **NSF-GRFP Honorable Mention**  
@@ -135,4 +147,3 @@ May 2015
 May 2011
 :     **Open Notebook Science Award**  
       Royal Society of Chemistry
--->
