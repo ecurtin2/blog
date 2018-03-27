@@ -28,6 +28,11 @@ theme: minima
 plugins:
   - jekyll-feed
 
+disqus:
+  shortname: ecurtin2
+
+google_analytics: UA-81645801-1
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
