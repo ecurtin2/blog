@@ -1,5 +1,123 @@
+---
+---
+
 @import "minima";
 
-a {
-  color: red;
+:root {
+  --ec_black: #000000;
+  --ec_code_background: #eef;
+  --ec_blue: #0066BB;
+  --ec_red: red;
+  --ec_green: green;
+  --ec_purple: purple;
 }
+
+
+/**
+ * Syntax highlighting styles
+ */
+
+.highlighter-rouge .highlight {
+  background: var(--ec_code_background);
+}
+
+.highlight .c { color: #888888 } /* Comment */
+.highlight .err { color: #FF0000; } /* Error */
+.highlight .k { color: var(--ec_green); font-weight: bold } /* Keyword */
+.highlight .o { color: var(--ec_black);  } /* Operator */
+
+.highlight .ch { color: #888888 } /* Comment.Hashbang */
+.highlight .cm { color: #888888 } /* Comment.Multiline */
+.highlight .cp { color: #557799 } /* Comment.Preproc */
+.highlight .cpf { color: #888888 } /* Comment.PreprocFile */
+.highlight .c1 { color: #888888 } /* Comment.Single */
+.highlight .cs { color: #cc0000; font-weight: bold } /* Comment.Special */
+
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+
+.highlight .kc { color: var(--ec_green); font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: var(--ec_green); font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: var(--ec_green); font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: var(--ec_green); font-weight: bold } /* Keyword.Pseudo */
+.highlight .kr { color: var(--ec_green); font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: var(--ec_green); font-weight: bold } /* Keyword.Type */
+
+
+/* .highlight .s { background-color: #fff0f0 }*/ /* Literal.String */
+
+.highlight .na { color: #0000CC } /* Name.Attribute */
+.highlight .nb { color: #007020 } /* Name.Builtin */
+.highlight .nc { color: var(--ec_blue); font-weight: bold } /* Name.Class */
+.highlight .no { color: #003366; font-weight: bold } /* Name.Constant */
+.highlight .nd { color: var(--ec_purple); font-weight: bold } /* Name.Decorator */
+.highlight .ni { color: #880000; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #FF0000; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: var(--ec_blue); font-weight: bold } /* Name.Function */
+.highlight .nl { color: #997700; font-weight: bold } /* Name.Label */
+.highlight .nn { color: var(--ec_blue); font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #007700 } /* Name.Tag */
+.highlight .nv { color: #996633 } /* Name.Variable */
+
+.highlight .ow { color: var(--ec_green); font-weight: bold } /* Operator.Word */
+
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+
+.highlight .m  { color: var(--ec_green);} /* Literal.Number */
+.highlight .mb { color: var(--ec_green); } /* Literal.Number.Bin */
+.highlight .mf { color: var(--ec_green); } /* Literal.Number.Float */
+.highlight .mh { color: var(--ec_green); } /* Literal.Number.Hex */
+.highlight .mi { color: var(--ec_green); } /* Literal.Number.Integer */
+.highlight .mo { color: var(--ec_green); } /* Literal.Number.Oct */
+
+.highlight .sc { color: var(--ec_red); } /* Literal.String.Char */
+.highlight .sd { color: var(--ec_red); } /* Literal.String.Doc */
+.highlight .se { color: var(--ec_red); } /* Literal.String.Escape */
+.highlight .sx { color: var(--ec_red); } /* Literal.String.Other */
+.highlight .sr { color: var(--ec_red); } /* Literal.String.Regex */
+.highlight .ss { color: var(--ec_red); } /* Literal.String.Symbol */
+
+.highlight .bp { color: var(--ec_green); } /* Name.Builtin.Pseudo: True, self */
+
+
+
+
+
+/* Tables!! Pandas DataFrame! :) */
+table {
+    width: 80%;
+    align: center;
+    border: none;
+    margin-left:auto;
+    margin-right:auto;
+    padding-bottom: 10px;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+}
+
+
+th, td {
+  text-align: center !important;
+  padding: 5px;
+  border: none;
+}
+
+th {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+tr:hover {background-color: #f5f5f5;}
