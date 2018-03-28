@@ -377,9 +377,9 @@ img { display: block; margin-left: auto; margin-right: auto; width: 60%; }
 
 dl { width: 100%; overflow: hidden; padding: 0; margin: 0; }
 
-dt { float: left; width: 50%; text-align: left; /* adjust the width; make sure the total of both is 100% */ padding: 0; margin: 0; }
+dt { float: left; width: 75%; text-align: left; /* adjust the width; make sure the total of both is 100% */ padding: 0; margin: 0; }
 
-dd { float: right; width: 50%; text-align: right; /* adjust the width; make sure the total of both is 100% */ padding: 0; margin: 0; }
+dd { float: right; width: 25%; text-align: right; /* adjust the width; make sure the total of both is 100% */ padding: 0; margin: 0; }
 
 h1, h2 { color: var(--theme_green); }
 

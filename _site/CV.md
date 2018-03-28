@@ -11,7 +11,7 @@ title: CV
 : 2020
 
 University of Illinois at Urbana-Champaign
-: Urbana-Champaign, IL
+: Urbana, IL
 
 **BS and MS in Chemistry**
 : 2015
@@ -43,10 +43,10 @@ as well as highly tuned C++ scaling across a supercomputer.
 --------------------------------------------------------------------------------
 
 **2015 - Present**
-: **University of Illinois at Urbana-Champaign**
+: **University of Illinois**
 
 *Graduate Research/Teaching Assistant*
-: *Urbana-Champaign, IL*
+: *Urbana, IL*
 
 
 - Developed a method for predicting how electrons align in solids. This
@@ -75,7 +75,7 @@ across a molecule in Python 3. The python module was accelerated with Numba to
 achieve very fast execution speed.
 
 **Apr - Sep 2013**
-: **Janssen Pharmaceuticals of Johnson & Johnson**  
+: **Janssen**  
 
 *Biologics R&D Co-op*   
 : *Spring House, PA*

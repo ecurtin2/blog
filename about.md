@@ -9,7 +9,7 @@ With this blog I'm hoping to make some useful, or at least interesting, posts ab
 
 ### About Evan
 
-I'm a second year PhD student in computational chemistry at the University of Illinois @ Urbana-Champaign. I like to cook too! 
+I'm a third year PhD candidate in computational chemistry at the University of Illinois @ Urbana-Champaign. I like to cook too! 
 
 ### Contact me
 
