@@ -155,13 +155,22 @@ dd {
 }
 
 h1, h2 {
+  font-size: 1.5em !important;
   color: var(--theme_green);
 }
 
-h3, h4 {
+h3 {
   margin-top: 15px;
   margin-bottom: 5px;
+  font-size: 1.25em !important;
+  color: var(--theme_teal);
+}
 
+h4 {
+  text-align: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 1.5em !important;
   color: var(--theme_teal);
 }
 

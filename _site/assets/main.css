@@ -381,9 +381,11 @@ dt { float: left; width: 75%; text-align: left; /* adjust the width; make sure t
 
 dd { float: right; width: 25%; text-align: right; /* adjust the width; make sure the total of both is 100% */ padding: 0; margin: 0; }
 
-h1, h2 { color: var(--theme_green); }
+h1, h2 { font-size: 1.5em !important; color: var(--theme_green); }
 
-h3, h4 { margin-top: 15px; margin-bottom: 5px; color: var(--theme_teal); }
+h3 { margin-top: 15px; margin-bottom: 5px; font-size: 1.25em !important; color: var(--theme_teal); }
+
+h4 { text-align: center; margin-top: 3px; margin-bottom: 3px; font-size: 1.5em !important; color: var(--theme_teal); }
 
 a { color: var(--theme_blue); }
 

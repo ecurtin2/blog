@@ -3,7 +3,9 @@ layout: page
 title: CV
 ---
 
-<!-- TODO: Add some color to this! -->
+
+#### Evan Curtin
+#### evanmcurtin@gmail.com
 
 ### Education
 --------------------------------------------------------------------------------
