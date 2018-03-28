@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.4.0 -->
+<title>Use Numba and SciPy for Fast Integrals | Evan’s Blog!</title>
+<meta name="generator" content="Jekyll v3.7.3" />
+<meta property="og:title" content="Use Numba and SciPy for Fast Integrals" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Overthinking simple questions since 2016 (kinda)." />
+<meta property="og:description" content="Overthinking simple questions since 2016 (kinda)." />
+<link rel="canonical" href="http://localhost:4000/2018/03/05/Use-Numba-and-SciPy-for-Fast-Integrals.html" />
+<meta property="og:url" content="http://localhost:4000/2018/03/05/Use-Numba-and-SciPy-for-Fast-Integrals.html" />
+<meta property="og:site_name" content="Evan’s Blog!" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-03-05T00:00:00-06:00" />
+<script type="application/ld+json">
+{"description":"Overthinking simple questions since 2016 (kinda).","@type":"BlogPosting","url":"http://localhost:4000/2018/03/05/Use-Numba-and-SciPy-for-Fast-Integrals.html","headline":"Use Numba and SciPy for Fast Integrals","dateModified":"2018-03-05T00:00:00-06:00","datePublished":"2018-03-05T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/03/05/Use-Numba-and-SciPy-for-Fast-Integrals.html"},"@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Evan's Blog!" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Evan&#39;s Blog!</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Blog.html">Blog</a><a class="page-link" href="/LICENSE.html">License</a><a class="page-link" href="/about.html">About</a><a class="page-link" href="/CV.html">CV</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Use Numba and SciPy for Fast Integrals</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-03-05T00:00:00-06:00" itemprop="datePublished">Mar 5, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+<p>Here’s a quick tip to make your integrals super fast in python. Suppose you wanted to integrate a function in 3D. We can start by import nquad from scipy and defining our function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">nquad</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>nquad makes it super easy to integrate a function in any number of dimensions, lets see:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ranges</span><span class="o">=</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(-0.14048187566074577, 1.4506979457578973e-08)
+</code></pre></div></div>
+
+<p>Let’s check how long it took:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>19.5 ms ± 222 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre></div></div>
+
+<p>Pretty good, right? Well let’s see if we can do better (because maybe with a different function we’ll need to). <a href="https://numba.pydata.org/">Numba</a> is a just-in-time compiler focused on numeric python. Let’s give it a try:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numba</span>
+</code></pre></div></div>
+
+<p>It works by adding a @jit decorator to our function. It infers the types of the arguments when it sees them and compiles the function into LLVM bytecode. The result can be significantly faster (I’ve seen easily two orders of magnitude).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@numba.jit</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<p>Let’s see if it’s still correct and how long it takes:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(-0.14048187566074577, 1.4506979457578973e-08)
+10.9 ms ± 17.3 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre></div></div>
+
+<p>Hey! Twice as fast with no work at all! Pretty nice if you ask me. But there is one more layer. The nquad function calls our compiled function from python, meaning that every time it calls the function we’re getting python function call overhead. Fortunately, scipy now has support for  <em>LowLevelCallable</em> types. The specifics are in the documentation, but basically you can use a c function from scipy and the nquad routine will call it directly, without indirection to the python interpreter.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">LowLevelCallable</span>
+</code></pre></div></div>
+
+<p>I never particularly cared for this, until I also saw that Numba now supports generating c functions directly from Python! Scipy needs a c-level function with the signature <code class="highlighter-rouge">double(int, double*)</code>, so we have to tell numba this is what we want. This is very easy. Unfortunately, this also means we are a bit more restricted in what we can do here.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cfunc</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">carray</span>
+
+<span class="n">c_sig</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">double</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">intc</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">CPointer</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">double</span><span class="p">))</span>
+<span class="nd">@cfunc</span><span class="p">(</span><span class="n">c_sig</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">exp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">total</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">new_f</span> <span class="o">=</span> <span class="n">LowLevelCallable</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">ctypes</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(-0.14048187566074577, 1.4506979457578973e-08)
+6.2 ms ± 14.7 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</code></pre></div></div>
+
+<p>Cool! We beat the straightforward numba approach. Unfortunately we had to write a little bit more c-like code. It’s not too bad though. I’m betting we can also take advantage of how Numba basically inlines variables it knows at compile time to do basically whatever we want. The cool thing here is that we’re calling QUADPACK with a C level callback function, and the performance should be essentially optimal, as the python overhead is minimized.</p>
+
+  </div><a class="u-url" href="/2018/03/05/Use-Numba-and-SciPy-for-Fast-Integrals.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Evan&#39;s Blog!</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Evan&#39;s Blog!</li><li><a class="u-email" href="mailto:evanmcurtin@gmail.com">evanmcurtin@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ecurtin2"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ecurtin2</span></a></li><li><a href="https://www.twitter.com/emc923"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">emc923</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Overthinking simple questions since 2016 (kinda).</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
