@@ -60,8 +60,11 @@ def convert(notebook_fname, strip_code=False):
         body = body.replace('```python\n\n```', '')
 
     output_paths = {k: asset_dir + '/' +  k for k in resources['outputs'].keys()}
-    newbody = replace_by_dict(body, output_paths)
-    markdown_lines = header + newbody.split('\n')
+    if output_paths:
+        newbody = replace_by_dict(body, output_paths)
+        markdown_lines = header + newbody.split('\n')
+    else:
+        markdown_lines = header + body.split('\n')	
 
     for fname, data in resources['outputs'].items():
         with open(asset_realpath + fname, 'wb') as f:
