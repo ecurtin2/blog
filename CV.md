@@ -3,82 +3,74 @@ layout: page
 title: CV
 ---
 
-### Education
--------------
-2015 - Present
-Urbana, IL
-:     **University of Illinois @ Urbana-Champaign**  
-      *PhD in Chemistry*, GPA: 3.87  
+<!-- TODO: Add some color to this! -->
 
-2010 - 2015
-Philadelphia, PA
-:    **Drexel University**  
-     *Bachelors and Masters of Science in Chemistry*, GPA: 3.85  
+### Education
+--------------------------------------------------------------------------------
+**PhD in Chemistry, 2020**
+:     University of Illinois at Urbana-Champaign, Urbana-Champaign, IL
+
+**BS and MS in Chemistry, 2015**
+:    Drexel University, Philadelphia, PA
 
 ### Technical Skills
---------------------
+--------------------------------------------------------------------------------
 
-2010 - Present
-:     **Data Analysis/Presentation**  
-     Automated data analysis pipelines using the Python data stack and presented technical information to
-     expert and layman audiences.
+**Data Analysis/Presentation**  
+:    Automated data analysis pipelines using the Python data stack and presented
+     technical information to expert and layman audiences.
 
-2012 - Present
-:     **Method Development**  
-     Created numerical models to solve problems in computational chemistry by employing techniques from Linear Algebra and Differential Equations.
+**Method Development**  
+:    Created numerical models to solve problems in computational chemistry by
+     employing techniques from Linear Algebra and Differential Equations.
 
-2012 - Present
-:     **Programming**  
-     Experienced in creating lightweight, rapid-iterations in scientific python, as well as highly tuned C++ scaling across a supercomputer.  
-      -- **Most experience:** Python 
-      -- **Moderate experience:** C++ 
-      -- **Some experience:** Fortran  
+**Programming**  
+:    Experienced in creating lightweight, rapid-iterations in scientific python,
+     as well as highly tuned C++ scaling across a supercomputer.  
+      - **Best:** Python
+      - **Good:** C++ (11 standard onwards)
+      - **Have Used for a Project:** Fortran90  
 
 ### Experience
------------------------
+--------------------------------------------------------------------------------
 
 2015 - Present
-Urbana, IL
-:     **University of Illinois @ Urbana-Champaign**  
+:     **University of Illinois @ Urbana-Champaign, Urbana-Champaign, IL**  
       *Graduate Research/Teaching Assistant*   
-      Developed a method for predicting the phase diagram of the electron gas. This required the solution
+       - Developed a method for predicting the phase diagram of the electron gas. This required the solution
       of an eigenvalue problem with hundreds of thousands of degrees of freedom, which was done using high
       performance, parallel C++ on the Blue Waters Supercomputer.
-      Additionally, I taught Physical Chemistry and General Chemistry Lab and was
+       - Taught Physical Chemistry and General Chemistry Lab and was
       rated "excellent" by students.
 
-2013 - 2015   
-Philadelphia, PA
+2013 - 2015, Philadelpia, PA
 :     **Drexel University**  
       *Research Assistant*    
-      Created a method to analyze vibrations in branched molecules (Fortran 90)
+       - Created a method to analyze vibrations in branched molecules (Fortran 90)
       and to predict electron transit times (Python 3). The python module was implemented using
-      just-in-time compilation to achieve speed comparable to compiled code. 
+      just-in-time compilation to achieve speed comparable to compiled code.
 
 Apr - Sep 2013
-Spring House, PA
-:     **Janssen Pharmaceuticals of Johnson & Johnson**  
+:     **Janssen Pharmaceuticals of Johnson & Johnson, Spring House, PA**  
       *Biologics R&D Co-op*    
-      Determined the kinetics and affinity for antibody therapeutics
+       - Determined the kinetics and affinity for antibody therapeutics
       binding to disease targets using Surface Plasmon Resonance (SPR).
 
 Apr - Sep 2012
-Exton, PA
-:     **West Pharmaceutical Services**    
+:     **West Pharmaceutical Services, Exton, PA**    
       *Quality Control Co-op*    
-      Analyzed company and client samples using company protocols as well as
+       - Analyzed company and client samples using company protocols as well as
       cGMP and GLP practices.
 
 Jun - Sep 2011
-Philadelphia, PA
-:     **Drexel University**    
+:     **Drexel University, Philadelphia, PA**    
       *Undergraduate Research Assistant*    
-      Curated and generated data for the
+       - Curated and generated data for the
       [Open Science Melting Point and Solubility Databases
       ](http://usefulchem.wikispaces.com/).
 
-### Selected Publication
-----------------
+### Publications
+--------------------------------------------------------------------------------
 
 Mar 2016
 :     [**A Reduced Dimensionality Model of Torsional Vibrations in
@@ -87,7 +79,7 @@ Mar 2016
       ***Curtin, E. M.***, & Sohlberg, K.
       *Physica E: Low-Dimensional Systems and Nanostructures*, 77, 131–137.
 
-<!--
+
 Jan 2015
 :     [**Determination of Abraham model solute descriptors for the
          monomeric and dimeric forms of trans-cinnamic acid using
@@ -106,10 +98,24 @@ Aug 2011
       Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., & ***Curtin, E***.
       *Nature Precedings*.
 
+### Hobbies
+--------------------------------------------------------------------------------
 
+ - I love to cook and  made a [collaborative cookbook](
+   https://evanandfriends.github.io/) for my
+  friends and me. I'm the only contributor.
+   - Cooking Idols: Gordon Ramsay, Alton Brown, J. Kenji López-Alt,
+   Magnus Nilsson
+ - I'm a very amateur powerlifter.
+   - Infuencers: Omar Isuf, Brian Alsruhe, Alan Thrall
+ - I fall asleep to cppcon / pycon youtube videos.
+   - Favorite speakers: Ray Hettinger, Kate Gregory, Brandon Rhodes,
+   Jake Vanderplas
+ - I used to play video games a lot
+   - Favorites: The Witcher 3, Ocarina of Time, Pokemon
 
 ### Awards
-----------
+--------------------------------------------------------------------------------
 
 Aug 2016
 :     **Mark Pytosh Fellowship**  
@@ -135,4 +141,3 @@ May 2015
 May 2011
 :     **Open Notebook Science Award**  
       Royal Society of Chemistry
--->
