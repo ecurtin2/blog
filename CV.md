@@ -3,48 +3,42 @@ layout: page
 title: CV
 ---
 
-### Education
--------------
-2015 - Present
-Urbana, IL
-:     **University of Illinois @ Urbana-Champaign**  
-      *PhD in Chemistry*, GPA: 3.87  
+<!-- TODO: Add some color to this! -->
 
-2010 - 2015
-Philadelphia, PA
-:    **Drexel University**  
-     *BS and MS in Chemistry*, GPA: 3.85  
+### Education
+--------------------------------------------------------------------------------
+**PhD in Chemistry, 2020**
+:     University of Illinois at Urbana-Champaign, Urbana-Champaign, IL
+
+**BS and MS in Chemistry, 2015**
+:    Drexel University, Philadelphia, PA
+
 
 ### Technical Skills
---------------------
+--------------------------------------------------------------------------------
 
-2010 - Present
-:     **Data Analysis/Presentation**  
-      - Automated data analysis pipelines using the Python data stack, emphasizing reproducibility
-        via complete automation from data generation all the way through presentation. 
-      - Presented technical information to expert and layman audiences. I prioritize clarity of 
-        content by using ideas from color theory.  
 
-2012 - Present
-:     **Method Development**  
-     Created models to solve problems in computational chemistry by employing techniques from Linear Algebra, Differential Equations
-     and numerical optimization. My favorite approach is to distill the simplest possible model that is effective, but am not afraid
-     to utilize complex models when necessary.
+**Data Analysis/Presentation**  
+:    Automated data analysis pipelines using the Python data stack and presented
+     technical information to expert and layman audiences.
 
-2012 - Present
-:     **Programming**  
-     Experienced in creating lightweight, rapid-iterations in scientific python, as well as highly tuned C++ scaling across a supercomputer.  
-     I often cherry pick ideas from software engineering when they improve a code base.
-     - **Most experience:** Python (2 and 3)
-     - **Moderate experience:** C++ (C++11 onward)
-     - **Some experience:** Fortran (pre-2003 standard)  
+**Method Development**  
+:    Created numerical models to solve problems in computational chemistry by
+     employing techniques from Linear Algebra and Differential Equations.
+
+**Programming**  
+:    Experienced in creating lightweight, rapid-iterations in scientific python,
+     as well as highly tuned C++ scaling across a supercomputer.  
+      - **Best:** Python
+      - **Good:** C++ (11 standard onwards)
+      - **Have Used for a Project:** Fortran90  
+
 
 ### Experience
------------------------
+--------------------------------------------------------------------------------
 
 2015 - Present
-Urbana, IL
-:     **University of Illinois @ Urbana-Champaign**  
+:     **University of Illinois @ Urbana-Champaign, Urbana-Champaign, IL**  
       *Graduate Research/Teaching Assistant*   
       - Developed a method for predicting how electrons align in solids. This required the solution
       of an eigenvalue problem with hundreds of thousands of degrees of freedom, which was done using high
@@ -56,8 +50,7 @@ Urbana, IL
       - Taught Physical Chemistry and General Chemistry Lab and was
       rated "excellent" by students.
 
-2013 - 2015   
-Philadelphia, PA
+2013 - 2015, Philadelpia, PA
 :     **Drexel University**  
       *Research Assistant*    
       - Created a method detemine how rapidly branched molecules vibrate with reduced computational
@@ -66,22 +59,19 @@ Philadelphia, PA
       across a molecule in Python 3. The python module was accelerated with Numba to achieve very fast execution speed. 
 
 Apr - Sep 2013
-Spring House, PA
-:     **Janssen Pharmaceuticals of Johnson & Johnson**  
+:     **Janssen Pharmaceuticals of Johnson & Johnson, Spring House, PA**  
       *Biologics R&D Co-op*    
       - Determine how quickly drugs bind to and release from disease targets using Surface Plasmon Resonance (SPR).
       This information informed high-level decisions about which drug candidates to pursue.	
 
 Apr - Sep 2012
-Exton, PA
-:     **West Pharmaceutical Services**    
+:     **West Pharmaceutical Services, Exton, PA**    
       *Quality Control Co-op*    
       - Analyzed company and client products with analytical chemistry techniques to 
       ensure consistency of quality, while applying cGMP and GLP practices.
 
 Jun - Sep 2011
-Philadelphia, PA
-:     **Drexel University**    
+:     **Drexel University, Philadelphia, PA**    
       *Undergraduate Research Assistant*    
       - Curated and generated data for the
       [Open Science Melting Point and Solubility Databases
@@ -91,7 +81,7 @@ Philadelphia, PA
       - All work was done using Open Science principles.
 
 ### Publications
-----------------
+--------------------------------------------------------------------------------
 
 Mar 2016
 :     - [**A Reduced Dimensionality Model of Torsional Vibrations in
@@ -99,7 +89,6 @@ Mar 2016
         ](http://dx.doi.org/10.1016/j.physe.2015.11.013)  
         ***Curtin, E. M.***, & Sohlberg, K.
         *Physica E: Low-Dimensional Systems and Nanostructures*, 77, 131–137.
-
 
 Jan 2015
 :     - [**Determination of Abraham model solute descriptors for the
@@ -113,17 +102,30 @@ Jan 2015
         Sozit B Kurtu, Mark I Mangir and Matthew J McBride
         *Chemistry Central Journal*, 9(1), 11.
 
-
 Aug 2011
 :     - [**ONS Open Melting Point Collection**
         ](http://dx.doi.org/10.1038/npre.2011.6229.1)  
         Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., & ***Curtin, E***.
         *Nature Precedings*.
 
+### Hobbies
+--------------------------------------------------------------------------------
 
+ - I love to cook and  made a [collaborative cookbook](
+   https://evanandfriends.github.io/) for my
+  friends and me. I'm the only contributor.
+   - Cooking Idols: Gordon Ramsay, Alton Brown, J. Kenji López-Alt,
+   Magnus Nilsson
+ - I'm a very amateur powerlifter.
+   - Infuencers: Omar Isuf, Brian Alsruhe, Alan Thrall
+ - I fall asleep to cppcon / pycon youtube videos.
+   - Favorite speakers: Ray Hettinger, Kate Gregory, Brandon Rhodes,
+   Jake Vanderplas
+ - I used to play video games a lot
+   - Favorites: The Witcher 3, Ocarina of Time, Pokemon
 
 ### Awards
-----------
+--------------------------------------------------------------------------------
 
 Aug 2016
 :     **Mark Pytosh Fellowship**  

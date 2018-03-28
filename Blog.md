@@ -3,6 +3,8 @@ layout: page
 title: Blog
 ---
 
+
+<link rel="stylesheet" href="/assets/css/style.css">
 <div class="posts">
   {% for post in site.posts %}
     <article class="post">
