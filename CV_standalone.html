@@ -401,9 +401,9 @@ dd { float: right; width: 25%; text-align: right; /* adjust the width; make sure
 
 h1, h2 { font-size: 1.5em !important; color: var(--theme_green); }
 
-h3 { margin-top: 15px; margin-bottom: 5px; font-size: 1.25em !important; color: var(--theme_teal); }
+h3 { margin-top: 5px; margin-bottom: 0px; font-size: 1.15em !important; color: var(--theme_teal); }
 
-h4 { text-align: center; margin-top: 3px; margin-bottom: 3px; font-size: 1.5em !important; color: var(--theme_teal); }
+h4 { text-align: center; padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 0px; font-size: 1.25em !important; color: var(--theme_teal); }
 
 a { color: var(--theme_blue); }
 
@@ -412,6 +412,8 @@ strong { color: var(--theme_darkgreen); }
 em { color: var(--theme_darkgreen); }
 
 hr { display: block; height: 1px; border: 0; border-top: 2px solid var(--theme_green); margin-top: 0.3em; margin-bottom: 0.3em; padding: 0; }
+
+ul { margin-top: 0em; margin-bottom: -0em; }
 
 </style>
 
@@ -438,19 +440,17 @@ hr { display: block; height: 1px; border: 0; border-top: 2px solid var(--theme_g
 </dl>
 <h3 id="technical-skills">Technical Skills</h3>
 <hr/>
-<p><strong>Data Analysis/Presentation</strong><br/>
-Automated data analysis pipelines using the Python data stack and presented
-technical information to expert and layman audiences.</p>
 <p><strong>Method Development</strong><br/>
-Created numerical models to solve problems in computational chemistry by
-employing techniques from Linear Algebra and Differential Equations.</p>
-<p><strong>Programming</strong><br/>
-Experienced in creating lightweight, rapid-iterations in scientific python,
-as well as highly tuned C++ scaling across a supercomputer.</p>
+Linear Algebra, Differential Equations, Classical/Quantum Mechanics, Chemistry</p>
+<dl>
+<dt><strong>Programming</strong></dt>
+<dd></dd>
+</dl>
 <ul>
-<li><strong>Best:</strong> Python</li>
-<li><strong>Good:</strong> C++ (11 standard onwards)</li>
-<li><strong>Have Used for a Project:</strong> Fortran90</li>
+<li><strong>Most Experience:</strong> Python (pandas, numpy, scipy, matplotlib)</li>
+<li><strong>Medium Experience</strong> C++11, High Performance Parallel Computing
+(SLEPc/PETSc), Linux, Bash, git</li>
+<li><strong>Some Experience:</strong> Fortran90, HTML/CSS (this resume)</li>
 </ul>
 <h3 id="experience">Experience</h3>
 <hr/>
@@ -462,15 +462,11 @@ as well as highly tuned C++ scaling across a supercomputer.</p>
 </dl>
 <ul>
 <li>Developed a method for predicting how electrons align in solids. This
-required the solution of an eigenvalue problem with hundreds of thousands of
-degrees of freedom, which was done using high performance, parallel C++ on the
+required the solution of an eigenvalue problem of a matrix too big for memory,
+ which was done using high performance, parallel C++ on the
 Blue Waters Supercomputer.</li>
-<li>Implemented a deterministic global minimum search algorithm in order to find
-better solutions to fundamental
-problems in theoretical chemistry and physics.</li>
-<li>Analyzed datasets bigger than 16GB out-of-memory by utilizing the HDF5 file
-format in conjunction with the python
-data stack (pandas, numpy, scipy, dask).</li>
+<li>Analyzed datasets by utilizing the HDF5 / JSON file format in conjunction with
+the python data stack (pandas, numpy, scipy, dask).</li>
 <li>Taught Physical Chemistry and General Chemistry Lab and was
 rated “excellent” by students.</li>
 </ul>
@@ -481,11 +477,11 @@ rated “excellent” by students.</li>
 <dd><em>Philadelpia, PA</em></dd>
 </dl>
 <ul>
-<li>Created a method detemine how rapidly branched molecules vibrate with reduced
-computational complexity in Fortran 90.</li>
 <li>Invented a scheme to predict how long electrons take to move
 across a molecule in Python 3. The python module was accelerated with Numba to
 achieve very fast execution speed.</li>
+<li>Created a method determine how rapidly branched molecules vibrate with reduced
+computational complexity in Fortran 90.</li>
 </ul>
 <dl>
 <dt><strong>Apr - Sep 2013</strong></dt>
@@ -494,34 +490,36 @@ achieve very fast execution speed.</li>
 <dd><em>Spring House, PA</em></dd>
 </dl>
 <ul>
-<li>Determine how quickly drugs bind to and release from disease targets using
+<li>Determined how quickly drugs bind to and release from disease targets using
 Surface Plasmon Resonance (SPR). This information informed high-level decisions
 about which drug candidates to pursue.</li>
 </ul>
-<dl>
-<dt><strong>Apr - Sep 2012</strong></dt>
-<dd><strong>West Pharmaceutical Services</strong></dd>
-<dt><em>Quality Control Co-op</em></dt>
-<dd><em>Exton, PA</em></dd>
-</dl>
-<ul>
-<li>Analyzed company and client products with analytical chemistry techniques to
-ensure consistency of quality, while applying cGMP and GLP practices.</li>
-</ul>
-<dl>
-<dt><strong>Jun - Sep 2011</strong></dt>
-<dd><strong>Drexel University</strong></dd>
-<dt><em>Undergraduate Research Assistant</em></dt>
-<dd><em>Philadelphia, PA</em></dd>
-</dl>
-<ul>
-<li>Curated and generated data for the
-<a href="http://usefulchem.wikispaces.com/">Open Science Melting Point and Solubility Databases
-</a>.</li>
-</ul>
+<!--
+**Apr - Sep 2012**
+: **West Pharmaceutical Services**    
+
+*Quality Control Co-op*  
+: *Exton, PA*
+
+- Analyzed company and client products with analytical chemistry techniques to
+ensure consistency of quality, while applying cGMP and GLP practices.
+
+**Jun - Sep 2011**
+: **Drexel University**    
+
+*Undergraduate Research Assistant*    
+: *Philadelphia, PA*
+
+- Curated and generated data for the
+[Open Science Melting Point and Solubility Databases
+](http://usefulchem.wikispaces.com/).
+-->
 <h3 id="publications">Publications</h3>
 <hr/>
-<p>Mar 2016</p>
+<dl>
+<dt>Mar 2016</dt>
+<dd></dd>
+</dl>
 <ul>
 <li><a href="http://dx.doi.org/10.1016/j.physe.2015.11.013">A Reduced Dimensionality Model of Torsional Vibrations in
  Star Molecules
@@ -529,7 +527,10 @@ ensure consistency of quality, while applying cGMP and GLP practices.</li>
 <strong><em>Curtin, E. M.</em></strong>, &amp; Sohlberg, K.
 <em>Physica E: Low-Dimensional Systems and Nanostructures</em>, 77, 131–137.</li>
 </ul>
-<p>Jan 2015</p>
+<dl>
+<dt>Jan 2015</dt>
+<dd></dd>
+</dl>
 <ul>
 <li><a href="http://dx.doi.org/10.1186/s13065-015-0080-9">Determination of Abraham model solute descriptors for the
  monomeric and dimeric forms of trans-cinnamic acid using
@@ -542,31 +543,15 @@ Lacey N Condron, Stephanie T Costa, <strong><em>Evan M Curtin</em></strong>,
 Sozit B Kurtu, Mark I Mangir and Matthew J McBride
 <em>Chemistry Central Journal</em>, 9(1), 11.</li>
 </ul>
-<p>Aug 2011</p>
+<dl>
+<dt>Aug 2011</dt>
+<dd></dd>
+</dl>
 <ul>
 <li><a href="http://dx.doi.org/10.1038/npre.2011.6229.1">ONS Open Melting Point Collection
 </a><br/>
 Bradley, J.-C., Bradley, J.-C., Lang, A., Williams, A., &amp; <strong><em>Curtin, E</em></strong>.
 <em>Nature Precedings</em>.</li>
-</ul>
-<h3 id="hobbies">Hobbies</h3>
-<hr/>
-<p>I love to cook and  made a <a href="https://evanandfriends.github.io/">collaborative cookbook</a> for my
-friends and me. I’m the only contributor.</p>
-<ul>
-<li>Cooking Idols: Gordon Ramsay, Alton Brown, J. Kenji López-Alt, Magnus Nilsson</li>
-</ul>
-<p>I’m a very amateur powerlifter.</p>
-<ul>
-<li>Infuencers: Omar Isuf, Brian Alsruhe, Alan Thrall</li>
-</ul>
-<p>I fall asleep to cppcon / pycon youtube videos.</p>
-<ul>
-<li>Favorite speakers: Ray Hettinger, Kate Gregory, Brandon Rhodes, Jake Vanderplas</li>
-</ul>
-<p>I used to play video games a lot</p>
-<ul>
-<li>Favorites: The Witcher 3, Ocarina of Time, Pokemon</li>
 </ul>
 <h3 id="awards">Awards</h3>
 <hr/>
@@ -600,6 +585,22 @@ friends and me. I’m the only contributor.</p>
 <dd>May 2011</dd>
 </dl>
 <p>Royal Society of Chemistry</p>
+<h3 id="hobbies">Hobbies</h3>
+<hr/>
+<dl>
+<dt>I love to cook and  made a <a href="https://evanandfriends.github.io/">collaborative cookbook</a> for my friends and me. I’m the only contributor.</dt>
+<dd></dd>
+</dl>
+<ul>
+<li>Cooking Idols: Gordon Ramsay, Alton Brown, J. Kenji López-Alt, Magnus Nilsson</li>
+</ul>
+<dl>
+<dt>I fall asleep to cppcon / pycon youtube videos.</dt>
+<dd></dd>
+</dl>
+<ul>
+<li>Favorite speakers: Ray Hettinger, Kate Gregory, Brandon Rhodes, Jake Vanderplas</li>
+</ul>
 </div>
 </article>
 </div>

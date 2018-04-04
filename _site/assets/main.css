@@ -383,9 +383,9 @@ dd { float: right; width: 25%; text-align: right; /* adjust the width; make sure
 
 h1, h2 { font-size: 1.5em !important; color: var(--theme_green); }
 
-h3 { margin-top: 15px; margin-bottom: 5px; font-size: 1.25em !important; color: var(--theme_teal); }
+h3 { margin-top: 5px; margin-bottom: 0px; font-size: 1.15em !important; color: var(--theme_teal); }
 
-h4 { text-align: center; margin-top: 3px; margin-bottom: 3px; font-size: 1.5em !important; color: var(--theme_teal); }
+h4 { text-align: center; padding-top: 0px; padding-bottom: 0px; margin-top: 0px; margin-bottom: 0px; font-size: 1.25em !important; color: var(--theme_teal); }
 
 a { color: var(--theme_blue); }
 
@@ -394,3 +394,5 @@ strong { color: var(--theme_darkgreen); }
 em { color: var(--theme_darkgreen); }
 
 hr { display: block; height: 1px; border: 0; border-top: 2px solid var(--theme_green); margin-top: 0.3em; margin-bottom: 0.3em; padding: 0; }
+
+ul { margin-top: 0em; margin-bottom: -0em; }

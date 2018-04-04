@@ -160,17 +160,19 @@ h1, h2 {
 }
 
 h3 {
-  margin-top: 15px;
-  margin-bottom: 5px;
-  font-size: 1.25em !important;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  font-size: 1.15em !important;
   color: var(--theme_teal);
 }
 
 h4 {
   text-align: center;
-  margin-top: 3px;
-  margin-bottom: 3px;
-  font-size: 1.5em !important;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  font-size: 1.25em !important;
   color: var(--theme_teal);
 }
 
@@ -194,4 +196,9 @@ hr {
     margin-top: 0.3em;
     margin-bottom: 0.3em;
     padding: 0;
+}
+
+ul {
+  margin-top: 0em;
+  margin-bottom: -0em;
 }
