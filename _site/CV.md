@@ -9,8 +9,9 @@ title: CV
 
 ### Education
 --------------------------------------------------------------------------------
-**PhD in Chemistry**
-: 2020
+
+**PhD Candidate in Chemistry**
+:   
 
 University of Illinois at Urbana-Champaign
 : Urbana, IL
