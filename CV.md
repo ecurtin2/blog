@@ -4,7 +4,7 @@ title: CV
 ---
 
 #### Evan Curtin
-evanmcurtin@gmail.com | LinkedIn: evanmcurtin | Site: ecurtin2.github.io |  Chicago, IL
+evanmcurtin@gmail.com | LinkedIn: evanmcurtin | Site: ecurtin2.github.io | Location: Chicago, IL
 
 ### Education
 --------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ Drexel University
 --------------------------------------------------------------------------------
 
 **5+ Years:** Chemistry, Physics, Linear Algebra, Calculus, Statistics           
-**2-4 Years:** Python (pandas, numpy, scipy, matplotlib), Linux, Bash
+**2-4 Years:** Python (pandas, numpy, scipy, matplotlib), Linux, Bash            
 **1-2 Years:** C++11, High Performance Computing, git / github, Fortan90
 
 ### Experience
@@ -55,7 +55,6 @@ Drexel University
   across a molecule in Python 3 and accelerated the code 30x with Numba.
 - Created a method determine how rapidly branched molecules vibrate with reduced
   computational complexity in Fortran 90.
-
 
 **Apr - Sep 2013**
 : **Janssen**  
