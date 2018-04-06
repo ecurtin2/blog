@@ -4,14 +4,14 @@ title: CV
 ---
 
 #### Evan Curtin
-#### evanmcurtin@gmail.com | Chicago, IL
-#### LinkedIn: evanmcurtin | Site: ecurtin2.github.io
+##### evanmcurtin@gmail.com | Chicago, IL
+##### LinkedIn: evanmcurtin | Site: ecurtin2.github.io
 
 ### Education
 --------------------------------------------------------------------------------
 
 **PhD Candidate in Computational Chemistry**
-: 2015 - 2020 (Anticipated)  
+: 2015 - 2020  
 
 University of Illinois at Urbana-Champaign
 : Urbana, IL
