@@ -43,7 +43,7 @@ Drexel University
 - Wrote a library for internal company use to allow consistency across the data
 science team and to enable improvements thereof to instantly scale across the team.
 - Reduced model training and deployment time by 90% by parallelization and automation using dask, numba and general code optimizations.
-- Established best practices and software for predictive modeling to ensure model quality and monitoring in deployment, including incorporating with company logging and notification software. 
+- Established best practices and software for predictive modeling to ensure model quality and monitoring in deployment, including incorporating with company logging and notification software.
 
 **2015 - May 2018**
 : **University of Illinois**
@@ -62,7 +62,7 @@ science team and to enable improvements thereof to instantly scale across the te
 : **Drexel University**  
 
 *Research Assistant*   
-: *Philadelpia, PA*
+: *Philadelphia, PA*
 
 - Invented a scheme to predict how long electrons take to move
   across a molecule in Python 3 and accelerated the code 30x with Numba.
