@@ -27,8 +27,8 @@ Drexel University
 --------------------------------------------------------------------------------
 
 **5+ Years:** Chemistry, Physics, Linear Algebra, Calculus, Statistics           
-**2-4 Years:** Python (pandas, numpy, scipy, sklearn, matplotlib), Linux, Bash            
-**1-2 Years:** SQL, C++11, High Performance Computing, git / github, Fortan90
+**2-4 Years:** Python (pandas, numpy, scipy, sklearn, matplotlib, SQLAlchemy), Linux, Bash           
+**1-2 Years:** SQL, C++11, High Performance Computing, git / github, Fortan
 
 ### Experience
 --------------------------------------------------------------------------------
@@ -39,10 +39,10 @@ Drexel University
 *Data Science Engineer*
 : *Chicago, IL*
 
+- Reduced model training and deployment time by 90% by parallelization and automation using dask, sqlalchemy, numba and general code optimizations.
 - Created predictive models for high value insurance claims using sklearn and deployed to production by incorporating with company infrastructure.
 - Wrote a library for internal company use to allow consistency across the data
 science team and to enable improvements thereof to instantly scale across the team.
-- Reduced model training and deployment time by 90% by parallelization and automation using dask, numba and general code optimizations.
 - Established best practices and software for predictive modeling to ensure model quality and monitoring in deployment, including incorporating with company logging and notification software.
 
 **2015 - May 2018**
