@@ -94,9 +94,6 @@
 .highlight .bp { color: var(--ec_green); } /* Name.Builtin.Pseudo: True, self */
 
 
-
-
-
 /* Tables!! Pandas DataFrame! :) */
 table {
     width: 80%;
@@ -129,62 +126,10 @@ img {
     width: 60%;
 }
 
-dl {
-  width: 100%;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-}
-
-dt {
-  float: left;
-  width: 75%;
-  text-align: left;
-  /* adjust the width; make sure the total of both is 100% */
-  padding: 0;
-  margin: 0;
-}
-
-dd {
-  float: right;
-  width: 25%;
-  text-align: right;
-  /* adjust the width; make sure the total of both is 100% */
-  padding: 0;
-  margin: 0;
-}
-
-h1, h2 {
-  font-size: 1.5em !important;
+h1, h2, h3, h4, h5 {
   color: var(--theme_green);
 }
 
-h3 {
-  margin-top: 5px;
-  margin-bottom: 0px;
-  font-size: 1.15em !important;
-  color: var(--theme_teal);
-}
-
-h4 {
-  text-align: center;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  font-size: 1.25em !important;
-  color: var(--theme_teal);
-}
-
-
-h5 {
-  text-align: center;
-  font-size: 1em;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  margin-top: 0px;
-  margin-bottom: 0px;
-}
 
 a {
   color: var(--theme_blue);
@@ -206,9 +151,4 @@ hr {
     margin-top: 0.3em;
     margin-bottom: 0.3em;
     padding: 0;
-}
-
-ul {
-  margin-top: 0em;
-  margin-bottom: -0em;
 }
