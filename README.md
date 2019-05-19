@@ -8,5 +8,4 @@ CV Update:
 
 For cv in google docs use docs to markdown, then copy/paste.
 
-https://chrome.google.
-com/webstore/detail/gd2md-html/igffnbdfnodiaphfmfaiiaegmoljbghf
+[docs to markdown](https://chrome.google.com/webstore/detail/gd2md-html/igffnbdfnodiaphfmfaiiaegmoljbghf)
