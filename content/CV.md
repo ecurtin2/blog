@@ -1,6 +1,6 @@
 ---
-title: CV
-date: 2019-05-18T10:53:18-05:00
+title: "About"
+date: 2018-06-29T06:19:29Z
 ---
 
 # Evan Curtin, Machine Learning Engineer

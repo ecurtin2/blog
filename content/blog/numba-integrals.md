@@ -6,6 +6,7 @@ tags:
 - Python
 - math
 title: Use Numba for fast integrals
+draft: False
 ---
 
 <div class="notebook-content">

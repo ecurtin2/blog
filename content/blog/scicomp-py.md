@@ -6,6 +6,7 @@ tags:
 - Python
 - science
 title: The Scientific computing toolkit for Python
+draft: False
 ---
 
 <div class="notebook-content">

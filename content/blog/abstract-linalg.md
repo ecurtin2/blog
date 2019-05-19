@@ -7,6 +7,7 @@ tags:
 - math
 title: Abstract linear algebra in Python
 desc: Hey dude
+draft: False
 ---
 
 <div class="notebook-content">
