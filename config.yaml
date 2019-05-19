@@ -1,4 +1,4 @@
-baseURL: "localhost:1313"
+baseURL: "https://ecurtin2.github.io/blog/"
 languageCode: "en-us"
 title: "Evan's Blog"
 description: Hi
