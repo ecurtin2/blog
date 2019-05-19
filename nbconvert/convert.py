@@ -50,7 +50,7 @@ def get_metadata(nb_path):
 
     with open(os.path.join(filedir, metadata_filename), "r") as f:
         try:
-            return yaml.load(f)
+            return yaml.safe_load(f)
         except yaml.YAMLError as exc:
             print(exc)
 

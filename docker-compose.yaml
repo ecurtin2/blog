@@ -3,3 +3,5 @@ version: "2"
 services:
   test:
     build: .
+    volumes:
+      - ./:/mnt

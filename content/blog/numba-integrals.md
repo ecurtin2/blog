@@ -1,12 +1,14 @@
+
 ---
 author: Evan Curtin
 date: 2016-12-14
+readingtime: 1
 slug: numba-integral
 tags:
 - Python
 - math
 title: Use Numba for fast integrals
-draft: False
+
 ---
 
 <div class="notebook-content">
@@ -1160,6 +1162,7 @@ h6:hover .anchor-link {
 .ansi-bold { font-weight: bold; }
 </style><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <style type="text/css">
+/* Too lazy to fix the script  just make this empty*/
 </style>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
@@ -1173,8 +1176,8 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="k">import</span> <span class="n">nquad</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">nquad</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
 </pre></div>
@@ -1194,7 +1197,7 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">ranges</span><span class="o">=</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">ranges</span><span class="o">=</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
 <span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
 </pre></div>
     </div>
@@ -1223,7 +1226,7 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">timeit</span> nquad(f, ranges)
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
 </pre></div>
     </div>
 </div>
@@ -1252,7 +1255,7 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numba</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">numba</span>
 </pre></div>
     </div>
 </div>
@@ -1270,7 +1273,7 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@numba</span><span class="o">.</span><span class="n">jit</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="nd">@numba.jit</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
 </pre></div>
@@ -1290,8 +1293,8 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
-<span class="o">%</span><span class="k">timeit</span> nquad(f, ranges)
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
 </pre></div>
     </div>
 </div>
@@ -1321,7 +1324,7 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">LowLevelCallable</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">LowLevelCallable</span>
 </pre></div>
     </div>
 </div>
@@ -1339,7 +1342,7 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">cfunc</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">carray</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cfunc</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">carray</span>
 <span class="n">c_sig</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">double</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">intc</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">CPointer</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">double</span><span class="p">))</span>
 <span class="nd">@cfunc</span><span class="p">(</span><span class="n">c_sig</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -1357,9 +1360,9 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_f</span> <span class="o">=</span> <span class="n">LowLevelCallable</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">ctypes</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
-<span class="o">%</span><span class="k">timeit</span> nquad(new_f, ranges)
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">new_f</span> <span class="o">=</span> <span class="n">LowLevelCallable</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">ctypes</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
 </pre></div>
     </div>
 </div>

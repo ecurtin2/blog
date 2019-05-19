@@ -1,5 +1,5 @@
 ---
-title: "About"
+title: "CV"
 date: 2018-06-29T06:19:29Z
 ---
 

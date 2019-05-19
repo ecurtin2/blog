@@ -1,0 +1,6 @@
+jinja2
+pygments
+pyyaml
+IPython
+traitlets
+nbconvert

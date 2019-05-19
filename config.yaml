@@ -9,7 +9,7 @@ publishDir: docs
 
 params:
   author: "Evan Curtin"
-  description: "I used to do science, now I make programs"
+  description: " "
   
   social:
     - name: github

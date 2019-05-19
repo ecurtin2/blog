@@ -1,16 +1,73 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title>Use Numba for fast integrals // Evan&#39;s Blog</title>
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.55.6" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Evan Curtin" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="https://ecurtin2.github.io/blog/css/main.min.622eb57cb83f57e702e8c9b6782146042598c7d6c44be822548096a994ff47ad.css" />
 
----
-author: Evan Curtin
-date: 2018-03-03
-slug: abstract-linalg
-tags:
-- Python
-- math
-title: Abstract linear algebra in Python
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Use Numba for fast integrals"/>
+<meta name="twitter:description" content="/*! * * IPython notebook * */ /* CSS font colors for translated ANSI escape sequences */ /* The color values are a mix of http://www.xcolors.net/dl/baskerville-ivorylight and http://www.xcolors.net/dl/euphrasia */ .ansi-black-fg { color: #3E424D; } .ansi-black-bg { background-color: #3E424D; } .ansi-black-intense-fg { color: #282C36; } .ansi-black-intense-bg { background-color: #282C36; } .ansi-red-fg { color: #E75C58; } .ansi-red-bg { background-color: #E75C58; } .ansi-red-intense-fg { color: #B22B31; } .ansi-red-intense-bg { background-color: #B22B31; } .ansi-green-fg { color: #00A250; } ."/>
 
----
+    <meta property="og:title" content="Use Numba for fast integrals" />
+<meta property="og:description" content="/*! * * IPython notebook * */ /* CSS font colors for translated ANSI escape sequences */ /* The color values are a mix of http://www.xcolors.net/dl/baskerville-ivorylight and http://www.xcolors.net/dl/euphrasia */ .ansi-black-fg { color: #3E424D; } .ansi-black-bg { background-color: #3E424D; } .ansi-black-intense-fg { color: #282C36; } .ansi-black-intense-bg { background-color: #282C36; } .ansi-red-fg { color: #E75C58; } .ansi-red-bg { background-color: #E75C58; } .ansi-red-intense-fg { color: #B22B31; } .ansi-red-intense-bg { background-color: #B22B31; } .ansi-green-fg { color: #00A250; } ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://ecurtin2.github.io/blog/blog/numba-integral/" />
+<meta property="article:published_time" content="2016-12-14T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2016-12-14T00:00:00&#43;00:00"/>
 
-<div class="notebook-content">
+
+  </head>
+  <body>
+    <header class="app-header">
+    <a href="https://ecurtin2.github.io/blog/"><img class="app-header-avatar" src="/blog/avatar.jpg" alt="Evan Curtin" /></a>
+    <h1>Evan&#39;s Blog</h1>
+
+    <a class="app-header-link" href="https://ecurtin2.github.io/blog/">Home</a>
+    <a class="app-header-link" href="https://ecurtin2.github.io/blog//blog">Blog</a>
+    <a class="app-header-link" href="https://ecurtin2.github.io/blog//cv">CV</a>
+    
+    <p> </p>
+    <div class="app-header-social">
+        
+            <a target="_blank" href="https://github.com/ecurtin2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg></a>
+        
+            <a target="_blank" href="https://www.linkedin.com/in/evanmcurtin/"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-linkedin">
+  <title>linkedin</title>
+  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle>
+</svg></a>
+        
+    </div>
+</header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title">Use Numba for fast integrals</h1>
+      <div class="post-meta">
+        <div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Dec 14, 2016
+        </div><div>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tag">
+  <title>tag</title>
+  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line>
+</svg>
+          <a class="tag" href="https://ecurtin2.github.io/blog/tags/python/">Python</a><a class="tag" href="https://ecurtin2.github.io/blog/tags/math/">math</a></div></div>
+    </header>
+    <div class="post-content">
+      <div class="notebook-content">
 <style type="text/css">/*!
 *
 * IPython notebook
@@ -1166,24 +1223,19 @@ h6:hover .anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Lately I've been playing around with the <a href="https://trilinos.org/packages/anasazi/">anasazi</a> library. It's basically a library that implements algorithms to solve eigenvalue problems that are all completely unaware of the underling data structures. The way this is done is by implementing the algorithms in terms of an <strong>interface</strong>. Basically, this interface is a contract between whoever wrote the library, and whoever is using it. It's a formal way for the library writer to say "If you give me an object that implements x, and y, this library will do Z with that object."</p>
-<p>This idea is a bit... abstract. <em>And that's the whole point</em>. Two places where this idea is used constantly are the Python Standard Library and the C++ Standard Template Library (STL). In Python, any object that implements __iter<strong> and \</strong>next__ is automatically considered an iterable, and this opens up a ton of the standard library. In C++, similar functionality is done using iterators, the basic type that all of the STL algorithms work on.</p>
-<p>In python, for instance, this allows you to define a custom collection with __iter<strong> and \</strong>next__, and now you automatically get any(), all(), list() and so on, <em>regardless of what it is your collection does</em>.</p>
-<p>This has the significant advantage that the algorithms and data structures you use become decoupled. Therefore to implement N algorithms on M data structures, you only need to implement N + M things around a common interface, rather than the N * M combinations of algorithms and data structures. It's never quite this amazing in practice, but it's close.</p>
-<h2 id="Moving-Past-numpy:-Separating-Algorithms-and-data-structures-in-Linear-Algebra">Moving Past numpy: Separating Algorithms and data structures in Linear Algebra<a class="anchor-link" href="#Moving-Past-numpy:-Separating-Algorithms-and-data-structures-in-Linear-Algebra">&#182;</a></h2><p>This is getting long winded. Assume for now that numpy is not doing what we need (say, we need memory - distributed matrices for our problem or something). Rather than rewrite an entire algorithm for another type, why not abstract away numpy in the first place? Then we simply need to write an interface between our algorithm and any data structure we want it to be able to use.</p>
-<h2 id="Case-Study---The-Similarity-Transform">Case Study - The Similarity Transform<a class="anchor-link" href="#Case-Study---The-Similarity-Transform">&#182;</a></h2><p>Python's duck typing actually makes this almost too easy to be true. However I prefer the explicit abstract method interface: here's the imports:</p>
+<p>Here's a quick tip to make your integrals super fast in python. Suppose you wanted to integrate a function in 3D. We can start by import nquad from scipy and defining our function.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">nquad</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
 </pre></div>
     </div>
 </div>
@@ -1192,81 +1244,17 @@ h6:hover .anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Lets write out a function for a similarity transform,
-$\mathbf{\tilde{A}} = \mathbf{S}^{-1}\mathbf{A}\mathbf{S}$,
-but let's use this idea of an abstract interface. The funny thing is, this looks remarkable like psuedo - code:</p>
+<p>nquad makes it super easy to integrate a function in any number of dimensions, lets see:</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="k">def</span> <span class="nf">SimilarityTransform</span><span class="p">(</span><span class="n">STInterface</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">STInterface</span><span class="p">,</span> <span class="n">SimilarityTransformInterface</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">STInterface</span><span class="o">.</span><span class="n">inverse</span><span class="p">()</span> <span class="err">@</span> <span class="n">other</span> <span class="err">@</span> <span class="n">STInterface</span>
-</pre></div>
-    </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Here we assumed that there's something out there called a SimilarityTransformInterface, and the thing we are being passed is an instance of that. Think for a second: what would this interface need to look like? Well, anything conforming to this interface has to implement an inverse() method as well as the @ operator, the python operator for matrix multliplication (since Python 3.5 - you're not still using python 2 right?).</p>
-<p>The cool thing is, you can express this idea by defining an <em>Abstract Base Class</em> with <em>Abstract Methods</em>. Basically, an abstract base class cannot be instantiated, but it can be subclassed. The rule is, any subclass must implement all methods marked as abstract by the @abstractmethod decorator.</p>
-<p>So let's define our abstract base class:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="k">class</span> <span class="nc">SimilarityTransformInterface</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">ABCMeta</span><span class="p">):</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
-    <span class="nd">@abstractmethod</span>
-    <span class="k">def</span> <span class="nf">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span> <span class="k">pass</span>
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">__subclasshook__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Any class that implements all abstract methods of this ABC is a subclass.</span>
-<span class="sd">        </span>
-<span class="sd">        This does not require that they inherit from this class!!!        </span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">cls</span> <span class="ow">is</span> <span class="n">SimilarityTransformInterface</span><span class="p">:</span>
-            <span class="n">requirements_met</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="vm">__class__</span><span class="o">.</span><span class="n">__abstractmethods__</span><span class="p">:</span>
-                <span class="n">requirements_met</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">r</span> <span class="ow">in</span> <span class="n">B</span><span class="o">.</span><span class="vm">__dict__</span> <span class="k">for</span> <span class="n">B</span> <span class="ow">in</span> <span class="n">C</span><span class="o">.</span><span class="vm">__mro__</span><span class="p">))</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">requirements_met</span><span class="p">):</span>
-                <span class="k">return</span> <span class="bp">True</span>
-        <span class="k">return</span> <span class="bp">NotImplemented</span>
-</pre></div>
-    </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Here we've basically instructed anybody who wants to subclass this class that they must implement inverse() and __matmul__ themselves.</p>
-<p>But that's not all. The __subclasshoook__ method is where it gets real funky. It basically patches python's issubclass and isinstance methods, and this function as written here basically tells python that  <strong>any class that implements all of the abstractmethods IS A SimilarityTransformInterface</strong>, and there's no need to inherit from it!</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[36]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="k">class</span> <span class="nc">NotOne</span><span class="p">:</span> <span class="k">pass</span>
-<span class="k">class</span> <span class="nc">IsOne</span><span class="p">:</span>
-    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
-    <span class="k">def</span> <span class="nf">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">pass</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">NotOne</span><span class="p">,</span> <span class="n">SimilarityTransformInterface</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="nb">issubclass</span><span class="p">(</span><span class="n">IsOne</span><span class="p">,</span> <span class="n">SimilarityTransformInterface</span><span class="p">))</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">ranges</span><span class="o">=</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
 </pre></div>
     </div>
 </div>
@@ -1274,84 +1262,9 @@ but let's use this idea of an abstract interface. The funny thing is, this looks
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-    <div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>False
-True
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So now we've defined our interface, and we can check to make sure whatever we're being passed conforms to it. We're now officially done writing the algorithm. Now all we have to do is write a wrapper for whatever our data types are to make them conform to the interface. I did this for numpy arrays below by copying fromt their documentation:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="k">class</span> <span class="nc">NumpyShim</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This wraps a numpy array object into a SimiliarityTransformInterface compliant object.&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">input_array</span><span class="p">):</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">input_array</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">obj</span>
-    <span class="k">def</span> <span class="nf">__array_finalize__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="k">return</span>
-    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;I just used the np.linalg.inv inverse&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
-</pre></div>
-    </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Ignore the __new<strong> and \</strong>aray_finalize<strong> functions. They have to do with complications of subclassing numpy arrays. Since numpy already defines the \</strong>matmul__ function (for using @ on numpy arrays) all I have to define is the inverse. Numpy also has an inverse function, so I can just call that function within inverse(). Right now this all probably looks like a lot more work to write a one line numpy function, but bear with me.</p>
-<p>Let's first make sure that our similarity transform algorithm works on numpy arrays. We can test this by diagonalizing a symmetric matrix, and seeing if we can use the eigenvectors to transform it into a diagonal matrix of eigenvalues.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
-<span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">A</span><span class="o">.</span><span class="n">T</span>
-<span class="n">evals</span><span class="p">,</span> <span class="n">evecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="n">S</span> <span class="o">=</span> <span class="n">NumpyShim</span><span class="p">(</span><span class="n">evecs</span><span class="p">)</span>
-<span class="n">M</span> <span class="o">=</span> <span class="n">NumpyShim</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Eigenvalues are: &quot;</span><span class="p">,</span> <span class="n">evals</span><span class="p">)</span>
-<span class="n">SimilarityTransform</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">M</span><span class="p">)</span>
-</pre></div>
-    </div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-    <div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Eigenvalues are:  [-3.71087275 -1.94249831 -0.09555686  3.90007723]
-I just used the np.linalg.inv inverse
-</pre>
-</div>
-</div>
-<div class="output_area">
-    <div class="prompt output_prompt">Out[37]:</div>
+    <div class="prompt output_prompt">Out[2]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>NumpyShim([[-3.71087275, -0.        , -0.        ,  0.        ],
-           [-0.        , -1.94249831, -0.        ,  0.        ],
-           [ 0.        ,  0.        , -0.09555686, -0.        ],
-           [ 0.        ,  0.        , -0.        ,  3.90007723]])</pre>
+<pre>(-0.14048187566074577, 1.4506979457578973e-08)</pre>
 </div>
 </div>
 </div>
@@ -1360,42 +1273,16 @@ I just used the np.linalg.inv inverse
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Wohoo! It works! But that was a lot of work for basically nothing. Here's where it can get interesting. We know that we have orthogonal eigenvectors of a hermitian matrix, and we know that the inverse of an orthogonal matrix is just it's transpose. So let's not waste our time calculating the inverse when we could just do the transpose. But we don't wanna mess with the algorithm when we know it works:</p>
-<p>Let's do this by making a specialized OrthogonalArray class, whose inverse() method is just the transpose operation. Like so:</p>
+<p>Let's check how long it took:</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="k">class</span> <span class="nc">OrthogonalArray</span><span class="p">(</span><span class="n">NumpyShim</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Specializes inverse function for orthogonal numpy arrays&quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="k">assert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="err">@</span> <span class="bp">self</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))),</span> <span class="mf">0.0</span> <span class="p">)),</span> <span class="s2">&quot;Must be orthogonal!&quot;</span>
-    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">print</span><span class="p">(</span><span class="s2">&quot;I just used the orthogonal array inverse&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span>
-</pre></div>
-    </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now all we have to do is convert our eigenvectors to be an OrthogonalArray and call the similarity transform on that. Note that it uses the orthogonal array inverse function.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">sym</span> <span class="o">=</span> <span class="n">OrthogonalArray</span><span class="p">(</span><span class="n">evecs</span><span class="p">)</span>
-<span class="n">SimilarityTransform</span><span class="p">(</span><span class="n">sym</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
 </pre></div>
     </div>
 </div>
@@ -1405,43 +1292,26 @@ I just used the np.linalg.inv inverse
 <div class="output_area">
     <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>I just used the orthogonal array inverse
+<pre>19.5 ms ± 222 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
-<div class="output_area">
-    <div class="prompt output_prompt">Out[38]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>OrthogonalArray([[-3.71087275, -0.        , -0.        ,  0.        ],
-                 [-0.        , -1.94249831,  0.        ,  0.        ],
-                 [-0.        , -0.        , -0.09555686, -0.        ],
-                 [ 0.        ,  0.        , -0.        ,  3.90007723]])</pre>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Ok that's pretty neat, isn't it? We can specialize our data structures to optimize certain restrictions that we know to be true. But the underlying algorithm is unchanged.</p>
-<p>If you're still not convinced, imagine the following: You could use a sparse array, an out-of-memory dask array, or maybe a massively parallel Trilinos or Petsc array to do this <strong>same algorithm</strong> they just <em>need to implement the correct interface</em>.</p>
-<h2 id="Ok-let's-get-real-weird">Ok let's get real weird<a class="anchor-link" href="#Ok-let's-get-real-weird">&#182;</a></h2><p>Allow me to demonstrate. I'm going to use the same function to do a <em>symbolic</em> similarity transform using sympy.</p>
+<p>Pretty good, right? Well let's see if we can do better (because maybe with a different function we'll need to). <a href="https://numba.pydata.org/">Numba</a> is a just-in-time compiler focused on numeric python. Let's give it a try:</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">init_printing</span><span class="p">,</span> <span class="n">symbols</span>
-<span class="n">init_printing</span><span class="p">(</span><span class="n">use_unicode</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">SympyShim</span><span class="p">(</span><span class="n">Matrix</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mat</span><span class="p">):</span>
-        <span class="bp">self</span> <span class="o">=</span> <span class="n">mat</span>
-    <span class="k">def</span> <span class="nf">inverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">inv</span><span class="p">()</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">numba</span>
 </pre></div>
     </div>
 </div>
@@ -1450,48 +1320,37 @@ I just used the np.linalg.inv inverse
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Again, sympy implements the @ operator for us already. (We could have actually required .inv() instead of .inverse() and used both numpy and sympy, but I wanted to illustrate). So we spend the 10 seconds it takes to implement our interface using sympy Matrices.</p>
+<p>It works by adding a @jit decorator to our function. It infers the types of the arguments when it sees them and compiles the function into LLVM bytecode. The result can be significantly faster (I've seen easily two orders of magnitude).</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s1">&#39;a b&#39;</span><span class="p">)</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">([[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">]])</span>
-<span class="n">display</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="nd">@numba.jit</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span>
 </pre></div>
     </div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-    <div class="prompt"></div>
-<div class="output_latex output_subarea ">
-$$\left[\begin{matrix}a & b\\b & a\end{matrix}\right]$$
-</div>
-</div>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's take a look at the eigenvalues and vectors:</p>
+<p>Let's see if it's still correct and how long it takes:</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">pair1</span><span class="p">,</span> <span class="n">pair2</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">eigenvects</span><span class="p">()</span>
-<span class="n">display</span><span class="p">(</span><span class="n">pair1</span><span class="p">)</span>
-<span class="n">display</span><span class="p">(</span><span class="n">pair2</span><span class="p">)</span>
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
 </pre></div>
     </div>
 </div>
@@ -1500,14 +1359,78 @@ $$\left[\begin{matrix}a & b\\b & a\end{matrix}\right]$$
 <div class="output">
 <div class="output_area">
     <div class="prompt"></div>
-<div class="output_latex output_subarea ">
-$$\left ( a - b, \quad 1, \quad \left [ \left[\begin{matrix}-1\\1\end{matrix}\right]\right ]\right )$$
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(-0.14048187566074577, 1.4506979457578973e-08)
+10.9 ms ± 17.3 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hey! Twice as fast with no work at all! Pretty nice if you ask me. But there is one more layer. The nquad function calls our compiled function from python, meaning that every time it calls the function we're getting python function call overhead. Fortunately, scipy now has support for  <em>LowLevelCallable</em> types. The specifics are in the documentation, but basically you can use a c function from scipy and the nquad routine will call it directly, without indirection to the python interpreter.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">LowLevelCallable</span>
+</pre></div>
+    </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I never particularly cared for this, until I also saw that Numba now supports generating c functions directly from Python! Scipy needs a c-level function with the signature <code>double(int, double*)</code>, so we have to tell numba this is what we want. This is very easy. Unfortunately, this also means we are a bit more restricted in what we can do here.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">numba</span> <span class="kn">import</span> <span class="n">cfunc</span><span class="p">,</span> <span class="n">types</span><span class="p">,</span> <span class="n">carray</span>
+<span class="n">c_sig</span> <span class="o">=</span> <span class="n">types</span><span class="o">.</span><span class="n">double</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">intc</span><span class="p">,</span> <span class="n">types</span><span class="o">.</span><span class="n">CPointer</span><span class="p">(</span><span class="n">types</span><span class="o">.</span><span class="n">double</span><span class="p">))</span>
+<span class="nd">@cfunc</span><span class="p">(</span><span class="n">c_sig</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="n">exp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="n">sin</span><span class="p">(</span><span class="n">cos</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">total</span><span class="p">)))</span>
+</pre></div>
+    </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">new_f</span> <span class="o">=</span> <span class="n">LowLevelCallable</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">ctypes</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">nquad</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
+<span class="o">%</span><span class="n">timeit</span> <span class="n">nquad</span><span class="p">(</span><span class="n">new_f</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+</pre></div>
+    </div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
 <div class="output_area">
     <div class="prompt"></div>
-<div class="output_latex output_subarea ">
-$$\left ( a + b, \quad 1, \quad \left [ \left[\begin{matrix}1\\1\end{matrix}\right]\right ]\right )$$
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>(-0.14048187566074577, 1.4506979457578973e-08)
+6.2 ms ± 14.7 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</pre>
 </div>
 </div>
 </div>
@@ -1516,81 +1439,7 @@ $$\left ( a + b, \quad 1, \quad \left [ \left[\begin{matrix}1\\1\end{matrix}\rig
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Sympy gives us (eigenvalue, multiplicity, eigenvector) tuples as a result, so we have our eigenvectors and values. Lets make a single matrix for the vectors:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">sympy_evecs</span> <span class="o">=</span> <span class="n">pair1</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">col_insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">pair2</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">sympy_evecs</span>
-</pre></div>
-    </div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-    <div class="prompt output_prompt">Out[11]:</div>
-<div class="output_latex output_subarea output_execute_result">
-$$\left[\begin{matrix}-1 & 1\\1 & 1\end{matrix}\right]$$
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now just convert to our interface type, and use our similarity transform:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span><span class="n">s</span> <span class="o">=</span> <span class="n">SympyShim</span><span class="p">(</span><span class="n">sympy_evecs</span><span class="p">)</span>
-<span class="n">SimilarityTransform</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
-</pre></div>
-    </div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-    <div class="prompt output_prompt">Out[12]:</div>
-<div class="output_latex output_subarea output_execute_result">
-$$\left[\begin{matrix}a - b & 0\\0 & a + b\end{matrix}\right]$$
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>What the &gt;^_!</strong> it works!!!  Ok maybe I'm overexaggerating what's going on here but I've demonstrated the core idea here. This is an incredibly simple function that I'm implementing but the core idea is the same. <strong>The duck typing of Python makes it an ideal language to implement abstract algorithms that are independent of the underling datatypes</strong>. Can you do this type of thing in C++? Surely, but get your templates and 1200 character types ready.</p>
-<p>I also think that a lot of linear algebra algorithms are a great target for this approach. Writing a lot of the interface code is quite straightforward (it really really really looks like pseudo code) and then you just have to wrap a lot of very commonly implemented tasks anyway (inverse, dot product, etc).</p>
-<p>Then you can leverage a lot of linear algebra packages: numpy/scipy, theano, dask, pestc, trilinos, CUDABLAS, tensorflow, etc. with the same algorithms.</p>
-<p>You can also do <strong>Matrix free computation where you never even store a matrix</strong>. This problem happens all the time if you're dealing with very large matrices that are hundreds of thousands or millions of rows.</p>
-<p>Maybe we can re implement <a href="https://trilinos.org/packages/anasazi/">anasazi</a> eigensolvers at the algorithm level in python. Then we can have plug-n-play Lanczos, Arnoldi, Davidson, etc algorithms.</p>
-<p>Last thing then I'll be quiet. Imagine using this approach in conjunction with numpy as a proof of concept of your algorithm. Come production time, just write a wrapper for theano and if you do it properly you ought to be able to generate the compute graph of your entire algorithm, and let theano optimize and compile it. I really think this approach to solving problems will really shine when paired with the Python scientific stack.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight highlight-ipynb hl-python"><pre><span></span>
-</pre></div>
-    </div>
+<p>Cool! We beat the straightforward numba approach. Unfortunately we had to write a little bit more c-like code. It's not too bad though. I'm betting we can also take advantage of how Numba basically inlines variables it knows at compile time to do basically whatever we want. The cool thing here is that we're calling QUADPACK with a C level callback function, and the performance should be essentially optimal, as the python overhead is minimized.</p>
 </div>
 </div>
 </div>
@@ -1624,3 +1473,13 @@ $$\left[\begin{matrix}a - b & 0\\0 & a + b\end{matrix}\right]$$
 </script>
 
 </div>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
