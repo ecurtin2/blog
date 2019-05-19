@@ -3,74 +3,74 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/cv/</loc>
+    <loc>http://localhost:1313/blog/cv/</loc>
     <lastmod>2018-06-29T06:19:29+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/</loc>
+    <loc>http://localhost:1313/blog/</loc>
     <lastmod>2018-06-29T06:19:29+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/blog/abstract-linalg/</loc>
+    <loc>http://localhost:1313/blog/blog/abstract-linalg/</loc>
     <lastmod>2018-03-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/blog/</loc>
-    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://ecurtin2.github.io/blog/tags/python/</loc>
+    <loc>http://localhost:1313/blog/blog/</loc>
     <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/tags/</loc>
+    <loc>http://localhost:1313/blog/tags/python/</loc>
     <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/tags/math/</loc>
+    <loc>http://localhost:1313/blog/tags/</loc>
     <lastmod>2018-03-03T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/tags/chemistry/</loc>
+    <loc>http://localhost:1313/blog/tags/math/</loc>
+    <lastmod>2018-03-03T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://localhost:1313/blog/tags/chemistry/</loc>
     <lastmod>2016-12-14T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/blog/numba-integral/</loc>
+    <loc>http://localhost:1313/blog/blog/numba-integral/</loc>
     <lastmod>2016-12-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/blog/what-is-a-molecule/</loc>
+    <loc>http://localhost:1313/blog/blog/what-is-a-molecule/</loc>
     <lastmod>2016-12-14T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/blog/scientific-toolkit/</loc>
+    <loc>http://localhost:1313/blog/blog/scientific-toolkit/</loc>
     <lastmod>2016-10-26T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/tags/science/</loc>
+    <loc>http://localhost:1313/blog/tags/science/</loc>
     <lastmod>2016-10-26T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>https://ecurtin2.github.io/blog/categories/</loc>
+    <loc>http://localhost:1313/blog/categories/</loc>
     <priority>0</priority>
   </url>
   

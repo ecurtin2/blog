@@ -1,7 +1,8 @@
 version: "2"
 
 services:
-  test:
+  generate:
     build: .
     volumes:
       - ./:/mnt
+    command: sh -c "python nbconvert/convert.py && hugo"
