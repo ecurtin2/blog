@@ -1,14 +1,11 @@
-
 ---
 author: Evan Curtin
 date: 2016-12-14
-readingtime: 1
 slug: numba-integral
 tags:
 - Python
 - math
 title: Use Numba for fast integrals
-
 ---
 
 <div class="notebook-content">

@@ -1,4 +1,3 @@
-
 ---
 author: Evan Curtin
 date: 2016-10-26
@@ -7,7 +6,6 @@ tags:
 - Python
 - science
 title: The Scientific computing toolkit for Python
-
 ---
 
 <div class="notebook-content">

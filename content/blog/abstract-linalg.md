@@ -1,4 +1,3 @@
-
 ---
 author: Evan Curtin
 date: 2018-03-03
@@ -8,7 +7,6 @@ tags:
 - math
 title: Abstract linear algebra in Python
 desc: Hey dude
-
 ---
 
 <div class="notebook-content">

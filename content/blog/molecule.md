@@ -1,4 +1,3 @@
-
 ---
 author: Evan Curtin
 date: 2016-12-14
@@ -8,7 +7,6 @@ tags:
 - Python
 - Chemistry
 title: What is a molecule?
-
 ---
 
 <div class="notebook-content">
