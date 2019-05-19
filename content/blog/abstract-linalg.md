@@ -1,6 +1,6 @@
 ---
 author: Evan Curtin
-date: 2018-03-03
+date: 2018-03-03T10:52:12-05:00
 slug: abstract-linalg
 tags:
 - Python

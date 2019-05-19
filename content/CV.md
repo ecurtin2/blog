@@ -1,7 +1,6 @@
 ---
 title: CV
 date: 2019-05-18T10:53:18-05:00
-draft: False
 ---
 
 # Evan Curtin, Machine Learning Engineer
@@ -10,7 +9,6 @@ Chicago, IL | [evanmcurtin@gmail.com](mailto:evanmcurtin@gmail.com) | github.com
 
 
 ## SKILLS
-
 
 
 *   5+ Years: Python (numpy, scipy, pandas, etc), Scientific / Mathematical Computing 

@@ -211,7 +211,7 @@ if __name__ == "__main__":
 
     project_root = Path(__file__).absolute().parent.parent
 
-    input_dir = project_root / "content/notebooks"
+    input_dir = project_root / "notebooks"
     output_dir = project_root / "content/blog"    
 
     print(f"Source: {input_dir}")

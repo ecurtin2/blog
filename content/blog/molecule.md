@@ -1,7 +1,6 @@
 ---
 author: Evan Curtin
 date: 2016-12-14
-readingtime: 1
 slug: what-is-a-molecule
 tags:
 - Python
