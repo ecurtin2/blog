@@ -1,0 +1,18 @@
+baseURL: "localhost:1313"
+languageCode: "en-us"
+title: "Evan's Blog"
+description: Hi
+pygmentsCodeFences: true
+pygmentsUseClasses: true
+pygmentsCodefencesGuessSyntax: true
+
+
+params:
+  author: "Evan Curtin"
+  description: "I used to do science, now I make programs"
+  
+  social:
+    - name: github
+      url: https://github.com/ecurtin2
+    - name: linkedin
+      url: https://www.linkedin.com/in/evanmcurtin/

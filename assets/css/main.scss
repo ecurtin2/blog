@@ -1,0 +1,34 @@
+$theme_black: #000000;
+$theme_code_foreground: #1d1d1d;
+$theme_code_background: #eef;
+$theme_blue: #0066BB;
+$theme_red: red;
+$theme_green: green;
+$theme_purple: purple;
+$theme_darkblue: #2a5c8e;
+$theme_teal: #037171;
+$theme_red: #bc3843;
+$theme_green: #2a7f62;
+$theme_darkgreen: #03312e;
+$theme_gray: #dddddd;
+
+$bg-color: #f8f8f8;
+$fg-color: #1d1d1d;
+$light-color: #000000;
+$lightest-color: #037171;
+$primary-color: #2a7f62;
+
+$sidebar-bg-color: $theme_gray;
+$sidebar-fg-color: $theme_darkgreen;
+$sidebar-accent-color: $theme_darkgreen;
+  
+
+@import 'base';
+@import 'components/app';
+@import 'components/error_404';
+@import 'components/icon';
+@import 'components/pagination';
+@import 'components/post';
+@import 'components/posts_list';
+@import 'components/tag';
+@import 'components/syntax';

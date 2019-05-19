@@ -1,0 +1,19 @@
+.posts-list {
+  padding: 0;
+}
+
+/* another hack since i dont know where this was being set */
+.posts-list-item-title {
+  text-decoration: none;
+}
+
+.post-list-item-date {
+  display: block;
+  font-size: 0.8em;
+}
+
+.posts-list-item-description {
+  display: block;
+  font-size: 0.9em;
+}
+

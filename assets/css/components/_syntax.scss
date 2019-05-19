@@ -1,0 +1,78 @@
+
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .err { color: #FF0000; } /* Error */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .cs { color: #cc0000; font-weight: bold } /* Comment.Special */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .ni { color: #880000; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #FF0000; font-weight: bold } /* Name.Exception */
+.highlight .nl { color: #997700; font-weight: bold } /* Name.Label */
+.highlight .nt { color: #007700 } /* Name.Tag */
+.highlight .nv { color: #996633 } /* Name.Variable */
+
+
+.highlight .na { color: #0000CC } /* Name.Attribute */
+.highlight .nd { color: $theme_purple; font-weight: bold } /* Name.Decorator */
+.highlight .ow { color: $theme_green; font-weight: bold } /* Operator.Word */
+.highlight .k { color: $theme_green; font-weight: bold } /* Keyword */
+.highlight .o { color: $theme_black;  } /* Operator */
+
+
+.highlight {
+    .s, .se, .sd, .sx, .sr, .ss {
+        color:$theme_red;  /* String Literals */
+    }
+    .m, .mb, .mf, .mh, .mi, .mo {
+        color: $theme_green; /* Number literals */
+    }
+    .kd, .kn, .kp, .kr, .kt {
+        color: $theme_green;  /* keywords */
+        font-weight: bold; 
+    }
+    .kc, .bp {  
+        color: $theme_green;  /* self, True */
+    }
+    .w, .c, .ch, .cm, .cpf, .c1, .cp {
+        color: $theme_gray; /* comments */
+    }
+    .nn, .nc, .no, .nf {
+        color: $theme_blue; font-weight: bold; /* funcs/classes */
+    }
+    .k, .nb, .np {
+        color: $theme_green /* builtins */
+    }
+}
+.code {
+    background-color: white !important;
+    background: white !important
+}
+
+/* Tables!! Pandas DataFrame! :) */
+table {
+    width: 80%;
+    align: center;
+    border: none;
+    margin-left:auto;
+    margin-right:auto;
+    padding-bottom: 10px;
+}
+
+th, td {
+  text-align: center !important;
+  padding: 5px;
+  border: none;
+}
+
+th {
+  border-bottom: 1px solid #f2f2f2;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+tr:hover {background-color: #f5f5f5;}

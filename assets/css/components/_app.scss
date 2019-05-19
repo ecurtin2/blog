@@ -1,0 +1,60 @@
+.app-header {
+  padding-top: 5em;
+  background: $sidebar-bg-color;
+  text-align: center;
+}
+
+.app-header-avatar {
+  max-width: 15rem;
+  max-height: 15rem;
+  width: auto;
+  height: auto;
+  border-radius: 100%;
+  border: 0.5rem solid $sidebar-accent-color;
+}
+
+.app-container {
+  padding: 2.5rem;
+}
+
+.app-header-social {
+  font-size: 2em;
+  color: $sidebar-fg-color;
+
+  a {
+    margin: 0 0.1em;
+  }
+}
+
+.app-header {
+  h1, h2, h3, h4, h5, h6 {
+    color: $sidebar-fg-color;
+  }
+  p {
+    color: $sidebar-fg-color;
+  }
+}
+
+.app-header-link {
+  text-decoration: none;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+}
+
+
+@media (min-width: 940px) {
+  .app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20rem;
+    min-height: 100vh;
+  }
+
+  .app-container {
+    max-width: 65rem;
+    margin-left: 20rem;
+  }
+}
