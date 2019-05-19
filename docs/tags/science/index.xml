@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>science on Evan&#39;s Blog</title>
-    <link>http://localhost:1313/blog/tags/science/</link>
+    <link>https://ecurtin2.github.io/blog/tags/science/</link>
     <description>Recent content in science on Evan&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 26 Oct 2016 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="http://localhost:1313/blog/tags/science/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://ecurtin2.github.io/blog/tags/science/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>The Scientific computing toolkit for Python</title>
-      <link>http://localhost:1313/blog/blog/scientific-toolkit/</link>
+      <link>https://ecurtin2.github.io/blog/blog/scientific-toolkit/</link>
       <pubDate>Wed, 26 Oct 2016 00:00:00 +0000</pubDate>
       
-      <guid>http://localhost:1313/blog/blog/scientific-toolkit/</guid>
+      <guid>https://ecurtin2.github.io/blog/blog/scientific-toolkit/</guid>
       <description>/*! * * IPython notebook * */ /* CSS font colors for translated ANSI escape sequences */ /* The color values are a mix of http://www.xcolors.net/dl/baskerville-ivorylight and http://www.xcolors.net/dl/euphrasia */ .ansi-black-fg { color: #3E424D; } .ansi-black-bg { background-color: #3E424D; } .ansi-black-intense-fg { color: #282C36; } .ansi-black-intense-bg { background-color: #282C36; } .ansi-red-fg { color: #E75C58; } .ansi-red-bg { background-color: #E75C58; } .ansi-red-intense-fg { color: #B22B31; } .ansi-red-intense-bg { background-color: #B22B31; } .ansi-green-fg { color: #00A250; } .</description>
     </item>
     
