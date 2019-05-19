@@ -11,6 +11,7 @@ body {
   font-family: sans-serif;
   background: $bg-color;
   color: $fg-color;
+  max-width: 65em;
 }
 
 
@@ -50,10 +51,38 @@ img {
     width: 60%;
 }
 
-h1, h2, h3, h4, h5 {
+h1 {
+  color: $theme_teal;
+  font-size: 2.5em;
+}
+h2 {
+  color: $theme_green;
+}
+h3 {
+  margin-top: 0.5em !important;
+  margin-bottom: 0 !important;
+  color: $theme_darkgreen;
+}
+h4 {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  color: $theme_green;
+  padding: none;
+  margin: none;
+}
+h5 {
+  color: $theme_green;
+  padding: none;
+  margin: none;
+}
+h6 {
   color: $theme_green;
 }
 
+p {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
 
 a {
   color: $theme_blue;
@@ -84,4 +113,11 @@ code {
   background: white;
   max-width: 10em !important;
   word-wrap: normal;
+  overflow-x: visible !important;
+}
+
+blockquote {
+  border-left: .2em solid $theme_green;
+  padding-left: 1em;
+  font-style: italic;
 }

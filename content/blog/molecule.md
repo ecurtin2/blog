@@ -1171,11 +1171,11 @@ h6:hover .anchor-link {
 <blockquote><p>An electrically neutral entity consisting of more than one atom (n &gt; 1). Rigorously, a molecule, in which  n &gt; 1 must correspond to a depression on the potential energy surface that is deep enough to confine at least one vibrational state.</p>
 </blockquote>
 <p>Let's break this down into pieces</p>
-<pre><code>1) An electrically neutral entity consisting of more than one atom (n &gt; 1)
-</code></pre>
+<blockquote><p>An electrically neutral entity consisting of more than one atom (n &gt; 1)</p>
+</blockquote>
 <p>Fair enough, if this were the whole definition then any arrangement of 2 or more atoms constitutes a molecule. This is a bit weird, considering that basically everything falls into this category, as long as it doesn't hold a charge. However there's not too much to discuss on this point.</p>
-<pre><code>2) Rigorously, a molecule, in which  n &gt; 1 must correspond to a depression on the potential energy surface that is deep enough to confine at least one vibrational state.
-</code></pre>
+<blockquote><p>Rigorously, a molecule, in which  n &gt; 1 must correspond to a depression on the potential energy surface that is deep enough to confine at least one vibrational state.</p>
+</blockquote>
 <p>What? Potential energy surface? Confined vibrations?? What does this have to do with a molecule?</p>
 <p>Quite a lot actually, let's dig in!</p>
 <h2 id="Potential-Energy-Surface-(PES)">Potential Energy Surface (PES)<a class="anchor-link" href="#Potential-Energy-Surface-(PES)">&#182;</a></h2><hr>

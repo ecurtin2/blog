@@ -19,34 +19,44 @@
 
 
 .highlight .na { color: #0000CC } /* Name.Attribute */
+
 .highlight .nd { color: $theme_purple; font-weight: bold } /* Name.Decorator */
 .highlight .ow { color: $theme_green; font-weight: bold } /* Operator.Word */
 .highlight .k { color: $theme_green; font-weight: bold } /* Keyword */
-.highlight .o { color: $theme_black;  } /* Operator */
+.highlight .o { color: $theme_purple !important;  } /* Operator */
 
 
 .highlight {
     .s, .se, .sd, .sx, .sr, .ss {
-        color:$theme_red;  /* String Literals */
+        color:$theme_red !important;  /* String Literals */
     }
     .m, .mb, .mf, .mh, .mi, .mo {
-        color: $theme_green; /* Number literals */
+        color: $theme_green !important; /* Number literals */
     }
     .kd, .kn, .kp, .kr, .kt {
-        color: $theme_green;  /* keywords */
+        color: $theme_green !important;  /* keywords */
         font-weight: bold; 
     }
     .kc, .bp {  
-        color: $theme_green;  /* self, True */
+        color: $theme_green !important;  /* self, True */
     }
     .w, .c, .ch, .cm, .cpf, .c1, .cp {
-        color: $theme_gray; /* comments */
+        color: $theme_gray !important; /* comments */
     }
-    .nn, .nc, .no, .nf {
-        color: $theme_blue; font-weight: bold; /* funcs/classes */
+    .nn, .nc, .no, .nf, .fm {
+        color: $theme_blue !important; font-weight: bold !important; /* funcs/classes */
     }
     .k, .nb, .np {
-        color: $theme_green /* builtins */
+        color: $theme_green  !important;/* builtins */
+    }
+
+    .err {
+        border: none !important;
+        color: $theme_purple;
+    }
+
+    .vm {
+        color: black !important;
     }
 }
 .code {
