@@ -4,5 +4,12 @@ services:
   generate:
     build: .
     volumes:
-      - ./:/mnt
+      - .:/mnt
     command: sh -c "python nbconvert/convert.py && hugo"
+  server:
+    build: .
+    volumes: 
+      - .:/mnt
+    command: "hugo server --bind 0.0.0.0 --navigateToChanged --templateMetrics --buildDrafts"
+    ports:
+      - 1313:1313
