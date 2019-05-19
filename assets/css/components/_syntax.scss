@@ -41,7 +41,7 @@
         color: $theme_green !important;  /* self, True */
     }
     .w, .c, .ch, .cm, .cpf, .c1, .cp {
-        color: $theme_gray !important; /* comments */
+        color: #757575 !important; /* comments */
     }
     .nn, .nc, .no, .nf, .fm {
         color: $theme_blue !important; font-weight: bold !important; /* funcs/classes */

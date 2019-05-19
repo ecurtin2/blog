@@ -110,7 +110,7 @@ hr {
 }
 
 code {
-  background: white;
+  background: $theme_code_background !important;
   max-width: 10em !important;
   word-wrap: normal;
   overflow-x: visible !important;
@@ -120,4 +120,11 @@ blockquote {
   border-left: .2em solid $theme_green;
   padding-left: 1em;
   font-style: italic;
+}
+
+.chroma { 
+  background: $theme_code_background !important;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  border-left: none !important;
 }
