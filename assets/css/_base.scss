@@ -128,3 +128,20 @@ blockquote {
   padding-bottom: 0.5em;
   border-left: none !important;
 }
+
+.hidden {
+  display: none;
+}
+
+.contact-email {
+  width: 50%;
+}
+
+.contact-message {
+  width: 100%;
+  height: 10rem;
+}
+
+label {
+  color: $theme_darkgreen;
+}
