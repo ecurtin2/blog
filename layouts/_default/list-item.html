@@ -1,13 +1,13 @@
-
-<div class="posts-list-item">
-
-<a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
-<span class="post-list-item-date">
-    {{ .PublishDate.Format "Jan 2, 2006" }}
-</span>
-
-<span class="recipes-description">
-    {{ .Params.description }}
-</span>
+<div class="list-item">
+    <div class="left-half">
+        <span class="summary">
+            {{ .Render "summary" }}
+        </span>
+    </div>
+    <div class="right-half">
+        {{ with .Params.teaser_image }}
+        <img class="teaser-image" src="{{ . }}" alt="png"></img>
+        {{ end }}
+    </div>
 </div>
 <hr>

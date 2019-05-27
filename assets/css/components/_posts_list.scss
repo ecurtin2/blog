@@ -20,12 +20,15 @@
 
 
 
-.recipes-list-item {
+.list-item {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 
   .left-half {
     grid-column: 1;
+    a {
+      text-decoration: none;
+    }
   }
 
   .right-half {
@@ -33,12 +36,13 @@
   }
 }
 
-.recipes-teaser-image {
-  width: 100%;
-  padding: 1em;
+.teaser-image {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.recipes-description {
+.summary {
   font-size: 1em;
 }
 
