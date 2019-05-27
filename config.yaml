@@ -5,7 +5,6 @@ description: Hi
 pygmentsCodeFences: true
 pygmentsUseClasses: true
 pygmentsCodefencesGuessSyntax: true
-publishDir: docs
 
 params:
   author: "Evan Curtin"

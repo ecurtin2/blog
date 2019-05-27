@@ -1,15 +1,15 @@
-version: "2"
+version: "3.4"
 
 services:
   generate:
     build: .
     volumes:
       - .:/mnt
-    command: sh -c "python nbconvert/convert.py && hugo"
+    command: sh -c "python convert-notebooks.py && hugo"
   server:
     build: .
     volumes: 
       - .:/mnt
-    command: "hugo server --bind 0.0.0.0 --navigateToChanged --templateMetrics --buildDrafts"
+    command: "hugo server --bind 0.0.0.0 --port 1313 --navigateToChanged --templateMetrics --buildDrafts"
     ports:
-      - 1313:1313
+      - "1313:1313"

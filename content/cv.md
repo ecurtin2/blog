@@ -92,5 +92,5 @@ Magna Cum Laude, GPA: 3.85
 
 
 
-*   I love to cook and made a small Food blog site [https://evanmcurtin.com/FoodBlog/](https://evanmcurtin.com/FoodBlog/)
+*   I love to cook and made a small Food blog site [https://www.evanmcurtin.com/recipes/](https://www.evanmcurtin.com/recipes/)
 *   I fall asleep to cppcon / pycon youtube videos.
