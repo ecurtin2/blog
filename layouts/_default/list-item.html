@@ -1,13 +1,9 @@
 <div class="list-item">
-    <div class="left-half">
-        <span class="summary">
-            {{ .Render "summary" }}
-        </span>
-    </div>
-    <div class="right-half">
-        {{ with .Params.teaser_image }}
+    {{ with .Params.teaser_image }}
         <img class="teaser-image" src="{{ . }}" alt="png"></img>
-        {{ end }}
-    </div>
+    {{ end }}
+    <span class="summary">
+        {{ .Render "summary" }}
+    </span>
 </div>
 <hr>

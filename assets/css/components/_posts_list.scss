@@ -1,5 +1,5 @@
 .posts-list {
-  padding: 0;
+  padding: 1;
 }
 
 /* another hack since i dont know where this was being set */
@@ -19,30 +19,18 @@
 }
 
 
+.summary {
+  font-size: 1em;
+  a {
+    text-decoration: none;
+  }
+}
 
 .list-item {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-
-  .left-half {
-    grid-column: 1;
-    a {
-      text-decoration: none;
-    }
-  }
-
-  .right-half {
-    grid-column: 2;
-  }
+  padding: 1em 0 1em 0;
 }
 
 .teaser-image {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
+  width: auto;
+  max-width: 85%;
 }
-
-.summary {
-  font-size: 1em;
-}
-
