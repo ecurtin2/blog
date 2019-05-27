@@ -1,9 +1,10 @@
 ---
 title: The Scientific computing toolkit for Python
-slug: scientific-toolkit
 date: 2016-10-26
 tags: ["Python", "science"]
 author: Evan Curtin
+teaser_image: scicomp-py/scicomp-py_59_1.png
+description: A tour of some commonly used libraries.
 ---
 
 ## Getting Started

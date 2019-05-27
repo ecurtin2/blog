@@ -4,12 +4,8 @@ date: 2016-10-26
 tags:
 - food
 title: Chili
-
-image:
-  teaser: 2018-04-22-Chili/feature.jpg
-  feature: 2018-04-22-Chili/feature.jpg
-  credit: Evan C. #name of the person or site you want to credit
-  dir: /2018-04-22-Chili/
+description: This is how I make chili.
+teaser_image: chili/feature.jpg
 
 shortrecipe:
   Sear meat in large pot. Remove seeds and soak the chiles in warm water. Blend
@@ -56,9 +52,6 @@ ingredients:
     unit: tablespoon
 ---
 
-Chili. 'Nuff said hi.
-
----
 
 Start by prepping the ingredients. Here's some of what I used.
 

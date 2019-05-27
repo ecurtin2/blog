@@ -2,14 +2,11 @@
 layout: article
 title: Chinese Inspired Meat & Bone Soup
 author: Evan
+date: 2016-02-24
 category: Food
 tags: [Chinese, beef, noodle, soup]
-image:
-  teaser: 2016-12-10-Beef-Leek-Soup/teaser.jpg
-  feature: 2016-12-10-Beef-Leek-Soup/teaser.jpg
-  credit: Evan C. #name of the person or site you want to credit
-  dir: /images/2016-12-10-Beef-Leek-Soup/
-
+teaser_image: beef-leek-soup/teaser.jpg
+description: A random soup thing I made one day
 shortrecipe:
   Sear meat until brown on all sides. Remove from pan, and add
   leeks. Cook chopped leeks for 5 minutes and add garlic and ginger.

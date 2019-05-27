@@ -7,12 +7,16 @@ from shutil import rmtree
 def convert(notebook_file):
     notebook = Path(notebook_file)
     name = notebook.stem
-    dest_dir = Path("content/blog/") / name
+    blog_root = Path("content/blog/")
+    if not blog_root.is_dir():
+        blog_root.mkdir()
+    dest_dir = blog_root / name
     files_dir = notebook.with_name(notebook.stem + "_files")
 
     if dest_dir.is_dir():
-        print(f"Target directory {dest_dir} exists, not generating {name}")
-        return
+        print(f"Rebuilding {dest_dir}")
+        rmtree(dest_dir)
+        
     run(["jupyter", "nbconvert", str(notebook), "--to", "markdown"])
 
 

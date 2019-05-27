@@ -5,6 +5,7 @@
 /* another hack since i dont know where this was being set */
 .posts-list-item-title {
   text-decoration: none;
+  font-size: 1.5em;
 }
 
 .post-list-item-date {
@@ -15,5 +16,29 @@
 .posts-list-item-description {
   display: block;
   font-size: 0.9em;
+}
+
+
+
+.recipes-list-item {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  .left-half {
+    grid-column: 1;
+  }
+
+  .right-half {
+    grid-column: 2;
+  }
+}
+
+.recipes-teaser-image {
+  width: 100%;
+  padding: 1em;
+}
+
+.recipes-description {
+  font-size: 1em;
 }
 

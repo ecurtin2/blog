@@ -1,10 +1,13 @@
 
+<div class="posts-list-item">
+
 <a class="posts-list-item-title" href="{{ .Permalink }}">{{ .Title }}</a>
 <span class="post-list-item-date">
     {{ .PublishDate.Format "Jan 2, 2006" }}
 </span>
-<span class="posts-list-item-description">
-    {{ .Params.desc }}
-</span>
 
+<span class="recipes-description">
+    {{ .Params.description }}
+</span>
+</div>
 <hr>

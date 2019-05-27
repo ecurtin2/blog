@@ -1,9 +1,10 @@
 ---
 title: Abstract linear algebra in Python
-slug: abstract-linalg
 date: 2018-03-03
 tags: ["Python", "math"]
 author: Evan Curtin
+teaser_image: abstract-linalg/abstract-linalg_21_0.png
+description: Write code once.
 ---
 
 Lately I've been playing around with the [anasazi](https://trilinos.org/packages/anasazi/) library. It's basically a library that implements algorithms to solve eigenvalue problems that are all completely unaware of the underling data structures. The way this is done is by implementing the algorithms in terms of an **interface**. Basically, this interface is a contract between whoever wrote the library, and whoever is using it. It's a formal way for the library writer to say "If you give me an object that implements x, and y, this library will do Z with that object."

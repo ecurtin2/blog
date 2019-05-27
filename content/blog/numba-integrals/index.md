@@ -1,10 +1,9 @@
 ---
 title: Use Numba for fast integrals
-slug: numba-integral
 date: 2016-12-14
 tags: ["Python", "math"]
-readingtime: 1
 author: Evan Curtin
+description: C speed from python.
 ---
 
 Here's a quick tip to make your integrals super fast in python. Suppose you wanted to integrate a function in 3D. We can start by import nquad from scipy and defining our function.
