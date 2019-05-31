@@ -90,7 +90,7 @@ print(issubclass(IsOne, SimilarityTransformInterface))
 
     False
     True
-
+    
 
 So now we've defined our interface, and we can check to make sure whatever we're being passed conforms to it. We're now officially done writing the algorithm. Now all we have to do is write a wrapper for whatever our data types are to make them conform to the interface. I did this for numpy arrays below by copying fromt their documentation:
 
@@ -131,7 +131,7 @@ SimilarityTransform(S, M)
 
     Eigenvalues are:  [-3.71087275 -1.94249831 -0.09555686  3.90007723]
     I just used the np.linalg.inv inverse
-
+    
 
 
 
@@ -169,7 +169,7 @@ SimilarityTransform(sym, A)
 ```
 
     I just used the orthogonal array inverse
-
+    
 
 
 
