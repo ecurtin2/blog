@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: my-model-pipeline-
+spec:
+  entrypoint: workflow
+  templates:
+  - name: workflow
+    dag:
+      tasks:
+      - name: pull-data
+        template: get-data-from-postgres
+      - name: transform-data
+        dependencies: [pull-data]
+        template: transform-data-template
+      - name: train-model
+        dependencies: [transform-data]
+        template: train-template
+
+  - name: transform-data-template
+    container:
+      image: gettyimages/spark
+      command: [pyspark]
+      args: ["transform.py"]
+      resources:
+        requests:
+          memory: "8Gi"
+          cpu: 4
+
+  - name: train-template
+    container:
+      image: continuumio/anaconda
+      command: [python]
+      args: ["train.py"]
+      resources:
+        requests:
+          memory: "32Gi"
+          cpu: 12   
