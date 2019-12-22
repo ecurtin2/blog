@@ -17,6 +17,23 @@ spec:
         dependencies: [transform-data]
         template: train-template
 
+  - name: get-data-from-postgres
+    container:
+      image: continuumio/anaconda
+      command: [python]
+      args: ["extract-data-from-database.py"]
+      env:
+        - name: DATABASE_USER
+          valueFrom:
+            secretKeyRef:
+              name: my-database-credentials
+              key: user
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: my-database-credentials
+              key: password
+
   - name: transform-data-template
     container:
       image: gettyimages/spark
