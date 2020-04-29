@@ -1,6 +1,6 @@
 ---
 title: "CV"
-date: 2019-05-19
+date: 2020-04-29
 ---
 
 # Evan Curtin, Machine Learning Engineer
@@ -12,8 +12,8 @@ Chicago, IL | [evanmcurtin@gmail.com](mailto:evanmcurtin@gmail.com) | github.com
 
 
 *   5+ Years: Python (numpy, scipy, pandas, etc), Scientific / Mathematical Computing 
-*   2-4 Years: C++, git, Linux/bash
-*   <2 Years: Cloud Computing (Amazon Web Services), Docker, SQL
+*   2-4 Years: C++, git, SQL, Linux/bash
+*   <2 Years: Cloud Computing (Amazon Web Services), Docker, Kubernetes, Argo
 
 
 ## EXPERIENCE
@@ -28,7 +28,9 @@ _Apr 2019 - Present_
 
 
 
-*   Kubernetes based machine learning pipelines on AWS
+*   Created a fully automated machine learning model refit pipeline on Kubernetes that runs regularly on Terabyte-scale datasets.
+*   Scaled data transformation and analysis using Spark, Kubernetes and occasionally vendor platforms
+*   Worked closely with business and platform teams to dramatically shorten the train-deploy cycle of a model 
 
 
 ### Data Science Engineer
