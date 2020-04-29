@@ -146,6 +146,8 @@ label {
   color: $theme_darkgreen;
 }
 
-.post-meta {
-  page-break-after: always;
+div {
+  .post-meta {
+    page-break-after: always;
+  }
 }
