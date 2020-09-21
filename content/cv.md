@@ -12,8 +12,9 @@ Chicago, IL | [evanmcurtin@gmail.com](mailto:evanmcurtin@gmail.com) | github.com
 
 
 *   5+ Years: Python (numpy, scipy, pandas, etc), Scientific / Mathematical Computing 
-*   2-4 Years: C++, git, SQL, Linux/bash
-*   <2 Years: Cloud Computing (Amazon Web Services), Docker, Kubernetes, Argo
+*   2-4 Years: C++, git, SQL, Linux/bash, Cloud Computing (Amazon Web Services), Docker
+*   <2 Years: Kubernetes, Argo, Apache Spark
+*   A few weekends: Rust, Scala, Elm, Go
 
 
 ## EXPERIENCE
@@ -28,9 +29,11 @@ _Apr 2019 - Present_
 
 
 
-*   Created a fully automated machine learning model refit pipeline on Kubernetes that runs regularly on Terabyte-scale datasets.
+*   Created a fully automated machine learning model refit pipeline on Kubernetes with Argo. The pipeline transforms over
+a Terabyte of raw data and results in a production-ready model library being trained on new data and published daily.
 *   Scaled data transformation and analysis using Spark, Kubernetes and occasionally vendor platforms
-*   Worked closely with business and platform teams to dramatically shorten the train-deploy cycle of a model 
+*   Worked closely with business and platform teams to dramatically shorten the train-deploy cycle of a model
+*   Optimized model performance using hyperparameter tuning (hyperopt) and weighting the objective to better align with business intent.
 
 
 ### Data Science Engineer
@@ -89,6 +92,10 @@ Magna Cum Laude, GPA: 3.85
 
 *   Evan Curtin and Karl Sohlberg. Quantifying electron transit in donor-bridge-acceptor systems using probabilistic confidence. _Journal of Theoretical and Computational Chemistry, 2018_
 
+
+## Open Source
+
+*    Quantized: Solutions to the time-dependent schroedinger equation for arbitrary potentials in 1D https://github.com/ecurtin2/quantized
 
 ## HOBBIES
 
