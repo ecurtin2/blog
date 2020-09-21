@@ -93,7 +93,7 @@ Magna Cum Laude, GPA: 3.85
 *   Evan Curtin and Karl Sohlberg. Quantifying electron transit in donor-bridge-acceptor systems using probabilistic confidence. _Journal of Theoretical and Computational Chemistry, 2018_
 
 
-## Open Source
+## PROJECTS
 
 *    Quantized: Solutions to the time-dependent schroedinger equation for arbitrary potentials in 1D https://github.com/ecurtin2/quantized
 
