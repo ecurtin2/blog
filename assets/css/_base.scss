@@ -11,7 +11,7 @@ body {
   font-family: sans-serif;
   background: $bg-color;
   color: $fg-color;
-  max-width: 65em;
+  max-width: 71em;
 }
 
 
@@ -51,22 +51,28 @@ img {
     width: 60%;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
 h1 {
   color: $theme_teal;
-  font-size: 2.5em;
+  font-size: 2em;
 }
+
 h2 {
   color: $theme_green;
 }
 h3 {
-  margin-top: 0.5em !important;
+  margin-top: 0.25em !important;
   margin-bottom: 0 !important;
-  color: $theme_darkgreen;
+  // color: $theme_darkgreen;
 }
 h4 {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
-  color: $theme_green;
+  // color: $theme_;
   padding: none;
   margin: none;
 }
@@ -86,6 +92,7 @@ p {
 
 a {
   color: $theme_blue;
+  text-decoration: none;
   &:hover {
     color: $theme_teal;
   }
@@ -146,8 +153,14 @@ label {
   color: $theme_darkgreen;
 }
 
-div {
-  .post-meta {
-    page-break-after: always;
-  }
+@media print {
+.no-print {
+  visibility: hidden;
+  display: none;
+}
+}
+
+ul {
+  margin-block-start: 0.1em;
+  margin-block-end: 0.1em;
 }

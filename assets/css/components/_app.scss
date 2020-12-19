@@ -58,3 +58,9 @@
     margin-left: 20rem;
   }
 }
+
+@media print {
+  .app-header {
+    padding: 0;
+  }
+}
