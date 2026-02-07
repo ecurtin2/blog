@@ -87,6 +87,17 @@
         }
       }
     }
+
+    // Clamp preview text to ~3 lines.
+    .post-excerpt {
+      margin: 0.35rem 0 0 0;
+      color: lighten($fg-color, 10%);
+      line-height: 1.55;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+    }
   }
 }
 

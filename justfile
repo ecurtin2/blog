@@ -2,6 +2,9 @@
 default:
     @just --list
 
+# Keep this in sync with GitHub Actions workflows.
+hugo_version := "0.140.2"
+
 # Check and install all required dependencies
 install:
     #!/usr/bin/env bash
@@ -13,12 +16,23 @@ install:
     mkdir -p ~/.local/bin
     
     # Hugo
+    need_hugo=1
     if command -v hugo &> /dev/null; then
-        echo "✓ hugo $(hugo version | head -c 50)..."
+        if hugo version | grep -q "v{{hugo_version}}"; then
+            echo "✓ hugo $(hugo version)"
+            need_hugo=0
+        else
+            echo "✗ hugo wrong version ($(hugo version)); need v{{hugo_version}}"
+        fi
     else
-        echo "✗ hugo not found, installing..."
-        curl -L https://github.com/gohugoio/hugo/releases/download/v0.140.2/hugo_extended_0.140.2_linux-amd64.tar.gz | tar -xz -C ~/.local/bin hugo
-        echo "✓ hugo installed"
+        echo "✗ hugo not found"
+    fi
+
+    if [ "$need_hugo" -eq 1 ]; then
+        echo "Installing hugo v{{hugo_version}} (extended)..."
+        curl -L "https://github.com/gohugoio/hugo/releases/download/v{{hugo_version}}/hugo_extended_{{hugo_version}}_linux-amd64.tar.gz" \
+          | tar -xz -C ~/.local/bin hugo
+        echo "✓ hugo installed: $(~/.local/bin/hugo version)"
     fi
     
     # uv
