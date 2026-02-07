@@ -1,11 +1,11 @@
 <header class="app-header no-print">
-    <a href="{{ .Site.BaseURL }}"><img class="app-header-avatar" src="{{ "avatar.jpg" | relURL }}" alt="{{ .Site.Params.author | default "John Doe" }}" /></a>
+    <a href="{{ "/" | relURL }}"><img class="app-header-avatar" src="{{ "avatar.jpg" | relURL }}" alt="{{ .Site.Params.author | default "John Doe" }}" /></a>
     <h1>{{ .Site.Title }}</h1>
 
     <nav class="app-header-nav">
-        <a class="app-header-link" href="{{ .Site.BaseURL }}">About Me</a>
-        <a class="app-header-link" href="{{ .Site.BaseURL }}/blog">Blog</a>
-        <a class="app-header-link" href="{{ .Site.BaseURL }}/cv">CV</a>
+        <a class="app-header-link" href="{{ "/" | relURL }}">About Me</a>
+        <a class="app-header-link" href="{{ "/blog/" | relURL }}">Blog</a>
+        <a class="app-header-link" href="{{ "/cv/" | relURL }}">CV</a>
     </nav>
     
     {{ with .Site.Params.description }}

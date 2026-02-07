@@ -21,6 +21,7 @@ certificate_arn = require(
 )
 github_repo = require(cfg, "githubRepo", "ecurtin2/blog")
 enable_oac = cfg.get_bool("enableOac") or False
+enable_uri_rewrite = cfg.get_bool("enableUriRewrite") or True
 
 # Existing ACM validation record (already in Route 53).
 acm_validation_name = require(
@@ -119,6 +120,48 @@ if enable_oac:
     )
     oac_id = oac.id
 
+# Rewrite /blog -> /blog/ and /blog/ -> /blog/index.html (and normalize //).
+uri_rewrite_fn = None
+if enable_uri_rewrite:
+    uri_rewrite_fn = aws.cloudfront.Function(
+        "uriRewriteFunction",
+        name="evancurtin-com-uri-rewrite",
+        runtime="cloudfront-js-1.0",
+        publish=True,
+        code="""function handler(event) {
+  var request = event.request;
+  var uri = request.uri || "/";
+
+  // Normalize multiple slashes.
+  var normalized = uri.replace(/\\/{2,}/g, "/");
+  if (normalized !== uri) {
+    return {
+      statusCode: 301,
+      statusDescription: "Moved Permanently",
+      headers: { location: { value: normalized } }
+    };
+  }
+
+  // If path has no extension and doesn't end with '/', redirect to add trailing slash.
+  var hasExtension = uri.lastIndexOf(".") > uri.lastIndexOf("/");
+  if (!hasExtension && !uri.endsWith("/")) {
+    return {
+      statusCode: 301,
+      statusDescription: "Moved Permanently",
+      headers: { location: { value: uri + "/" } }
+    };
+  }
+
+  // If directory path, rewrite to index.html.
+  if (uri.endsWith("/")) {
+    request.uri = uri + "index.html";
+  }
+
+  return request;
+}
+""",
+    )
+
 distribution = aws.cloudfront.Distribution(
     "siteDistribution",
     enabled=True,
@@ -149,6 +192,16 @@ distribution = aws.cloudfront.Distribution(
         allowed_methods=["GET", "HEAD"],
         cached_methods=["GET", "HEAD"],
         compress=False,
+        function_associations=(
+            [
+                aws.cloudfront.DistributionDefaultCacheBehaviorFunctionAssociationArgs(
+                    event_type="viewer-request",
+                    function_arn=uri_rewrite_fn.arn,
+                )
+            ]
+            if uri_rewrite_fn is not None
+            else []
+        ),
         forwarded_values=aws.cloudfront.DistributionDefaultCacheBehaviorForwardedValuesArgs(
             query_string=False,
             cookies=aws.cloudfront.DistributionDefaultCacheBehaviorForwardedValuesCookiesArgs(
