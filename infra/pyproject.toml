@@ -1,0 +1,13 @@
+[project]
+name = "blog-infra"
+version = "0.1.0"
+description = "Pulumi IaC for evancurtin.com"
+requires-python = ">=3.10"
+dependencies = [
+  "pulumi>=3.0.0",
+  "pulumi-aws>=6.0.0",
+]
+
+[tool.uv]
+# Keep infra dependencies isolated from the main blog project.
+

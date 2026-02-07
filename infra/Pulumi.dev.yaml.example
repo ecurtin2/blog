@@ -1,0 +1,13 @@
+config:
+  aws:region: us-east-1
+  blog-infra:domain: evancurtin.com
+  blog-infra:hostedZoneId: ZEV84TRNG5CSH
+  blog-infra:bucketName: evancurtin.com
+  blog-infra:distributionId: E4M8LUR5RBKVK
+  blog-infra:certificateArn: arn:aws:acm:us-east-1:627026565044:certificate/3cee70b1-7ce1-493a-a9b5-2fcd85572ba4
+  blog-infra:cloudfrontDomainName: d3h3kt8ilbknqz.cloudfront.net.
+  blog-infra:cloudfrontHostedZoneId: Z2FDTNDATAQYW2
+  blog-infra:githubRepo: ecurtin2/blog
+  blog-infra:githubOidcProviderArn: arn:aws:iam::627026565044:oidc-provider/token.actions.githubusercontent.com
+  blog-infra:enableOac: "true"
+

@@ -1,0 +1,8 @@
+.pulumi/
+.venv/
+__pycache__/
+*.pyc
+
+# Stack configs may contain secrets; keep local by default.
+Pulumi.*.yaml
+

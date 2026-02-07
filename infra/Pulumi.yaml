@@ -1,0 +1,5 @@
+name: blog-infra
+runtime:
+  name: python
+description: Pulumi IaC for evancurtin.com (Route53 + CloudFront + S3 + GitHub OIDC)
+
