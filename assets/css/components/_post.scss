@@ -1,15 +1,245 @@
-.post-title {
-  color: $lightest-color;
-  font-size: 2.5em;
+// ==============================================
+// Single Post Styles
+// ==============================================
+
+.post {
+  max-width: 720px;
 }
 
-.post-content {
-  pre {
-    border-left: 0.2em solid rgba($theme_green, .8);
-    padding-left: 1em;
-  }
+.post-header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba($theme_green, 0.15);
+}
+
+.post-title {
+  color: $lightest-color;
+  font-size: 2.25rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 
 .post-meta {
-  font-size: 0.8em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: lighten($fg-color, 25%);
+  
+  div {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+    opacity: 0.6;
+  }
+}
+
+.post-content {
+  font-size: 1.05rem;
+  
+  // Better spacing for content elements
+  > * + * {
+    margin-top: 1.25rem;
+  }
+  
+  // H1 within content (like CV name)
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  // Italic tagline after h1
+  > h1 + p em {
+    font-size: 1.1rem;
+    color: lighten($fg-color, 20%);
+  }
+  
+  // Inline code within paragraphs
+  p code, li code {
+    font-size: 0.9em;
+  }
+  
+  // Images in content
+  img {
+    margin: 2rem auto;
+    border-radius: $border-radius;
+    box-shadow: $shadow-md;
+  }
+  
+  // Better list indentation
+  ul, ol {
+    padding-left: 1.75rem;
+  }
+}
+
+.post-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba($theme_green, 0.15);
+}
+
+// ==============================================
+// Homepage Content
+// ==============================================
+
+.homepage-header {
+  margin-bottom: 2rem;
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    color: lighten($fg-color, 25%);
+    font-size: 1.1rem;
+  }
+}
+
+.homepage-content {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  
+  p {
+    margin-bottom: 1rem;
+  }
+}
+
+// ==============================================
+// CV / Resume Specific Styles
+// ==============================================
+
+.cv {
+  max-width: 720px;
+}
+
+.cv-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid rgba($theme_green, 0.2);
+}
+
+.cv-name {
+  font-size: 2.25rem;
+  color: $theme_teal;
+  margin-bottom: 0.25rem;
+}
+
+.cv-tagline {
+  font-size: 1.1rem;
+  font-style: italic;
+  color: lighten($fg-color, 15%);
+  margin-bottom: 0.5rem;
+}
+
+.cv-contact {
+  font-size: 0.95rem;
+  color: $fg-color;
+  
+  a {
+    font-weight: 500;
+  }
+}
+
+.cv-content {
+  font-size: 1rem;
+}
+
+.cv-summary {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.cv-section {
+  margin-bottom: 2rem;
+  
+  h2 {
+    font-size: 1.4rem;
+    color: $theme_green;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid rgba($theme_green, 0.15);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  p {
+    margin: 0.4rem 0;
+  }
+}
+
+.cv-experience-item,
+.cv-education-item {
+  margin-bottom: 1.5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+  
+  h3 {
+    font-size: 1.1rem;
+    color: $theme_darkgreen;
+    margin: 0 0 0.2rem 0;
+    padding: 0;
+    border: none;
+  }
+  
+  .cv-meta {
+    font-size: 0.9rem;
+    color: lighten($fg-color, 25%);
+    margin: 0 0 0.5rem 0;
+  }
+  
+  ul {
+    margin: 0.5rem 0 0 0;
+    padding-left: 1.25rem;
+    
+    li {
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  p {
+    margin: 0.25rem 0;
+    font-size: 0.95rem;
+    color: lighten($fg-color, 10%);
+  }
+}
+
+.cv-publications {
+  padding-left: 1.5rem;
+  
+  li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.cv-projects {
+  padding-left: 1.25rem;
+  
+  li {
+    margin-bottom: 0.5rem;
+    
+    a {
+      font-weight: 500;
+    }
+  }
 }

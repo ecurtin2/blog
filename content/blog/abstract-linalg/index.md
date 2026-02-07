@@ -6,7 +6,6 @@ author: Evan Curtin
 teaser_image: abstract-linalg/abstract-linalg_21_0.png
 description: Write code once.
 ---
-
 Lately I've been playing around with the [anasazi](https://trilinos.org/packages/anasazi/) library. It's basically a library that implements algorithms to solve eigenvalue problems that are all completely unaware of the underling data structures. The way this is done is by implementing the algorithms in terms of an **interface**. Basically, this interface is a contract between whoever wrote the library, and whoever is using it. It's a formal way for the library writer to say "If you give me an object that implements x, and y, this library will do Z with that object."
 
 This idea is a bit... abstract. *And that's the whole point*. Two places where this idea is used constantly are the Python Standard Library and the C++ Standard Template Library (STL). In Python, any object that implements \__iter__ and \__next__ is automatically considered an iterable, and this opens up a ton of the standard library. In C++, similar functionality is done using iterators, the basic type that all of the STL algorithms work on. 
@@ -90,7 +89,7 @@ print(issubclass(IsOne, SimilarityTransformInterface))
 
     False
     True
-    
+
 
 So now we've defined our interface, and we can check to make sure whatever we're being passed conforms to it. We're now officially done writing the algorithm. Now all we have to do is write a wrapper for whatever our data types are to make them conform to the interface. I did this for numpy arrays below by copying fromt their documentation:
 
@@ -131,7 +130,7 @@ SimilarityTransform(S, M)
 
     Eigenvalues are:  [-3.71087275 -1.94249831 -0.09555686  3.90007723]
     I just used the np.linalg.inv inverse
-    
+
 
 
 
@@ -169,7 +168,7 @@ SimilarityTransform(sym, A)
 ```
 
     I just used the orthogonal array inverse
-    
+
 
 
 

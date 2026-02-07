@@ -3,7 +3,11 @@ title: "About"
 date: 2019-05-19
 ---
 
-Here is where I will write some things sometime.
+Evan Curtin is a Staff Applied Scientist at Relativity, specializing in machine learning and generative AI systems. At Relativity, he played a key role in developing and launching Relativity aiR for Review, a product leveraging LLMs to streamline document review for eDiscovery practitioners. He has also developed advanced active-learning methods, including TAR 2.0 systems.
+
+Previously, Evan optimized pricing algorithms at Coalition, Inc., and built fraud-detection models at Capital One, consistently proving the effectiveness of machine learning solutions in high-risk business scenarios.
+
+Evan holds a Master's in Chemistry from Drexel University and studied computational quantum chemistry and high-performance computing at the University of Illinois, Urbana-Champaign.
 
 
 ## Contact Me

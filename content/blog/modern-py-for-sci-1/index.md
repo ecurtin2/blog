@@ -6,7 +6,6 @@ author: Evan Curtin
 teaser_image: molecule/molecule_3_0.png
 description: Using new python features to make your life easier
 ---
-
 # Modern techniques for scientific computing and data science (1/n)
 
 If you're anything like me, you've picked up some python programming in order to solve a problem or maybe as part of a class in computing. Many of us picked up this langauge as a means to an end and started learning via google and stack overflow. When learning like this, it's easy to miss some of the new devlopments in the python landscape. This post is a first in an arbitrary number of posts describing a few techniques I consider must-haves in modern python development. The field moves extremely fast, so I'll try to restrict myself to tools that I consider so useful, that the payoff of learning them is well worth the effort.
@@ -58,7 +57,7 @@ print("2 ^ 5 = ", pow5(2))
 
     2 cubed =  8
     2 ^ 5 =  32
-    
+
 
 Alright, so we can create various functions on the fly, and invoke them later. 
 Let's take a look at what one looks like:
@@ -69,7 +68,7 @@ print(cubed)
 ```
 
     <__main__.Power object at 0x000001C4080C8A58>
-    
+
 
 Bummer. That's not helpful at all! But what if we could make a new function,
 but also be able to print it out? That'd be kinda nice. The way to define a 
@@ -96,7 +95,7 @@ print("2 ^ 4 = ", dataclass_pow4(2))
 ```
 
     2 ^ 4 =  16
-    
+
 
 Notice how we didn't have to define `__init__` anymore! Now we've really only specified
 what `Dataclass_Pow` should do when called, and what variables it needs to save. And
@@ -108,7 +107,7 @@ print(dataclass_pow4)
 ```
 
     Dataclass_Pow(n=4)
-    
+
 
 Now that's what I call descriptive! Let's Try it out with something a bit more complicated:
 
@@ -258,7 +257,9 @@ alt.Chart(df).mark_line().encode(
 
 
 
+    
 ![png](modern-py-for-sci-1_17_0.png)
+    
 
 
 
@@ -283,7 +284,9 @@ alt.Chart(df).mark_line().encode(
 
 
 
+    
 ![png](modern-py-for-sci-1_19_0.png)
+    
 
 
 

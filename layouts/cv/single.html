@@ -1,0 +1,75 @@
+{{ define "main" }}
+{{ $p := .Site.Data.profile }}
+<article class="cv">
+  <header class="cv-header no-print">
+    <h1 class="cv-name">{{ $p.personal.name }}</h1>
+    <p class="cv-tagline">{{ $p.bio.tagline }}</p>
+    <p class="cv-contact">
+      {{ $p.personal.location }} |
+      <a href="mailto:{{ $p.personal.email }}">{{ $p.personal.email }}</a> |
+      <a href="{{ $p.personal.github }}">github.com/ecurtin2</a>
+    </p>
+  </header>
+
+  <div class="cv-content">
+    <p class="cv-summary">{{ $p.bio.summary }}</p>
+
+    <section class="cv-section">
+      <h2>Skills</h2>
+      <p><strong>Strong:</strong> {{ delimit $p.skills.strong ", " }}</p>
+      <p><strong>Proficient:</strong> {{ delimit $p.skills.proficient ", " }}</p>
+      <p><strong>Familiar:</strong> {{ delimit $p.skills.familiar ", " }}</p>
+      <p><strong>Interested in:</strong> {{ delimit $p.skills.interested_in ", " }}</p>
+    </section>
+
+    <section class="cv-section">
+      <h2>Experience</h2>
+      {{ range $p.experience }}
+      <div class="cv-experience-item">
+        <h3>{{ .title }} - {{ .company }}</h3>
+        <p class="cv-meta">{{ .start_date | replaceRE "^(\\d{4})-(\\d{2})$" "$1" }} – {{ if eq .end_date "present" }}Present{{ else }}{{ .end_date | replaceRE "^(\\d{4})-(\\d{2})$" "$1" }}{{ end }}, {{ .location }}</p>
+        <ul>
+          {{ range .highlights }}
+          <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </section>
+
+    <section class="cv-section">
+      <h2>Education</h2>
+      {{ range $p.education }}
+      <div class="cv-education-item">
+        <h3>{{ .degree }}, {{ .institution }}</h3>
+        {{ with .focus }}<p>Focus: {{ . }}</p>{{ end }}
+        {{ if .thesis }}<p>Thesis: {{ .thesis }}{{ with .minor }}. {{ . }} Minor.{{ end }}</p>{{ end }}
+        {{ with .technologies }}<p>Technologies: {{ delimit . ", " }}</p>{{ end }}
+      </div>
+      {{ end }}
+    </section>
+
+    <section class="cv-section">
+      <h2>Publications</h2>
+      <ol class="cv-publications">
+        {{ range $p.publications }}
+        <li>
+          {{ delimit .authors ", " }}, "{{ .title }}," <em>{{ .venue }}</em>{{ with .volume }}, vol. {{ . }}{{ end }}{{ with .issue }}, no. {{ . }}{{ end }}{{ with .page }}, p. {{ . }}{{ end }}{{ with .pages }}, pp. {{ . }}{{ end }}, {{ .year }}.
+        </li>
+        {{ end }}
+      </ol>
+    </section>
+
+    <section class="cv-section">
+      <h2>Projects</h2>
+      <ul class="cv-projects">
+        {{ range $p.projects }}
+        <li>
+          <a href="{{ .url }}">{{ .name }}</a>: {{ .description }}
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+  </div>
+</article>
+{{ end }}

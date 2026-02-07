@@ -6,7 +6,6 @@ author: Evan Curtin
 teaser_image: scicomp-py/scicomp-py_59_1.png
 description: A tour of some commonly used libraries.
 ---
-
 ## Getting Started
 ---
 
@@ -57,7 +56,7 @@ def mmult(mat1, mat2):
 
     CPU times: user 3.78 s, sys: 0 ns, total: 3.78 s
     Wall time: 3.78 s
-    
+
 
 Well that doesn't seem so bad! This would take longer to do by hand! It actually is pretty slow.  [Here's](https://jakevdp.github.io/blog/2014/05/09/why-python-is-slow/)
 a look at some of the reasons why. It has to do with the fact that python is dynamically typed and interpreted, rather than compiled. Additionally, the arrays in native python aren't laid out in one chunk of memory.
@@ -80,7 +79,7 @@ npmat2 = np.asarray(mat2)
 
     CPU times: user 4 ms, sys: 4 ms, total: 8 ms
     Wall time: 5.86 ms
-    
+
 
 WHOA! Blazing fast! Morale of the story: if there is a numpy function to do it, use it! And there  is a numpy function for a lot of stuff, here's a few useful ones:
 
@@ -113,7 +112,7 @@ print(10 + A)
     [[11 12 13]
      [14 15 16]
      [17 18 19]]
-    
+
 
 
 ```python
@@ -123,7 +122,7 @@ print(2 * A)
     [[ 2  4  6]
      [ 8 10 12]
      [14 16 18]]
-    
+
 
 
 ```python
@@ -133,7 +132,7 @@ print(A == 5)
     [[False False False]
      [False  True False]
      [False False False]]
-    
+
 
 
 ```python
@@ -146,7 +145,7 @@ print(A + B)
     [[11 22 33]
      [44 55 66]
      [77 88 99]]
-    
+
 
 ### 2) You can 'slice' numpy arrays
 
@@ -161,7 +160,7 @@ print(A[:, 2])  # 3rd column (starts at 0)
      [7 8 9]] 
     
     [3 6 9]
-    
+
 
 
 ```python
@@ -169,7 +168,7 @@ print(A[1, :])  #Second row
 ```
 
     [4 5 6]
-    
+
 
 
 ```python
@@ -178,7 +177,7 @@ print(A[0:2, 0:2]) # Top-Left 2x2 section
 
     [[1 2]
      [4 5]]
-    
+
 
 ### 3) You can index a numpy array... with a numpy array
 
@@ -191,7 +190,7 @@ print(A)
     [[1 2 3]
      [4 5 6]
      [7 8 9]]
-    
+
 
 
 ```python
@@ -200,7 +199,7 @@ print(A[indices])  # first and third row
 
     [[1 2 3]
      [7 8 9]]
-    
+
 
 
 ```python
@@ -210,7 +209,7 @@ print(A[:,indices])  # first and third column
     [[1 3]
      [4 6]
      [7 9]]
-    
+
 
 
 ```python
@@ -226,7 +225,7 @@ print(A[indices2])  # All elements where indices2 is True
      [7 8 9]] 
     
     [1 2 5 6]
-    
+
 
 ### 4) And you can combine operations
 
@@ -292,7 +291,7 @@ print(vecs[:, indices_of_sorted_vals])  # columns are rearranged
     [[-0.81649658  0.19219669  0.57735027]
      [ 0.40824829 -0.7833358   0.57735027]
      [ 0.40824829  0.59113912  0.57735027]]
-    
+
 
 ## Scipy
 ---
@@ -361,7 +360,9 @@ plt.show()
 ```
 
 
+    
 ![png](scicomp-py_30_0.png)
+    
 
 
 To plot multiple things at once, call plt.plot() more than once
@@ -389,7 +390,9 @@ plot_HO(5)
 ```
 
 
+    
 ![png](scicomp-py_32_0.png)
+    
 
 
 Matplotlib has functions for scatterplots, pie charts, bar graphs, heatmaps blah blah blah...
@@ -590,7 +593,9 @@ df.plot()  # Plot all the stuff
 
 
 
+    
 ![png](scicomp-py_41_1.png)
+    
 
 
 
@@ -601,7 +606,9 @@ plt.show()
 ```
 
 
+    
 ![png](scicomp-py_42_0.png)
+    
 
 
 You can find data by name and apply an operation to it, like checking which days had small amounts of rain:
@@ -686,7 +693,9 @@ plt.show()
 ```
 
 
+    
 ![png](scicomp-py_48_0.png)
+    
 
 
 The reason I like this library so much is that you can use the past few examples, combining them as you wish, and analyze huge amounts of data in seconds. Lately I've written a function to do a custom plot on each row of a dataframe (optionally you can apply a condition to a dataframe and pass that through). I take my output files, parse them and put them into a dataframe. This lets me go from a directory of output files to a ton of plots in seconds, with little effort. 
@@ -713,7 +722,9 @@ plt.plot(x, y)
 
 
 
+    
 ![png](scicomp-py_51_1.png)
+    
 
 
 This is the default with nothing done, the library was made to have nice colorschemes out of the box, but I prefer a less intrusive background
@@ -733,7 +744,9 @@ plt.plot(x, y)
 
 
 
+    
 ![png](scicomp-py_53_1.png)
+    
 
 
 Remember our harmonic oscillator plots?
@@ -744,7 +757,9 @@ plot_HO(5)
 ```
 
 
+    
 ![png](scicomp-py_55_0.png)
+    
 
 
 There are a lot of built in plots, mostly for discrete data points and statistics. I mostly use the color palettes and things like that, but if you need to do statistical plots, look no further
@@ -771,7 +786,9 @@ plt.show()
 ```
 
 
+    
 ![png](scicomp-py_57_0.png)
+    
 
 
 
@@ -787,7 +804,9 @@ sns.jointplot(x='Rain', y='Wind', data=df2)
 
 
 
+    
 ![png](scicomp-py_58_1.png)
+    
 
 
 
@@ -820,7 +839,9 @@ plt.show()
 
 
 
+    
 ![png](scicomp-py_59_1.png)
+    
 
 
 

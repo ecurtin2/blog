@@ -1,26 +1,41 @@
+// ==============================================
+// Color Palette (preserved)
+// ==============================================
 $theme_black: #000000;
 $theme_code_foreground: #1d1d1d;
-$theme_code_background: #eef;
+$theme_code_background: #f4f6f8;
 $theme_blue: #0066BB;
-$theme_red: red;
-$theme_green: green;
-$theme_purple: purple;
-$theme_darkblue: #2a5c8e;
-$theme_teal: #037171;
 $theme_red: #bc3843;
 $theme_green: #2a7f62;
+$theme_purple: #6b5b95;
+$theme_darkblue: #2a5c8e;
+$theme_teal: #037171;
 $theme_darkgreen: #03312e;
-$theme_gray: #dddddd;
+$theme_gray: #e8ecef;
 
-$bg-color: #f8f8f8;
+$bg-color: #fafbfc;
 $fg-color: #1d1d1d;
 $light-color: #000000;
 $lightest-color: #037171;
 $primary-color: #2a7f62;
 
-$sidebar-bg-color: $theme_gray;
-$sidebar-fg-color: $theme_darkgreen;
-$sidebar-accent-color: $theme_darkgreen;
+$sidebar-bg-color: $theme_darkgreen;
+$sidebar-fg-color: #f8f9fa;
+$sidebar-accent-color: $theme_teal;
+
+// ==============================================
+// Design Tokens
+// ==============================================
+$font-stack: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+$font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+$border-radius: 8px;
+$border-radius-sm: 4px;
+$border-radius-lg: 12px;
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+$shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+$transition-fast: 0.15s ease;
+$transition-normal: 0.25s ease;
   
 
 @import 'base';

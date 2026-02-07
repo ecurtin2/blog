@@ -6,7 +6,6 @@ author: Evan Curtin
 teaser_image: molecule/molecule_3_0.png
 description: What is a molecule tho
 ---
-
 I recently replied to an reddit [/r/askscience post](https://www.reddit.com/r/askscience/comments/59frj2/could_someone_explain_what_this_iupac_definition/) that got me overthinking about something so simple, I just had to write a post about it. The main crux of the issue is simple. At a base level, what is a molecule? As I'll show you now, a rigorous definition is a bit tricky. International Union of Pure and Applied Chemistry is basically the chemical naming authority. Here's [IUPAC's definition of molecule](https://goldbook.iupac.org/M04002.html):
 
  >An electrically neutral entity consisting of more than one atom (n > 1). Rigorously, a molecule, in which  n > 1 must correspond to a depression on the potential energy surface that is deep enough to confine at least one vibrational state.
@@ -93,7 +92,9 @@ plot_sidebyside(ax1, ax2, 450)
 ```
 
 
+    
 ![png](molecule_3_0.png)
+    
 
 
 At the other extreme on the right, the curve begins to level out. This is because the atoms are so far apart, moving them farther away does nothing, since they are completely independent. 
@@ -105,7 +106,9 @@ plot_sidebyside(ax1, ax2, 170)
 ```
 
 
+    
 ![png](molecule_5_0.png)
+    
 
 
 Lastly, we have the case where the atoms are in their lowest energy arrangement. Since nature likes moving towards a low energy state, this is the most stable form of the molecule. The distance at which this occurs is the **bond length**.
@@ -120,7 +123,9 @@ plot_pes(ax, V2)
 ```
 
 
+    
 ![png](molecule_7_0.png)
+    
 
 
 Notice how the energy keeps going down as you increase the distance. This means that the atoms will constantly want to keep getting farther apart, and **you have no molecule!** In the words of IUPAC, a surface that looks like this has no depression whatsoever!

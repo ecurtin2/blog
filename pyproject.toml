@@ -1,0 +1,25 @@
+[project]
+name = "blog"
+version = "0.1.0"
+description = "Evan's Blog - Hugo site with Jupyter notebook conversion"
+requires-python = ">=3.10"
+dependencies = [
+    "jinja2",
+    "pygments",
+    "pyyaml",
+    "ipython",
+    "traitlets",
+    "nbconvert",
+    "python-docx>=1.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.format]
+quote-style = "double"

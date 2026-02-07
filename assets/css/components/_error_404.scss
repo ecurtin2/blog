@@ -1,7 +1,38 @@
+// ==============================================
+// 404 Error Page
+// ==============================================
+
 .error-404 {
   text-align: center;
+  padding: 4rem 2rem;
 }
 
 .error-404-title {
-  text-transform: uppercase;
+  font-size: 6rem;
+  font-weight: 700;
+  color: $theme_teal;
+  margin-bottom: 1rem;
+  letter-spacing: -0.05em;
+}
+
+.error-404-message {
+  font-size: 1.25rem;
+  color: lighten($fg-color, 20%);
+  margin-bottom: 2rem;
+}
+
+.error-404-link {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: $primary-color;
+  color: white;
+  border-radius: $border-radius;
+  font-weight: 500;
+  transition: background $transition-fast, transform $transition-fast;
+  
+  &:hover {
+    background: darken($primary-color, 5%);
+    color: white;
+    transform: translateY(-2px);
+  }
 }

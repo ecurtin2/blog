@@ -1,0 +1,154 @@
+# Evan Curtin - Professional Profile
+# Canonical source for resume, LinkedIn, bios, and AI-assisted writing
+
+[personal]
+name = "Evan Curtin"
+location = "Brooklyn, NY"
+email = "evanmcurtin@gmail.com"
+phone = "(267) 644-6180"
+github = "https://github.com/ecurtin2"
+linkedin = "https://www.linkedin.com/in/evanmcurtin/"
+
+[bio]
+tagline = "Applied Scientist with a consistent history of delivering novel models to production"
+summary = "I focus on creating systems for efficient evaluation of algorithms to accelerate development via iterative improvements and CI/CD practices."
+expanded = """
+I specialize in taking ML and LLM ideas from zero to production in high-stakes, regulated environments. \
+My work focuses on building systems where experimentation is cheap, failure is safe, and progress is driven \
+by reliable evaluation rather than guesswork. I operate across modeling, infrastructure, and product, and \
+I am often pulled in when systems behave unexpectedly in production or when teams need to simplify and \
+realign around the true problem."""
+
+[bio.identity]
+whoami = """
+At heart, I'm a builder. I like making things that actually work and keep working after I'm no longer \
+paying attention to them. I get satisfaction from turning vague ideas into concrete systems, fixing things \
+that are broken or unclear, and leaving behind something simpler and more reliable than what I started with. \
+I'm happiest when I'm close to the work and believe that progress comes from understanding the problem better \
+rather than adding more complexity."""
+
+[skills]
+strong = ["Python", "Numpy/Pandas", "ML/NLP", "Prompt Engineering/Applied LLMs"]
+proficient = ["SQL", "Docker", "Apache Spark", "Kubernetes", "Databricks", "Prefect"]
+familiar = ["AWS/Azure", "C++/Fortran", "Polars", "ElasticSearch"]
+interested_in = ["Rust", "Julia", "DataFusion"]
+
+[[experience]]
+title = "Staff Applied Scientist"
+company = "Relativity ODA, LLC"
+start_date = "2022-01"
+end_date = "present"
+location = "Brooklyn, NY (Remote)"
+highlights = [
+    "Developed a method to classify documents for eDiscovery using LLMs (Relativity aiR for Review). Demonstrated human-level+ efficacy, and collaborated with engineering, product and go-to-market teams to support the product's release through various events in USA and Europe. This product has been used in multiple active litigations and on several million documents.",
+    "Updated our active learning text classification engine used to find relevant documents for discovery. The engine provides a 10% reduction in overall review effort, while performing 10x faster, as compared to the previous implementation across hundreds of real legal matters.",
+    "Designed and implemented scalable evaluation pipelines for both of the above systems to evaluate algorithm updates against sensitive data in a privacy-preserving manner. This enabled 2 teams of scientists to conduct hundreds of experiments in support of novel ML backed products.",
+]
+
+[[experience]]
+title = "Data Engineer"
+company = "Coalition, Inc"
+start_date = "2021-05"
+end_date = "2021-12"
+location = "Chicago, IL (Remote)"
+highlights = [
+    "Established a CI framework for evolving insurance quote algorithms during hypergrowth. This involved optimization of the algorithm's performance by 6-fold and enabled rapid changes to the pricing model with reduced risk.",
+    "Scaled the pricing system with Dask and AWS Sagemaker to integrate real-time vulnerability data, collaborating with the platform team to deploy with Terraform.",
+]
+
+[[experience]]
+title = "Principal Machine Learning Scientist"
+company = "Capital One"
+start_date = "2019-04"
+end_date = "2021-05"
+location = "Chicago, IL"
+highlights = [
+    "Created a rapid-refit model and model training pipeline with H2O using Kubernetes, Spark and Argo, processing over a terabyte daily, and preventing $14M in annual fraud losses. The model was calibrated and validated on out-of-band data as a readiness check before deployment, which occurred daily with >95% success rates.",
+    "Implemented CI/CD for the model training pipeline with GitOps deployment, allowing rapid iterative enhancements and immediate rollbacks.",
+    "Collaborated with stakeholders to enable daily model deployments in a stringent regulatory environment.",
+]
+
+[[experience]]
+title = "Data Science Engineer"
+company = "Broadspire (Crawford & Company)"
+start_date = "2018-06"
+end_date = "2019-04"
+location = "Chicago, IL"
+highlights = [
+    "Developed an XGBoost-based insurance risk model for adjustor triage, cutting training time by 90% with Dask and leveraging AWS Lambda for swift, low-maintenance deployments.",
+]
+
+[[education]]
+degree = "PhD in Chemistry (ABD - All but Dissertation)"
+institution = "University of Illinois, Urbana-Champaign"
+focus = "Stability of Hartree-Fock Equations in symmetry-breaking solids"
+technologies = ["C++", "SLEPc", "Blue Waters supercomputer"]
+
+[[education]]
+degree = "MS and BS in Chemistry"
+institution = "Drexel University"
+thesis = "Low Dimensional Models for Predicting Nanomaterial Properties"
+minor = "Physics"
+
+[[publications]]
+authors = ["E. Yang", "E. Curtin", "et al."]
+title = "Beyond the bar: generative AI as a transformative component in legal document review"
+venue = "2024 IEEE Int. Conf. Big Data"
+year = 2024
+
+[[publications]]
+authors = ["G. Bazargan", "E. Curtin", "K. Sohlberg"]
+title = "Comparing statistical predictions of quantum particle transit times in molecular systems to experimental measurements"
+venue = "J. Theor. Comput. Chemistry"
+volume = "18"
+issue = "8"
+page = "1950039"
+year = 2019
+
+[[publications]]
+authors = ["E. Curtin", "G. Bazargan", "K. Sohlberg"]
+title = "Quantifying electron transit in donor-bridge-acceptor systems using probabilistic confidence"
+venue = "J. Theor. Comput. Chemistry"
+volume = "17"
+issue = "7"
+page = "1850046"
+year = 2018
+
+[[publications]]
+authors = ["E. M. Curtin", "K. Sohlberg"]
+title = "A reduced dimensionality model of torsional vibrations in star molecules"
+venue = "Physica E: Low-Dimensional Syst. Nanostructures"
+volume = "77"
+pages = "131-137"
+year = 2016
+
+[[publications]]
+authors = ["J.-C. Bradley", "A. Lang", "A. Williams", "E. Curtin"]
+title = "ONS open melting point collection"
+venue = "Nature Precedings"
+year = 2011
+
+[[projects]]
+name = "Quantized"
+url = "https://github.com/ecurtin2/quantized"
+description = "An easy to use Quantum Mechanics Library in Python"
+
+[[projects]]
+name = "Cookiecutter-Python"
+url = "https://github.com/ecurtin2/cookiecutter-python"
+description = "A project template for python projects with CI and Codespaces support"
+
+[[projects]]
+name = "nbsanity"
+url = "https://github.com/ecurtin2/nbsanity"
+description = "Jupyter notebook linter written in Rust"
+
+[[projects]]
+name = "mkdocs-apidoc"
+url = "https://github.com/ecurtin2/mkdocs-apidoc"
+description = "Plugin for using mkdocs with autogenerated API documentation"
+
+[[projects]]
+name = "Hartree-Fock Stability"
+url = "https://github.com/ecurtin2/hf-stability"
+description = "Find if a HF solution is unstable with high performance linear algebra"

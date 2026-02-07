@@ -1,14 +1,23 @@
+// ==============================================
+// Tag Styles
+// ==============================================
+
 .tag {
-  display: inline-block;
-  margin-right: 0.2em;
-  padding: 0 0.6em;
-  font-size: 0.9em;
-  border-radius: 0.2em;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.4rem;
+  padding: 0.2rem 0.65rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 999px;
   white-space: nowrap;
-  background: rgba(255, 255, 255, 0.1);
-  transition: background 0.8s;
+  background: rgba($theme_green, 0.1);
+  color: $theme_green;
+  transition: background $transition-fast, color $transition-fast, transform $transition-fast;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba($theme_green, 0.2);
+    color: $theme_darkgreen;
+    transform: translateY(-1px);
   }
 }
