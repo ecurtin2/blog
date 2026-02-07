@@ -2,7 +2,15 @@
 """Generate styled DOCX resume from profile.toml with blog theme colors."""
 
 import sys
-import tomllib
+try:
+    import tomllib  # Python 3.11+
+except ModuleNotFoundError:  # pragma: no cover
+    try:
+        import tomli as tomllib  # Python <=3.10 backport
+    except ModuleNotFoundError as e:  # pragma: no cover
+        raise ModuleNotFoundError(
+            "Missing TOML parser. Use Python 3.11+ (tomllib) or install 'tomli'."
+        ) from e
 from pathlib import Path
 
 from docx import Document
@@ -37,7 +45,6 @@ def add_hyperlink(paragraph, text, url):
     rPr.append(color)
     
     new_run.append(rPr)
-    new_run.text = text
     
     # Use w:t element for text
     text_elem = OxmlElement("w:t")
@@ -71,6 +78,17 @@ def add_bottom_border(paragraph, color="2A7F62"):
     pPr.append(pBdr)
 
 
+def included_in(item, target: str) -> bool:
+    """Return True if item is explicitly included for the target output."""
+    if not isinstance(item, dict):
+        return False
+    return target in item.get("included_in", [])
+
+
+def filter_included(items, target: str):
+    return [x for x in items if included_in(x, target)]
+
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: generate_docx.py <output.docx>", file=sys.stderr)
@@ -85,6 +103,7 @@ def main():
     p = profile["personal"]
     bio = profile["bio"]
     skills = profile["skills"]
+    target = "resume"
 
     doc = Document()
     
@@ -127,10 +146,6 @@ def main():
     contact_run.font.size = Pt(10)
     set_paragraph_spacing(contact_para, after=120)
 
-    # Summary
-    summary_para = doc.add_paragraph(bio["summary"])
-    set_paragraph_spacing(summary_para, after=200)
-
     # Skills section
     skills_header = doc.add_paragraph()
     skills_run = skills_header.add_run("SKILLS")
@@ -140,14 +155,12 @@ def main():
     add_bottom_border(skills_header)
     set_paragraph_spacing(skills_header, before=200, after=100)
 
-    for label, items in [
-        ("Strong", skills["strong"]),
-        ("Proficient", skills["proficient"]),
-        ("Familiar", skills["familiar"]),
-        ("Interested in", skills["interested_in"]),
-    ]:
+    for group in skills.get("groups", []):
+        items = [it.get("name", "") for it in filter_included(group.get("items", []), target) if isinstance(it, dict) and it.get("name")]
+        if not items:
+            continue
         skill_para = doc.add_paragraph()
-        label_run = skill_para.add_run(f"{label}: ")
+        label_run = skill_para.add_run(f'{group.get("label", "Skills")}: ')
         label_run.bold = True
         label_run.font.color.rgb = DARKGREEN
         skill_para.add_run(", ".join(items))
@@ -162,28 +175,90 @@ def main():
     add_bottom_border(exp_header)
     set_paragraph_spacing(exp_header, before=200, after=100)
 
-    for job in profile["experience"]:
-        start_year = job["start_date"][:4]
-        end_year = "Present" if job["end_date"] == "present" else job["end_date"][:4]
-        
-        # Job title
-        title_para = doc.add_paragraph()
-        title_run = title_para.add_run(f'{job["title"]} – {job["company"]}')
-        title_run.bold = True
-        title_run.font.color.rgb = DARKGREEN
-        set_paragraph_spacing(title_para, before=120, after=0)
-        
-        # Date/location
-        meta_para = doc.add_paragraph()
-        meta_run = meta_para.add_run(f'{start_year} – {end_year}, {job["location"]}')
-        meta_run.font.size = Pt(10)
-        meta_run.font.color.rgb = LIGHT_GRAY
-        set_paragraph_spacing(meta_para, after=60)
-        
-        # Highlights
-        for highlight in job["highlights"]:
-            bullet_para = doc.add_paragraph(highlight, style="List Bullet")
-            set_paragraph_spacing(bullet_para, after=40)
+    MONTHS = ("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+    def fmt_date(d):
+        if d == "present":
+            return "Present"
+        if len(d) >= 7:
+            return f"{MONTHS[int(d[5:7])]} {d[:4]}"
+        return d[:4]
+
+    def fmt_year(d):
+        if d == "present":
+            return "Present"
+        return d[:4]
+
+    def short_role_title(title: str, all_titles: list[str]) -> str:
+        # Compact titles for promotion ladders like "X Applied Scientist"
+        suffix = " Applied Scientist"
+        if all(t.endswith(suffix) for t in all_titles):
+            return title.removesuffix(suffix)
+        return title
+
+    for job in filter_included(profile.get("experience", []), target):
+        if "roles" in job:
+            roles = filter_included(job.get("roles", []), target)
+            if not roles:
+                continue
+
+            current = next((r for r in roles if r.get("end_date") == "present"), roles[-1])
+            prev = [r for r in roles if r is not current]
+
+            all_titles = [r.get("title", "") for r in roles]
+
+            # Header: current title – company
+            title_para = doc.add_paragraph()
+            title_run = title_para.add_run(f'{current["title"]} – {job["company"]}')
+            title_run.bold = True
+            title_run.font.color.rgb = DARKGREEN
+            set_paragraph_spacing(title_para, before=120, after=0)
+
+            # Meta: current dates + location
+            meta_para = doc.add_paragraph()
+            meta_run = meta_para.add_run(
+                f'{fmt_year(current["start_date"])} – {fmt_year(current["end_date"])}, {job["location"]}'
+            )
+            meta_run.font.size = Pt(10)
+            meta_run.font.color.rgb = LIGHT_GRAY
+            set_paragraph_spacing(meta_para, after=20)
+
+            # Previously: compact role list (most recent first)
+            if prev:
+                prev_sorted = list(reversed(prev))
+                prev_bits = []
+                for r in prev_sorted:
+                    t = short_role_title(r.get("title", ""), all_titles)
+                    prev_bits.append(f'{t} ({fmt_year(r["start_date"])}–{fmt_year(r["end_date"])})')
+                prev_para = doc.add_paragraph()
+                prev_run = prev_para.add_run("Previously: " + " • ".join(prev_bits))
+                prev_run.font.size = Pt(10)
+                prev_run.font.color.rgb = LIGHT_GRAY
+                set_paragraph_spacing(prev_para, after=20)
+
+            # Highlights
+            for highlight in filter_included(job.get("highlights", []), target):
+                bullet_para = doc.add_paragraph(highlight.get("text", ""), style="List Bullet")
+                set_paragraph_spacing(bullet_para, after=40)
+        else:
+            start_year = job["start_date"][:4]
+            end_year = "Present" if job["end_date"] == "present" else job["end_date"][:4]
+            # Job title
+            title_para = doc.add_paragraph()
+            title_run = title_para.add_run(f'{job["title"]} – {job["company"]}')
+            title_run.bold = True
+            title_run.font.color.rgb = DARKGREEN
+            set_paragraph_spacing(title_para, before=120, after=0)
+            # Date/location
+            meta_para = doc.add_paragraph()
+            meta_run = meta_para.add_run(f'{start_year} – {end_year}, {job["location"]}')
+            meta_run.font.size = Pt(10)
+            meta_run.font.color.rgb = LIGHT_GRAY
+            set_paragraph_spacing(meta_para, after=60)
+            # Highlights
+            for highlight in filter_included(job.get("highlights", []), target):
+                bullet_para = doc.add_paragraph(highlight.get("text", ""), style="List Bullet")
+                set_paragraph_spacing(bullet_para, after=40)
 
     # Education section
     edu_header = doc.add_paragraph()
@@ -194,7 +269,7 @@ def main():
     add_bottom_border(edu_header)
     set_paragraph_spacing(edu_header, before=200, after=100)
 
-    for edu in profile["education"]:
+    for edu in filter_included(profile.get("education", []), target):
         # Degree
         deg_para = doc.add_paragraph()
         deg_run = deg_para.add_run(f'{edu["degree"]}, {edu["institution"]}')
@@ -219,38 +294,28 @@ def main():
     add_bottom_border(pub_header)
     set_paragraph_spacing(pub_header, before=200, after=100)
 
-    for i, pub in enumerate(profile["publications"], 1):
+    pubs = filter_included(profile.get("publications", []), target)
+    for i, pub in enumerate(pubs, 1):
         authors = ", ".join(pub["authors"])
-        cite = f'{i}. {authors}, "{pub["title"]}," {pub["venue"]}'
+
+        pub_para = doc.add_paragraph()
+        pub_para.add_run(f"{i}. {authors}, \"")
+        if "doi" in pub:
+            add_hyperlink(pub_para, pub["title"], f'https://doi.org/{pub["doi"]}')
+        else:
+            pub_para.add_run(pub["title"])
+        pub_para.add_run(f',\" {pub["venue"]}')
         if "volume" in pub:
-            cite += f", vol. {pub['volume']}"
+            pub_para.add_run(f", vol. {pub['volume']}")
         if "issue" in pub:
-            cite += f", no. {pub['issue']}"
+            pub_para.add_run(f", no. {pub['issue']}")
         if "page" in pub:
-            cite += f", p. {pub['page']}"
+            pub_para.add_run(f", p. {pub['page']}")
         if "pages" in pub:
-            cite += f", pp. {pub['pages']}"
-        cite += f", {pub['year']}."
-        
-        pub_para = doc.add_paragraph(cite)
+            pub_para.add_run(f", pp. {pub['pages']}")
+        pub_para.add_run(f", {pub['year']}.")
+
         set_paragraph_spacing(pub_para, after=60)
-
-    # Projects section
-    proj_header = doc.add_paragraph()
-    proj_run = proj_header.add_run("PROJECTS")
-    proj_run.bold = True
-    proj_run.font.size = Pt(12)
-    proj_run.font.color.rgb = GREEN
-    add_bottom_border(proj_header)
-    set_paragraph_spacing(proj_header, before=200, after=100)
-
-    for proj in profile["projects"]:
-        proj_para = doc.add_paragraph(style="List Bullet")
-        name_run = proj_para.add_run(proj["name"])
-        name_run.bold = True
-        name_run.font.color.rgb = BLUE
-        proj_para.add_run(f': {proj["description"]}')
-        set_paragraph_spacing(proj_para, after=40)
 
     doc.save(output_path)
     print(f"Generated {output_path}", file=sys.stderr)
